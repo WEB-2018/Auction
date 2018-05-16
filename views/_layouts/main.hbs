@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{{title}}</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/assests/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/assests/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/assests/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <!--<link href="/assests/vendor/morrisjs/morris.css" rel="stylesheet">-->
+
+    <!-- Custom Fonts -->
+    <link href="/assests/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates|Varela+Round" rel="stylesheet">
+
+    <!-- Product CSS -->
+    <link href="/assests/dist/css/Product.css" rel="stylesheet" type="text/css">
+ 
+    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/material-design-iconic-font.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.theme.rin.css">-->
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/style.css">
+    <link rel="icon" href="/imgs/favicon.ico">
+    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/main.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    {{>header}}
+
+    <div class="row">
+        <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
+            <div id="Time"></div>
+            <p id="result" style="display: none"></p>
+        </div>
+    </div>
+ 
+
+    <!--menu-->
+   {{>menu}}
+    <!--cate-->
+
+
+    <div class="row">
+        <div class="col-md-12">
+            {{{body}}}
+        </div>
+    </div>
+    {{>footer}}
+
+
+
+<!-- jQuery -->
+<script src="/assests/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/assests/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/assests/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<!--<script src="/assests/vendor/raphael/raphael.min.js"></script>-->
+<!--<script src="/assests/vendor/morrisjs/morris.min.js"></script>-->
+<!--<script src="/assests/data/morris-data.js"></script>-->
+
+<!-- Custom Theme JavaScript -->
+<script src="/assests/dist/js/sb-admin-2.js"></script>
+
+<!-- Product JS -->
+<script src="/assests/dist/js/Product.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        formatEditor();
+        //hien icon theo loai
+        $(".loai").each(function () {
+            if ($(this).html().indexOf("Sách") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-book\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Thiết bị số") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-phone\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Đồ gia dụng") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-lamp\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Thời trang") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-apple\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Làm đẹp") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-leaf\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Nhà cửa") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-home\" aria-hidden=\"true\"></i>");
+            }
+            else if ($(this).html().indexOf("Xe cộ") != -1) {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-wrench\" aria-hidden=\"true\"></i>");
+            }
+            else {
+                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-pencil\" aria-hidden=\"true\"></i>");
+            }
+
+        })
+
+        //hide sidebar-seach khi o trang search
+        if ($("title").html().indexOf("Tìm kiếm") != -1) {
+            $(".sidebar-search").css("display", "none");
+            var key = $('#txtSearch').val();
+            if (key != "") {
+                count = num;
+                $("#btnLoadMoreProduct").css('display', 'block');
+                $('#searchProduct').html('');
+                $("#searchFooter2").css('display', 'none');
+                showMoreProduct();
+            }
+        }
+        var start = $('.startTime').text();
+        var end = $('.endTime').text();
+        $('.startTime').text(formatDate(start));
+        $('.endTime').text(formatDate(end));
+
+        elapseTime();
+
+
+    })
+
+    function FormatTimeDetailProduct() {
+        var id = $('.startTime');
+        id.text(formatDate(id.text()));
+        var id = $('.endTime');
+        id.text(formatDate(id.text()));
+    }
+
+    //ma hoa ten nguoi dung gia cao nhat
+    $('.userHighestPrice').each(function () {
+        var id = $(this);
+        var nd =id.text();
+        if (nd == '') {
+            id.text('Chưa có');
+        }
+        else {
+            var length = nd.length;
+            var sub = nd.substr(0, length - 3);
+            nd = nd.replace(sub, '*****');
+            id.text(nd);
+        }
+    })
+    //cac san pham moi dang co them icon new
+    $('.postTime').each(function () {
+        var time = $(this).text();
+        var id = $(this);
+        var postDate = new Date(time).getTime();
+        var now = new Date().getTime();
+        var khoangThoiGian = 60*60*24*1000;
+        var t = now - postDate;
+        document.getElementById("new").innerHTML = d.toUTCString();
+        if(t < khoangThoiGian){
+            id.siblings('.newProduct').css('display', 'block');
+        }
+    })
+
+    //tinh thoi gian dau gia con lai
+    function elapseTime() {
+        $(".elapseTime").each(function (index) {
+            var timeOut = $(this).text();
+            var id = $(this);
+            var countDownDate = new Date(timeOut).getTime();
+
+            if (timeOut != '' && !id.hasClass('showTime')) {
+                id.addClass('showTime');
+                var x = setInterval(function () {
+                    //alert(id);
+                    // Get todays date and time
+                    var now = new Date().getTime();
+
+                    // Find the distance between now an the count down date
+                    var distance = countDownDate - now;
+
+
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    //alert(seconds);
+                    // Display the result in the element with id="demo"
+                    id.html(days + "d " + hours + "h "
+                            + minutes + "m " + seconds + "s ");
+
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        id.html("EXPIRED");
+                    }
+                }, 1000);
+            }
+        })
+    }
+
+    //submit khi nhan search o Trang chu
+    $("#btnSearchHomepage").click(function () {
+        var keyword = $('#keyword').val();
+        var path = "/product/search?keyword=" + keyword + "&count=0&newPage=1";
+        window.location.replace(path);
+    })
+
+    var count = 0, i = 0, num = 4;
+    var sortType = 0;
+    $("#btnSearch").click(function () {
+        count = num;
+        $("#btnLoadMoreProduct").css('display', 'block');
+        $('#searchProduct').html('');
+        $("#searchFooter2").css('display', 'none');
+        sortType = 0;
+        disableSortButtons();
+        showMoreProduct();
+    })
+
+
+    $("#buttonSortTime").click(function () {
+        count = num;
+        $("#btnLoadMoreProduct").css('display', 'block');
+        $('#searchProduct').html('');
+        $("#searchFooter2").css('display', 'none');
+        sortType = 1;
+        disableSortPriceButton();
+        showMoreProduct();
+    })
+
+
+    $("#buttonSortPrice").click(function () {
+        count = num;
+        $("#btnLoadMoreProduct").css('display', 'block');
+        $('#searchProduct').html('');
+        $("#searchFooter2").css('display', 'none');
+        sortType = 2;
+        disableSortTimeButton();
+        showMoreProduct();
+    })
+
+    function disableSortTimeButton() {
+        if (!$('#buttonSortPrice').hasClass('btnEnable')) {
+            $('#buttonSortPrice').addClass('btnEnable');
+        }
+        if ($('#buttonSortTime').hasClass('btnEnable')) {
+            $('#buttonSortTime').removeClass('btnEnable');
+        }
+    }
+
+    function disableSortPriceButton() {
+        if (!$('#buttonSortTime').hasClass('btnEnable')) {
+            $('#buttonSortTime').addClass('btnEnable');
+        }
+        if ($('#buttonSortPrice').hasClass('btnEnable')) {
+            $('#buttonSortPrice').removeClass('btnEnable');
+        }
+    }
+
+    function disableSortButtons() {
+        if ($('#buttonSortPrice').hasClass('btnEnable')) {
+            $('#buttonSortPrice').removeClass('btnEnable');
+        }
+        if ($('#buttonSortTime').hasClass('btnEnable')) {
+            $('#buttonSortTime').removeClass('btnEnable');
+        }
+    }
+
+
+    function showMoreProduct() {
+        var keyword = $('#txtSearch').val();
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.response);
+                var productCount = products.length;
+                i = 0;
+                while (i < productCount) {
+                    $('#searchProduct').append(productToThumbnail(products[i]));
+                    i++;
+                }
+                count = count + num;
+
+                if (productCount < num) {
+                    $("#btnLoadMoreProduct").css('display', 'none');
+                    $("#searchFooter2").css('display', 'block');
+                }
+            }
+        };
+        var category = $('#catID').val();
+        var url = "/product/search?keyword=" + keyword + "&count=" + count + "&sortType=" + sortType
+                + "&category=" + category;
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+
+    function productToThumbnail(product) {
+        var res = '<div class="col-sm-3 col-lg-3 col-md-3 product-infor">'
+                + '<div class="thumbnail text-center">'
+                + '<img id="new" class="newProduct" src="/imgs/new.png" alt=' + product.thoiDiemDang + 'style="position: absolute; top: 0px; right: 10px; display: none">'
+                + '<img src="/imgs/sp/' + product.idSanPham + '/1.jpg" style="height:200px;object-fit:contain" alt="">'
+                + '<div class="caption" style="height: 200px">'
+                + '<h4>'
+                + '<a href="/product/detail/' + product.idSanPham + '">' + product.tenSanPham + '&nbsp&nbsp</a>'
+                + '<a class="zmdi zmdi-favorite" onclick="addToWatchList('+ product.idSanPham +')"></a>'
+               
+                + '</h4>'
+                + ' <h3 class="pro-price">'+product.giaHienTai +'$</h3>'
+//                + '<h4 class="pull-right" style="color: green">'+'0'+'</h4>'
+                + '<div style="display: inline;">'
+                + 'by MS0'
+                + '<div class="userHighestPrice" style="display: inline;color: black">'+product.idNguoiGiaCaoNhat*6+'-5'+'</div>'
+                + '</div>'
+
+                +'<div>'
+                +'<button pull-center style="" class="btn btn-basic">'
+                +'<a style="hover:" href="/product/detail/' + product.idSanPham + '">Catch it &nbsp<strong>'+product.giaMuaNgay+'</strong>$</a></button>'
+                +'</div>'
+
+                + '</div>'
+                +'<div class="ratings">'
+                +'<div class="pull-right">'
+                +'<span style="color: red; display: inline" class="glyphicon glyphicon-time"></span>'
+                +'<div style="display: inline;" class="elapseTime">'+product.thoiDiemKetThuc+'</div>'
+                
+                +'</div>'
+                +'<p>'
+                +'<span id="new" style="color: green" class="glyphicon glyphicon-flash"></span>'
+                //+ product.luotBid
+                +'</p>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                ;
+
+
+        return res;
+    }
+
+
+    function datGia(id) {
+
+        if(confirm("Are you sure to buy this product?")) {
+            $.ajax({
+                url: "/product/buyNow",
+                type: "post",
+                data: {
+                    idSanPham: id
+                },
+                success: function(html) {
+                    if (html === "diemDanhGiaError") {
+//                        $("#msg").text('Không đủ điểm đánh giá');
+                        alert("You don't have enough point to buy this product");
+                    } else if (html === "timeError")
+                        alert("This product was expried"); else if (html === "giaError")
+                        alert("Please enter higher price than current price !"); else if (html === "done") {
+
+                        alert("Successfull !");
+                        location.reload();
+                    }
+                }
+            });
+        }
+
+    }
+
+    function fn(id) {
+        var gia = $("#dauGia").val();
+
+        if(confirm("Are you sure to bid this product ?")) {
+            $.ajax({
+                url: "/product/bid",
+                type: "post",
+                data: {
+                    idSanPham: id,
+                    giaDauGia: gia
+                },
+                success: function(html){
+                    if(html==="diemDanhGiaError") {
+//                        $("#msg").text('Không đủ điểm đánh giá');
+                        alert("You don't have enough point to bid this product");
+                    } else if(html==="timeError")
+                        alert("This product was expried"); else if(html==="giaError")
+                        alert("Please enter higher price than current price !"); else if(html==="done") {
+
+                        alert("Successfull !");
+                        location.reload();
+                    }
+
+                }
+            });
+        }
+    }
+
+</script>
+
+
+</body>
+
+</html>

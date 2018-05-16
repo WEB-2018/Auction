@@ -1,0 +1,120 @@
+  <div class="row">
+        <div id="categories">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header pull-left">
+                        <h2 class="uppercase">MOST BIDDED</h2>
+                        <h6>Click to see more >></h6>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <ul class="list-inline text-center">
+                    {{#each productsByBid}}
+                     <li>
+                        <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+                            <a href="product/detail/{{idSanPham}}" tabindex="-1">
+                                <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}">
+                          
+                            </a>
+                        </div>
+                        <div class="product-info text-center">
+                            <h6 class="product-title">
+                                <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
+                            </h6>
+                            <p >Bid Times: {{luotBid}}</p>
+                            <h3 class="pro-price">{{giaHienTai}} $</h3>
+
+                            
+                        </div>
+                    </li>
+                {{/each}}
+
+                </ul>
+                
+
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!--feature-pro-->
+    <div class="row ">
+        <div id="featured-product">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header pull-left">
+                        <h2 class="uppercase">Highest Price</h2>
+                        <h6>Click to see more >></h6>
+                    </div>
+                </div>
+            </div>
+
+            <div id="featured-product-list " class="row text-center" style="display: inline;">
+
+                <ul class="list-inline ">
+                {{#each productsByPrice}}
+                     <li>
+                        <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+                            <a href="product/detail/{{idSanPham}}" tabindex="-1">
+                                <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}">
+                          
+                            </a>
+                        </div>
+                        <div class="product-info text-center">
+                            <h6 class="product-title">
+                                <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
+                            </h6>
+                            <p >* Top Price *</p>
+                            <h3 class="pro-price">{{giaHienTai}} $</h3>
+
+                            
+                        </div>
+                    </li>
+                {{/each}}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <!--list product-->
+    <hr>
+    <div class="row">
+	    <div id="product-list">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="header text-left mb-40">
+                        <h2 class="uppercase">featured product</h2>
+                        <h6>Click to see more >></h6>
+                    </div>
+                </div>
+            
+            </div>
+
+             <div id="featured-product-list " class="row text-center" style="display: inline;">
+
+                 <ul class="list-inline ">
+                {{#each productsByTime}}
+                     <li>
+                        <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+                            <a href="product/detail/{{idSanPham}}" tabindex="-1">
+                                <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}">
+                          
+                            </a>
+                        </div>
+                        <div class="product-info text-center">
+                            <h6 class="product-title">
+                                <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
+                            </h6>
+                          
+                            <span style="color: blue; display: inline" class="glyphicon glyphicon-time"></span>
+                                        <div style="display: inline;" class="elapseTime">{{thoiDiemKetThuc}}</div>
+                            <h3 class="pro-price">{{giaHienTai}} $</h3>
+
+                        </div>
+                    </li>
+                {{/each}}
+                </ul>
+                  
+	    </div>
+

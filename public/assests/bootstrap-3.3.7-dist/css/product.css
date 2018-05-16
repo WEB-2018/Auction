@@ -1,0 +1,77 @@
+.single-product-info h3{
+    color: #ff7f00;
+}
+.widget {
+    padding: 20px 30px;
+}
+
+.widget-title,.info h6 {
+	text-align: left;
+	font-size: 12pt;
+    color: #666666;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.border-left {
+    position: relative;
+    padding-left: 10px;
+}
+.product-cat .hitarea {
+    cursor: pointer;
+    height: 30px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.product-cat .treeview > li > ul > li > a {
+    font-size: 13px;
+    line-height: 25px;
+}
+
+
+.product-cat .treeview > li > a, .product-cat .treeview > li > ul > li > a {
+    color: #999999;
+    display: inline-block;
+    text-transform: capitalize;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.box-shadow {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+.border-left::before {
+    background: #ff7f00 none repeat scroll 0 0;
+    content: "";
+    height: 12px;
+    left: 0;
+    margin-top: -6px;
+    position: absolute;
+    top: 50%;
+    width: 2px;
+}
+p {
+
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 20px;
+    color: #999999;
+    margin-bottom: 15px;
+}
+.info{
+	margin-left:  150px;
+}
+input[type="number"]{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid transparent;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    color: #999999;
+    font-size: 13px;
+    height: 40px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    width:200px;
+    font-size: 20px;
+}

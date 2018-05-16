@@ -1,0 +1,45 @@
+.glyphicon-heart-empty:hover{
+    cursor:pointer
+}
+
+.glyphicon-heart:hover{
+    cursor:pointer
+}
+
+.buttonSapXep{
+    border-color: #189EFF;
+    border-image-width: 1px;
+    margin-left: 5px;
+    background-color: #fff; 
+    color: #00f;
+}
+
+.btnEnable{
+    border-color: #F08D35;
+    background-color: #189EFF;
+    color: #fff;
+}
+
+.buttonSapXep.btnDisable{
+    border-color: #B7B7B7;
+    background-color: #E8E8E8;
+    color: #fff;
+}
+
+.buttonSapXep:hover{
+    background-color: #189EFF;
+    color: white;
+}
+
+.thumbnail:hover{
+    border: 1px solid #4180CF;
+}
+
+.buttonHeart {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}

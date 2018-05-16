@@ -1,0 +1,15 @@
+.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}
+
+input.my-error-class{
+    color:#FF0000;  /* red */
+    border: solid 1px red;
+}
+input.my-valid-class {
+    color:#00CC00; /* green */
+    border: solid 1px green;
+}

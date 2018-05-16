@@ -1,0 +1,242 @@
+/*style sign up html*/
+*, *::after, *::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+div {
+    display: block;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+@media (min-width: 768px)
+{.container {
+    width: 700px;
+}
+.container {
+    
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.mb-80 {
+    margin-bottom: 80px;
+}
+.panel-default> .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border-top-color: #ddd;
+}
+.my-account-content .panel-body {
+    padding: 35px;
+}
+.panel-body {
+    padding: 15px;
+}
+@media (min-width: 768px)
+.col-sm-6 {
+    width: 50%;
+}
+input[type="text"], input[type="password"] {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid transparent;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    color: #999999;
+    font-size: 13px;
+    height: 40px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+}
+a.button-border span, a.button-border-white span, input, select, textarea {
+    -webkit-transition: all 0.5s ease-out 0s;
+    -moz-transition: all 0.5s ease-out 0s;
+    -ms-transition: all 0.5s ease-out 0s;
+    -o-transition: all 0.5s ease-out 0s;
+    transition: all 0.5s ease-out 0s;
+}
+
+a, button, input {
+    outline: medium none;
+    color: #666666;
+}
+.custom-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.custom-select {
+    background: rgba(0, 0, 0, 0) url(/assests/bootstrap-3.3.7-dist/img/icon/down-arrow.png) no-repeat scroll 97% center;
+    background-size: 40px;
+    border: medium none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    height: 40px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+select {
+    border: 1px solid #eeeeee;
+    color: #999999;
+    font-size: 13px;
+    height: 30px;
+    padding-left: 20px;
+}
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+a:focus, a:hover {
+    color: #ff7f00;
+    text-decoration: none;
+}
+a:focus, a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+a:active, a:hover {
+    outline: 0;
+}
+.col-sm-6, .col-md-8{
+
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.custom-select option {
+    font-size: 13px;
+    padding: 2px 0 0 20px;
+}
+option {
+    background: #ffffff none repeat scroll 0 0;
+    border: 0 solid #626262;
+    font-size: 13px;
+    padding-left: 10px;
+}
+button, select {
+    text-transform: none;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+.custom-textarea {
+    height: 110px;
+}
+textarea {
+    background: #ffffff none repeat scroll 0 0;
+    border: 1px solid transparent;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    padding: 10px 10px 10px 20px;
+    resize: vertical;
+    width: 100%;
+}
+body {
+    background: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 24px;
+}
+.submit-btn-1 {
+    background: #ff7f00;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+.btn-hover-1, .btn-hover-2 {
+    position: relative;
+}
+.submit-btn-1 {
+    background: rgb(255, 127, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+    font-weight: 700;
+    height: 35px;
+    padding: 0 20px;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+}
+button {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    font-family: raleway;
+}
+.f-right {
+    float: right;
+}
+.collapse.in {
+    display: block;
+}
+.collapse {
+    display: none;
+}
+h4 {
+    display: block;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+body{
+    overflow: hidden;
+}
+#register form {
+    
+    max-width: 400px;
+    width: 90%;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    color: #fff;
+    
+}
+#register {
+    height: 700px;
+    background: #475d62 url(/assests/bootstrap-3.3.7-dist/img/star-sky.jpg) no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+input[type="text"], input[type="password"] {
+    background: transparent none repeat scroll 0 0;
+    border: 1px solid transparent;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    color: #999999;
+    font-size: 13px;
+    height: 40px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+}
+.checkbox a{
+    color: white;
+}

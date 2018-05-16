@@ -1,0 +1,35 @@
+
+h1{
+    font-size: 24px;
+	padding-left: 10px;
+	border-left: 3px solid orange;
+    color: black;
+}
+
+#side-menu{
+	margin-left: 50px;
+}
+i:active{
+	font-size: 20pt;
+}
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    color: black;
+    background-color: transparent;
+
+}
+.nav > li > a.active, .nav > li > a.active{
+    text-decoration: none;
+    font-weight: bold;
+    color: orange;
+}
+.panel-body{
+
+}
+.box-shadow {
+    margin-left:50px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+.navbar-collapse {
+    padding:0px;
+}
