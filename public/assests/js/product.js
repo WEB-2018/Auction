@@ -1,97 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>{{title}}</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/assests/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/assests/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/assests/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <!--<link href="/assests/vendor/morrisjs/morris.css" rel="stylesheet">-->
-
-    <!-- Custom Fonts -->
-    <link href="/assests/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates|Varela+Round" rel="stylesheet">
-
-    <!-- Product CSS -->
-    <link href="/assests/dist/css/Product.css" rel="stylesheet" type="text/css">
- 
-    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
-    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/material-design-iconic-font.css">
-    <!--<link rel="stylesheet" href="css/bootstrap.theme.rin.css">-->
-    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/style.css">
-    <link rel="icon" href="/imgs/favicon.ico">
-    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/main.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-    {{>header}}
-
-    <div class="row">
-        <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
-            <div id="Time"></div>
-            <p id="result" style="display: none"></p>
-        </div>
-    </div>
- 
-
-    <!--menu-->
-   {{>menu}}
-    <!--cate-->
-
-
-    <div class="row">
-        <div class="col-md-12">
-            {{{body}}}
-        </div>
-    </div>
-    {{>footer}}
-
-
-
-<!-- jQuery -->
-<script src="/assests/vendor/jquery/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/assests/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="/assests/vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- Morris Charts JavaScript -->
-<!--<script src="/assests/vendor/raphael/raphael.min.js"></script>-->
-<!--<script src="/assests/vendor/morrisjs/morris.min.js"></script>-->
-<!--<script src="/assests/data/morris-data.js"></script>-->
-
-<!-- Custom Theme JavaScript -->
-<script src="/assests/dist/js/sb-admin-2.js"></script>
-
-<!-- Product JS -->
-<script src="/assests/dist/js/Product.js"></script>
-<script type="text/javascript" src="/assests/js/product.js"></script>
-<script>
 
     $(document).ready(function () {
         formatEditor();
@@ -141,7 +47,7 @@
         $('.startTime').text(formatDate(start));
         $('.endTime').text(formatDate(end));
 
-        elapseTime();
+        ElapseTime();
 
 
     })
@@ -173,16 +79,15 @@
         var id = $(this);
         var postDate = new Date(time).getTime();
         var now = new Date().getTime();
-        var khoangThoiGian = 60*60*24*1000;
+        var khoangThoiGian = 30*60*1000;
         var t = now - postDate;
-        document.getElementById("new").innerHTML = d.toUTCString();
         if(t < khoangThoiGian){
             id.siblings('.newProduct').css('display', 'block');
         }
     })
 
     //tinh thoi gian dau gia con lai
-    function elapseTime() {
+    function ElapseTime() {
         $(".elapseTime").each(function (index) {
             var timeOut = $(this).text();
             var id = $(this);
@@ -317,26 +222,25 @@
     }
 
     function productToThumbnail(product) {
-        var res = '<div class="col-sm-3 col-lg-3 col-md-3 product-infor">'
-                + '<div class="thumbnail text-center">'
-                + '<img id="new" class="newProduct" src="/imgs/new.png" alt=' + product.thoiDiemDang + 'style="position: absolute; top: 0px; right: 10px; display: none">'
-                + '<img src="/imgs/sp/' + product.idSanPham + '/1.jpg" style="height:200px;object-fit:contain" alt="">'
+        var res = '<div class="col-sm-3 col-lg-3 col-md-3">'
+                + '<div class="thumbnail">'
+                + '<img class="newProduct" src="/imgs/new.png" alt=' + product.thoiDiemDang + 'style="position: absolute; top: 0px; right: 10px; display: none">'
+                + '<img src="/imgs/sp/' + product.idSanPham + '/1.jpg" alt="">'
                 + '<div class="caption" style="height: 200px">'
                 + '<h4>'
-                + '<a href="/product/detail/' + product.idSanPham + '">' + product.tenSanPham + '&nbsp&nbsp</a>'
-                + '<a class="zmdi zmdi-favorite" onclick="addToWatchList('+ product.idSanPham +')"></a>'
-               
+                + '<button class="buttonHeart" onclick="addToWatchList('+ product.idSanPham +')"><span style="color: red" class="glyphicon glyphicon-heart pull-right" aria-hidden="true"></span></button>'
+                + '<a href="/product/detail/' + product.idSanPham + '">' + product.tenSanPham + '</a>'
                 + '</h4>'
-                + ' <h3 class="pro-price">'+product.giaHienTai +'$</h3>'
 //                + '<h4 class="pull-right" style="color: green">'+'0'+'</h4>'
                 + '<div style="display: inline;">'
-                + 'by MS0'
-                + '<div class="userHighestPrice" style="display: inline;color: black">'+product.idNguoiGiaCaoNhat*6+'-5'+'</div>'
+                + 'Người dùng giữ giá cao nhất&nbsp'
+                + '<div class="userHighestPrice" style="display: inline; font-size: 16px ;color: blue">Chưa có</div>'
                 + '</div>'
 
                 +'<div>'
-                +'<button pull-center style="" class="btn btn-basic">'
-                +'<a style="hover:" href="/product/detail/' + product.idSanPham + '">Catch it &nbsp<strong>'+product.giaMuaNgay+'</strong>$</a></button>'
+                +'<button style="padding: 2px 20px; background-color: #fff; color: brown; width: 100%;" class="btn btn-success">'
+                +'<p style="font-size: 16px;">Mua ngay&nbsp<strong style="color: orange">'+product.giaMuaNgay+'</strong></p>'
+                +'</button>'
                 +'</div>'
 
                 + '</div>'
@@ -344,17 +248,14 @@
                 +'<div class="pull-right">'
                 +'<span style="color: red; display: inline" class="glyphicon glyphicon-time"></span>'
                 +'<div style="display: inline;" class="elapseTime">'+product.thoiDiemKetThuc+'</div>'
-                
                 +'</div>'
                 +'<p>'
-                +'<span id="new" style="color: green" class="glyphicon glyphicon-flash"></span>'
-                //+ product.luotBid
+                +'<span style="color: green" class="glyphicon glyphicon-flash"></span>'
+                + '0'
                 +'</p>'
                 +'</div>'
                 +'</div>'
-                +'</div>'
-                ;
-
+                +'</div>';
 
         return res;
     }
@@ -362,7 +263,7 @@
 
     function datGia(id) {
 
-        if(confirm("Are you sure to buy this product?")) {
+        if(confirm("Bạn có chắc muốn mua ?")) {
             $.ajax({
                 url: "/product/buyNow",
                 type: "post",
@@ -372,12 +273,12 @@
                 success: function(html) {
                     if (html === "diemDanhGiaError") {
 //                        $("#msg").text('Không đủ điểm đánh giá');
-                        alert("You don't have enough point to buy this product");
+                        alert("Bạn không đủ điểm đánh giá");
                     } else if (html === "timeError")
-                        alert("This product was expried"); else if (html === "giaError")
-                        alert("Please enter higher price than current price !"); else if (html === "done") {
+                        alert("Sản phẩm đấu giá đã kết thúc"); else if (html === "giaError")
+                        alert("Hãy đặt giá lớn hơn giá hiện tại"); else if (html === "done") {
 
-                        alert("Successfull !");
+                        alert("Mua thành công");
                         location.reload();
                     }
                 }
@@ -389,7 +290,7 @@
     function fn(id) {
         var gia = $("#dauGia").val();
 
-        if(confirm("Are you sure to bid this product ?")) {
+        if(confirm("Bạn có chắc muốn mua ?")) {
             $.ajax({
                 url: "/product/bid",
                 type: "post",
@@ -400,12 +301,12 @@
                 success: function(html){
                     if(html==="diemDanhGiaError") {
 //                        $("#msg").text('Không đủ điểm đánh giá');
-                        alert("You don't have enough point to bid this product");
+                        alert("Bạn không đủ điểm đánh giá");
                     } else if(html==="timeError")
-                        alert("This product was expried"); else if(html==="giaError")
-                        alert("Please enter higher price than current price !"); else if(html==="done") {
+                        alert("Sản phẩm đấu giá đã kết thúc"); else if(html==="giaError")
+                        alert("Hãy đặt giá lớn hơn giá hiện tại"); else if(html==="done") {
 
-                        alert("Successfull !");
+                        alert("Đặt giá thành công");
                         location.reload();
                     }
 
@@ -414,9 +315,3 @@
         }
     }
 
-</script>
-
-
-</body>
-
-</html>
