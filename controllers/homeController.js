@@ -3,43 +3,33 @@ var express = require('express'),
     categoryRepo = require('../models/categoryRepo'),
     restrict = require('../middle-wares/restrict');
 var r = express.Router();
-function calEslapseTime(product) {
-    var now = new Date();
-    var end = product.thoiDiemKetThuc;
-    product.thoiGianConLai = end - now;
-}
-
-function formatRows(pRows) {
-    for(i=0;i<pRows.length;i++){
-        calEslapseTime(pRows[i]);
-    }
-}
 
 
-function loadByBid(req,res,next) {
 
-    productRepo.loadSanPhamNhieuLuotBid()
+function loadByViews(req,res,next) {
+
+    productRepo.loadSanPhamNhieuLuotXem()
         .then(function (pRows) {
-            req.productsByBid = pRows;
+            req.productsMostWatched = pRows;
             return next();
         })
 
 }
 
-function loadByPrice(req,res,next) {
+function loadBySale(req,res,next) {
     
-    productRepo.loadSanPhamGiaCaoNhat()
+    productRepo.loadSanPhamGiamGia()
         .then(function (pRows) {
-            req.productsByPrice = pRows;
+            req.productsBySale = pRows;
             return next();
         })
     
 }
 
-function loadByTime(req, res, next) {
-    productRepo.loadSanPhamGanKetThuc()
+function loadBySold(req, res, next) {
+    productRepo.loadSanPhamBanChay()
         .then(function (pRows) {
-            req.productsByTime = pRows;
+            req.productsBySold = pRows;
             return next();
         })
 }
@@ -48,15 +38,15 @@ function renderHomePage(req, res) {
     res.render('home/index', {
         title: "Home",
         layoutVM: res.locals.layoutVM,
-        productsByBid: req.productsByBid,
-        productsByPrice : req.productsByPrice,
-        productsByTime: req.productsByTime,
+        productsMostWatched: req.productsMostWatched,
+        productsBySale : req.productsBySale,
+        productsBySold: req.productsBySold,
         session: req.session,
         isLogged: req.session.isLogged
     });
 }
 
-r.get('/',loadByBid,loadByPrice,loadByTime,renderHomePage);
+r.get('/',loadByViews,loadBySale,loadBySold,renderHomePage);
 
 
 module.exports = r;

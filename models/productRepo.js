@@ -5,67 +5,27 @@ var mustache = require('mustache'),
 
 exports.loadAll = function() {
 
-    var sql = 'select * from sanpham where thoiDiemKetThuc > NOW() and tinhTrang=0';
+    var sql = 'select * from sanpham where tinhTrang=0';
 
     return db.load(sql);
 }
 
-exports.loadAllByTime = function () {
+exports.loadSanPhamNhieuLuotXem = function () {
 
-
-   var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where thoiDiemKetThuc > NOW() and tinhTrang=0 order by thoiDiemKetThuc ASC';
+    var sql = 'select * from sanpham where tinhTrang=0 order by sanpham.luotXem DESC limit 5'
     return db.load(sql);
-
 }
 
-exports.loadAllByPrice = function () {
+exports.loadSanPhamGiamGia = function () {
 
-   var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where thoiDiemKetThuc > NOW() and tinhTrang=0 order by giaHienTai ASC';
+    var sql = 'select * from sanpham where tinhTrang=0 order by (sanpham.giaSanPham - sanpham.giaHienTai) DESC limit 5'
 
     return db.load(sql);
 
 }
 
-exports.loadAllWithUserName = function() {
-
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where thoiDiemKetThuc > NOW() and tinhTrang=0';
-
-    return db.load(sql);
-}
-
-exports.loadAllByTimeWithUserName = function () {
-
-
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where thoiDiemKetThuc > NOW() and tinhTrang=0 order by thoiDiemKetThuc ASC';
-    return db.load(sql);
-
-}
-
-exports.loadAllByPriceWithUserName = function () {
-
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where thoiDiemKetThuc > NOW() and tinhTrang=0 order by giaHienTai';
-
-    return db.load(sql);
-
-}
-
-
-exports.loadSanPhamNhieuLuotBid = function () {
-
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where (sanpham.thoiDiemKetThuc > NOW() and tinhTrang=0) order by sanpham.luotBid DESC limit 5'
-    return db.load(sql);
-}
-
-exports.loadSanPhamGiaCaoNhat = function () {
-
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where (sanpham.thoiDiemKetThuc > NOW() and tinhTrang=0) order by sanpham.giaHienTai DESC limit 5'
-
-    return db.load(sql);
-
-}
-
-exports.loadSanPhamGanKetThuc = function () {
-    var sql = 'select * from sanpham left join nguoidung on (nguoidung.idNguoiDung = sanpham.idNguoiGiaCaoNhat) where (sanpham.thoiDiemKetThuc > NOW() and tinhTrang=0) order by sanpham.thoiDiemKetThuc ASC limit 5';
+exports.loadSanPhamBanChay = function () {
+    var sql = 'select * from sanpham order by sanpham.daBan DESC limit 5';
     return db.load(sql);
 
 }
@@ -89,6 +49,7 @@ exports.loadById = function(id) {
 
     return d.promise;
 }
+
 
 
 exports.loadAllByCat = function (id) {

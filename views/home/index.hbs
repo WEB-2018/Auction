@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="header pull-left">
-                        <h2 class="uppercase">MOST BIDDED</h2>
+                        <h2 class="uppercase">MOST Watched</h2>
                         <h6>Click to see more >></h6>
                     </div>
                 </div>
@@ -11,7 +11,7 @@
 
             <div>
                 <ul class="list-inline text-center">
-                    {{#each productsByBid}}
+                    {{#each productsMostWatched}}
                      <li>
                         <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
                             <a href="product/detail/{{idSanPham}}" tabindex="-1">
@@ -23,8 +23,8 @@
                             <h6 class="product-title">
                                 <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
                             </h6>
-                            <p >Bid Times: {{luotBid}}</p>
-                            <h3 class="pro-price">{{giaHienTai}} $</h3>
+                            <p ><span class="fa fa-eye" ></span> {{luotXem}}</p>
+                            <h3 class="pro-price">{{giaSanPham}} $</h3>
 
                             
                         </div>
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="header pull-left">
-                        <h2 class="uppercase">Highest Price</h2>
+                        <h2 class="uppercase">Hot deal</h2>
                         <h6>Click to see more >></h6>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
             <div id="featured-product-list " class="row text-center" style="display: inline;">
 
                 <ul class="list-inline ">
-                {{#each productsByPrice}}
+                {{#each productsBySale}}
                      <li>
                         <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
                             <a href="product/detail/{{idSanPham}}" tabindex="-1">
@@ -65,7 +65,7 @@
                             <h6 class="product-title">
                                 <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
                             </h6>
-                            <p >* Top Price *</p>
+                            <p style="text-decoration: line-through;color:red">{{giaSanPham}} $</p>
                             <h3 class="pro-price">{{giaHienTai}} $</h3>
 
                             
@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="header text-left mb-40">
-                        <h2 class="uppercase">featured product</h2>
+                        <h2 class="uppercase">Best Seller</h2>
                         <h6>Click to see more >></h6>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
              <div id="featured-product-list " class="row text-center" style="display: inline;">
 
                  <ul class="list-inline ">
-                {{#each productsByTime}}
+                {{#each productsBySold}}
                      <li>
                         <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
                             <a href="product/detail/{{idSanPham}}" tabindex="-1">
@@ -107,9 +107,8 @@
                                 <a href="product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
                             </h6>
                           
-                            <span style="color: blue; display: inline" class="glyphicon glyphicon-time"></span>
-                                        <div style="display: inline;" class="elapseTime">{{thoiDiemKetThuc}}</div>
-                            <h3 class="pro-price">{{giaHienTai}} $</h3>
+                            <p>Sold: {{daBan}}</p>
+                            <h3 class="pro-price">{{giaSanPham}} $</h3>
 
                         </div>
                     </li>

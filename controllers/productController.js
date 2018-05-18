@@ -38,52 +38,19 @@ function loadProductById(req,res,next) {
 
 }
 
-function loadNguoiBan(req,res,next) {
 
-    var idNguoiBan = req.product.idNguoiBan;
-    console.log(2);
-    accountRepo.loadByUserId(idNguoiBan)
-        .then(function (aRow) {
-            req.nguoiBan = aRow;
-            console.log(aRow.hoTen);
-            return next();
-        })
-
-}
-
-function loadNguoiRaGiaCaoNhat(req,res,next) {
-
-    var idNguoiCaoNhat = req.product.idNguoiGiaCaoNhat;
-    console.log(3);
-    accountRepo.loadByUserId(idNguoiCaoNhat)
-        .then(function (aRow) {
-            req.nguoiMuaCaoNhat = aRow;
-            //console.log(aRow.hoTen);
-            return next();
-        })
-    
-}
 
 function renderProductDetail(req, res) {
-    console.log(5);
-    var giaCaoNhat = null;
-    if(typeof req.nguoiMuaCaoNhat!=="undefined")
-        giaCaoNhat = req.product.giaHienTai;
-
     res.render('product/productdetail', {
-        title : "Chi tiết sản phẩm",
+        title : "Product Detail",
         product : req.product,
-        giaDauGia : req.product.giaHienTai + req.product.buocGia,
-        nguoiBan : req.nguoiBan,
-        nguoiMuaCaoNhat : req.nguoiMuaCaoNhat,
-        giaCaoNhat : giaCaoNhat,
         session: req.session,
         isLogged: req.session.isLogged
     });
 
 }
 
-r.get('/detail/:id',loadProductById,loadNguoiBan,loadNguoiRaGiaCaoNhat,renderProductDetail);
+r.get('/detail/:id',loadProductById,renderProductDetail);
 
 
 function loadSanPham(req, res, next) {

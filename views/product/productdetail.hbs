@@ -48,8 +48,8 @@
                  <br>
          
                 <div class="info box-shadow" style="padding: 30px">
-                <h6 style="font-weight: bold;">DESCRIPTION</h6>
-                <p>{{product.moTa}}</p>
+                <h6 style="font-weight: bold;">COMMENT</h6>
+               
       
             </div>
                 <br>
@@ -60,173 +60,39 @@
             <div class="form col-md-4 box-shadow">
                 <div class="form-group" style="padding: 20px">
                     <div class="single-product-info">
-                    <h3><font color="orange">{{product.tenSanPham}}</font></h3>
-                    <h5 class="brand-name-2">Product ID: {{product.idSanPham}}</h5>
-                    <h4>$ {{product.giaHienTai}}</h4>
+                    <h3 class="uppercase" style="text-align: center;"><font color="orange">{{product.tenSanPham}}</font></h3>
+                 
+             
                      
-                    <!--  hr -->
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Owner </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h5><a href="/user/{{OwnerID}}">{{nguoiBan.hoTen}}</a></h5>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>ID </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{product.idNguoiBan}}</h5>
-                        </div>
-                    </div>
-
+                       
                      <div class="row">
                         <div class="col-md-6">
-                            <label>Farm </label>
+                              <h4>$ {{product.giaSanPham}} [Old: {{product.giaHienTai}}]</h4>
                         </div>
-                        <div class="col-md-6">
-                            <div class="pro-rating" >
+                        <div class="col-md-6" style="text-align: right;">
+                             <span class="fa fa-eye" ></span> {{product.luotXem}}
+                        </div>
+                    </div>
 
-                                <a href="#" tabindex="0" id="xx1"><i class="zmdi zmdi-star"></i></a>
-                                <a href="#" tabindex="0" id="xx2"><i class="zmdi zmdi-star"></i></a>
-                                <a href="#" tabindex="0" id="xx3"><i class="zmdi zmdi-star"></i></a>
-                                <a href="#" tabindex="0" id="xx4"><i class="zmdi zmdi-star"></i></a>
-                                <a href="#" tabindex="0" id="xx5"><i class="zmdi zmdi-star-half"></i></a>
-                                <a href="#" tabindex="0" id="xx6"><i class="zmdi zmdi-star-outline"></i></a>
-                                <a href="#" tabindex="0" id="xx7"><i class="zmdi zmdi-star-outline"></i></a>
-                                <a href="#" tabindex="0" id="xx8"><i class="zmdi zmdi-star-outline"></i></a>
-                                <a href="#" tabindex="0" id="xx9"><i class="zmdi zmdi-star-outline"></i></a>
-                                
-                                    <script type="text/javascript">
-                                     var farm = (100*{{nguoiBan.diemDanhGiaCong}})/({{nguoiBan.diemDanhGiaCong}}+{{nguoiBan.diemDanhGiaTru}})
+                    <hr>
+                   
                     
-                                       if(farm<=15||({{nguoiBan.diemDanhGiaCong}}+{{nguoiBan.diemDanhGiaTru}})==0)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx2").style.display = "none";
-                                            document.getElementById("xx3").style.display = "none";
-                                            document.getElementById("xx4").style.display = "none";
-                                        }
-                                        if( farm>15&&farm<=25)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx2").style.display = "none";
-                                            document.getElementById("xx3").style.display = "none";
-                                            document.getElementById("xx5").style.display = "none";
-                                        }
-                                         if( farm>25&&farm<=35)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx2").style.display = "none";
-                                            document.getElementById("xx3").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                        }
-                                        if( farm>35&&farm<=45)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx2").style.display = "none";
-                                            document.getElementById("xx5").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                        }
-                                         if( farm>45&&farm<=55)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx2").style.display = "none";
-                                            document.getElementById("xx7").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                        }
-                                         if( farm>55&&farm<=65)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx5").style.display = "none";
-                                            document.getElementById("xx7").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                        }
-                                         if( farm>65&&farm<=75)
-                                       {
-                                            document.getElementById("xx1").style.display = "none";
-                                            document.getElementById("xx7").style.display = "none";
-                                            document.getElementById("xx8").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                        }
-                                         if( farm>75&&farm<=85)
-                                       {
-                                            document.getElementById("xx5").style.display = "none";
-                                            document.getElementById("xx6").style.display = "none";
-                                            document.getElementById("xx7").style.display = "none";
-                                            document.getElementById("xx8").style.display = "none";
-                                        }
-                                         if( farm>85&&farm<=100)
-                                       {
-                                            document.getElementById("xx6").style.display = "none";
-                                            document.getElementById("xx7").style.display = "none";
-                                            document.getElementById("xx8").style.display = "none";
-                                            document.getElementById("xx9").style.display = "none";
-                                        }
-
-                                    </script>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="row">
-                        <div class="col-md-6">
-                            <label>Address </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{nguoiBan.diaChi}}</h5>
-                        </div>
-                    </div>
-
-                    <hr>
-                   
-                  
 
                    
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <label>Time remain </label>
+                        <div class="col-md-12">
+                            <label>Description</label>
+                            <p>{{product.moTa}}</p>
                         </div>
-                        <div class="col-md-6" >
-                            <h6 id="Remain_Time"></h6>
-                        </div>
+                       
                          
                     </div>
 
                    
 
                 <script>
-                // Set the date we're counting down to
-                var countDownDate = new Date("{{product.thoiDiemKetThuc}}").getTime();
-
-                // Update the count down every 1 second
-                var x = setInterval(function() {
-
-                  // Get todays date and time
-                  var now = new Date().getTime();
-
-                  // Find the distance between now an the count down date
-                  var distance = countDownDate - now;
-
-                  // Time calculations for days, hours, minutes and seconds
-                  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                  // Display the result in the element with id="demo"
-                  document.getElementById("Remain_Time").innerHTML = days + "d " + hours + "h "
-                  + minutes + "m " + seconds + "s ";
-
-                  // If the count down is finished, write some text 
-                    var y = document.getElementById("Remain_Time")
-                    y.style.fontSize = "18px";
-                    y.style.fontFamily = "'Electrolize', sans-serif";
-                    y.style.color = "#0174DF";
+                var distance = 0;
                   if (distance < 0) {
                     clearInterval(x);
                     y.innerHTML = "FINISHED";
@@ -239,93 +105,43 @@
 
                 </script>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Bid-times </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{product.luotBid}}</h5>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Step-price </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{product.buocGia}} $</h5>
-                        </div>
-                    </div>
+                    
                     
                         <hr>
            
                     <div class="row">
                         <div class="col-md-6">
-                            <label>User charge highest</label>
+                            <label>Sold</label>
                           
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="/user/{{NewOwner}}">
-                            {{nguoiMuaCaoNhat.hoTen}} &nbsp
-                            <a id="diemDanhGia">
-                            </a>%
-                            </a>
+                            {{product.daBan}} / {{product.khoHang}}
                         </div>
-                        <script>
-                            var x = {{nguoiMuaCaoNhat.diemDanhGiaCong}};
-                            var y = {{nguoiMuaCaoNhat.diemDanhGiaTru}};
-                            var z;
-                            if(y==0&&x==0)
-                            {
-                                 z = 100;
-                            }
-                            else
-                            {
-                                 z = x*100/(x+y);
-                                  
-                            }
-                            document.getElementById("diemDanhGia").innerHTML =  Math.ceil(z);
-                           
-                        </script>
+                   
                     </div>
-                
+                    <hr>
 
-                    <div class="row text-right">
-                        <div class="col-md-6">
-                            <input type="number" id="dauGia" class="first" min="{{giaDauGia}}" max="{{product.giaMuaNgay}}" placeholder="Ex" value=""> 
-                        </div>
-                        <script type="text/javascript">
-                            var x = {{product.giaHienTai}};
-                            var y = {{product.buocGia}};
-                            var z = x +y;
-                             document.querySelector("input[type=number][class=first]").setAttribute("value", z );
-                        </script>
-                        <div class="col-md-6">
-                            <h3 style="padding-top:10px">$ {{product.giaMuaNgay}}</h3>
-                             
-                        </div>
-                    </div>
-                    <div class="row text-right">
+                    <div class="row">
                         <div class="col-md-4">
-                            <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" type="submit" onclick="fn({{product.idSanPham}})" id="bidbtn">BID</button>
+                            <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" type="submit" onclick="fn({{product.idSanPham}})" id="bidbtn" >Add to cart</button>
                            
                         </div>
-
-                        <div class="col-md-4">
-                            or
+                        <div class="col-md-4" style="padding-left:45px;padding-top:20px;">
+                            <input type="number" id="dauGia" class="first" placeholder="" value="1" > 
                         </div>
                         <div class="col-md-4">
                              <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" onclick="datGia({{product.idSanPham}})" type="submit" id="muaNgay">Buy now</button>
                         </div>
+                    
                     </div>
-
+                    
                      <div class="row text-left">
                      <h6 id="err" style="color: red;padding: 20px" ></h6>
                      </div>
 
                     </div>
                 </div>
-                <br>
+      
             </div>
         </div>
         <!--Description-->
