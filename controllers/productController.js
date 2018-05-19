@@ -64,161 +64,172 @@ function loadSanPham(req, res, next) {
 }
 
 
-var nodemailer =  require('nodemailer');
-var transporter =  nodemailer.createTransport({ // config mail server
-    service: 'Gmail',
-    auth: {
-        user: 'openmindhcmus@gmail.com',
-        pass: 'openmind12345',
-    }
-});
-
-var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
-    from: 'Rose Studio',
-    to: '',
-    subject: 'Mail from Rose Studio',
-    text: 'You recieved message from Rose Studio',
-    html: ''
-}
-
-function setMailHTML(html) {
-    mainOptions.html = html;
-}
-
-function setMailReceiver(sendTo) {
-    mainOptions.to = sendTo;
-}
-
-function sendMail() {
-    transporter.sendMail(mainOptions, function(err, info){
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Message sent: ' +  info.response);
-        }
-    });
-}
-
-r.post('/buyNow',restrict,loadSanPham,function (req, res) {
-
-    var sanPham = req.product;
-    var gia = sanPham.giaMuaNgay;
-    var nguoiMua = req.session.user;
-    var ketThuc = new Date(sanPham.thoiDiemKetThuc);
-
-    var entity = {
-        giaHienTai:gia,
-        idNguoiGiaCaoNhat: nguoiMua.idNguoiDung,
-        idSanPham: sanPham.idSanPham
-    };
-
-
-    var lichSu = {
-        idSanPham :sanPham.idSanPham,
-        idNguoiDung: nguoiMua.idNguoiDung,
-        thoiDiemRaGia: new Date(),
-        giaDau: gia
-    };
-
-    var tinhTrang = {
-        idSanPham: sanPham.idSanPham,
-        tinhTrang: 1
-    };
-
-
-    if( (nguoiMua.diemDanhGiaCong/(nguoiMua.diemDanhGiaCong+nguoiMua.diemDanhGiaTru)) < 0.8) {
-        res.send("diemDanhGiaError");
-    } else {
-        if (ketThuc < new Date() || sanPham.tinhTrang === 1)
-            res.send("timeError"); else {
-
-            productRepo.updateDauGia(entity);
-
-            productRepo.updateTinhTrang(tinhTrang);
-            // them vao lich su ra gia
-            productRepo.themLichSuRaGia(lichSu);
-
-            // them vào danh sách đấu giá
-            productRepo.themDanhSachDauGia(lichSu);
-
-            // goi mail thong bao
-            var content = '<p>Bạn vừa mua sản phẩm với: ' +
-                '</b><ul><li>Tên sản phẩm:' + sanPham.tenSanPham + '</li><li>Giá tiền:' + gia;
-            setMailReceiver(nguoiMua.email);
-            setMailHTML(content);
-            sendMail();
-
-            res.send("done");
-
+function andSearch(keyword, pRows) {
+    var products = [];
+    var pureKeyword = replaceAll(keyword, '"', '');
+    for(i=0;i<pRows.length;i++){
+        var name = pRows[i].tenSanPham;
+        if(name.indexOf(pureKeyword) != -1){
+            console.log("and search: " + pureKeyword + " " + pRows[i].tenSanPham);
+            products.push(pRows[i]);
         }
     }
-})
 
-r.post('/bid',restrict,loadSanPham,function (req, res) {
+    return products;
+}
 
-    var sanPham = req.product;
-    var gia = req.body.giaDauGia;
-    var nguoiMua = req.session.user;
-    var ketThuc = new Date(sanPham.thoiDiemKetThuc);
+function orSearch(keyword, pRows) {
+    var products = [];
+    var word = [];
+    word = keyword.split(' ');
+    for(i=0;i<pRows.length;i++){
+        var name = pRows[i].tenSanPham;
+        for(j=0;j<word.length;j++){
+            if(name.indexOf(word[j]) != -1){
+                console.log("or search: " + word[j] + " - " + pRows[i].tenSanPham);
+                products.push(pRows[i]);
+                break;
+            }
+        }
+    }
 
-    var entity = {
-        giaHienTai:gia,
-        idNguoiGiaCaoNhat: nguoiMua.idNguoiDung,
-        idSanPham: sanPham.idSanPham
-    };
+    return products;
+}
 
+r.all('/search', function (req, res) {
+    var keyword = req.query.keyword;
+    var count = req.query.count;
+    var isNewPage = req.query.newPage;
+    var sortType = req.query.sortType;
+    var category = req.query.category;
+    console.log("sort type: " + sortType);
+    console.log("category: " + category);
+    AND_SEARCH = 0;
+    OR_SEARCH = 1;
+    var searchFunction = [
+        andSearch,
+        orSearch
+    ];
 
-    var lichSu = {
-        idSanPham :sanPham.idSanPham,
-        idNguoiDung: nguoiMua.idNguoiDung,
-        thoiDiemRaGia: new Date(),
-        giaDau: gia
-    };
+    console.log("count: " + count);
+    var num = 4;
+    console.log("keyword: " + keyword);
+    if(isNewPage=='1'){
+        console.log("new page");
+        res.render('product/search', {
+            layoutVM: res.locals.layoutVM,
+            title: "Search product",
+            keyword: keyword,
+            session: req.session,
+            isLogged: req.session.isLogged
+        });
+    }
+    else{
+        //mặc định là search cả cụm từ
+        var searchType = AND_SEARCH;
+        //không có "" trong keyword -> search từng từ trong cụm từ
+        if(keyword.indexOf('"') == -1) {
+            searchType = OR_SEARCH;
+        }
 
-    console.log(ketThuc);
-
-    if(false) {
-        res.send("diemDanhGiaError");
-    } else {
-        if(ketThuc < new Date() || sanPham.tinhTrang === 1)
-            res.send("timeError"); else {
-                if(gia<=sanPham.giaHienTai)
-                    res.send("giaError"); else {
-
-                    // update gia moi, nguoi ra gia cao nhat, so lan bid
-                    if(sanPham.tuDongGiaHan===0) {
-                        productRepo.updateDauGia(entity);
-                    }
-                    else {
-                        // tự động tăng thời gian kết thúc lên 10 p, nếu còn < 5p
-                        var time = ketThuc - new Date();
-                        var min = Math.floor(time / 60000);
-
-                        productRepo.updateDauGia(entity);
-
-                        if(min<10)
-                        {
-                            productRepo.updateThoiDiemKetThuc(entity);
+        if(category == 0){//catid = 0, tìm trong tất cả loại
+            if(sortType=='1') {
+                productRepo.loadAllByTimeWithUserName()
+                    .then(function (pRows) {
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("total: " + products.length);
+                        //moi lan request tra ve num sp
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
                         }
-                    }
 
+                        res.json(returnProduct);
+                    })
+            } else if(sortType=='2') {
+                productRepo.loadAllByPriceWithUserName()
+                    .then(function (pRows) {
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("Total: " + products.length);
+                        //moi lan request tra ve num sp
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
+                        }
 
-                    // them vao lich su ra gia
-                    productRepo.themLichSuRaGia(lichSu);
+                        res.json(returnProduct);
+                    })
+            } else {
+                productRepo.loadAllWithUserName()
+                    .then(function (pRows) {
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("Total: " + products.length);
+                        //moi lan request tra ve num sp
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
+                        }
 
-                    // them vào danh sách đấu giá
-                    productRepo.themDanhSachDauGia(lichSu);
+                        res.json(returnProduct);
+                    })
+            }
+        }//catid = 0, tìm trong tất cả loại
+        else {//catid != 0, tìm trong loại category
+            if(sortType=='1') {
+                productRepo.loadAllByCat(category)
+                    .then(function (pRows) {
+                        pRows.sort(postTimeCompare);
+                        // console.log(pRows);
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("total: " + products.length);
+                        //moi lan request tra ve num sp
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
+                        }
 
-                    // goi mail thong bao
-                    var content = '<p>Bạn vừa đấu giá sản phẩm với: ' +
-                        '</b><ul><li>Tên sản phẩm:' + sanPham.tenSanPham + '</li><li>Giá tiền:' + gia;
-                    setMailReceiver(nguoiMua.email);
-                    setMailHTML(content);
-                    sendMail();
+                        res.json(returnProduct);
+                    })
+            } else if(sortType=='2') {
+                productRepo.loadAllByCat(category)
+                    .then(function (pRows) {
+                        pRows.sort(priceCompare);
+                        // console.log(pRows);
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("total" + products.length);
+                        //moi lan request tra ve num sp
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
+                        }
 
-                    res.send("done");
-                }
-        }
+                        res.json(returnProduct);
+                    })
+            } else {
+                productRepo.loadAllByCat(category)
+                    .then(function (pRows) {
+                        // console.log(pRows);
+                        var products = [];
+                        var returnProduct = [];
+                        products = searchFunction[searchType](keyword, pRows);
+                        // console.log("total" + products.length);
+                        //moi lan request tra ve num sp
+                       
+
+                        res.json(returnProduct);
+                    })
+            }
+        }//catid = 0, tìm trong loại category
     }
 })
 

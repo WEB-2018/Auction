@@ -59,20 +59,6 @@
         id.text(formatDate(id.text()));
     }
 
-    //ma hoa ten nguoi dung gia cao nhat
-    $('.userHighestPrice').each(function () {
-        var id = $(this);
-        var nd =id.text();
-        if (nd == '') {
-            id.text('Chưa có');
-        }
-        else {
-            var length = nd.length;
-            var sub = nd.substr(0, length - 3);
-            nd = nd.replace(sub, '*****');
-            id.text(nd);
-        }
-    })
     //cac san pham moi dang co them icon new
     $('.postTime').each(function () {
         var time = $(this).text();
@@ -86,43 +72,7 @@
         }
     })
 
-    //tinh thoi gian dau gia con lai
-    function ElapseTime() {
-        $(".elapseTime").each(function (index) {
-            var timeOut = $(this).text();
-            var id = $(this);
-            var countDownDate = new Date(timeOut).getTime();
-
-            if (timeOut != '' && !id.hasClass('showTime')) {
-                id.addClass('showTime');
-                var x = setInterval(function () {
-                    //alert(id);
-                    // Get todays date and time
-                    var now = new Date().getTime();
-
-                    // Find the distance between now an the count down date
-                    var distance = countDownDate - now;
-
-
-                    // Time calculations for days, hours, minutes and seconds
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    //alert(seconds);
-                    // Display the result in the element with id="demo"
-                    id.html(days + "d " + hours + "h "
-                            + minutes + "m " + seconds + "s ");
-
-                    // If the count down is finished, write some text
-                    if (distance < 0) {
-                        clearInterval(x);
-                        id.html("EXPIRED");
-                    }
-                }, 1000);
-            }
-        })
-    }
+ 
 
     //submit khi nhan search o Trang chu
     $("#btnSearchHomepage").click(function () {
@@ -224,11 +174,10 @@
     function productToThumbnail(product) {
         var res = '<div class="col-sm-3 col-lg-3 col-md-3">'
                 + '<div class="thumbnail">'
-                + '<img class="newProduct" src="/imgs/new.png" alt=' + product.thoiDiemDang + 'style="position: absolute; top: 0px; right: 10px; display: none">'
-                + '<img src="/imgs/sp/' + product.idSanPham + '/1.jpg" alt="">'
+                + '<img src="/imgs/sp/' + product.idSanPham + '/2.jpg" alt="">'
                 + '<div class="caption" style="height: 200px">'
                 + '<h4>'
-                + '<button class="buttonHeart" onclick="addToWatchList('+ product.idSanPham +')"><span style="color: red" class="glyphicon glyphicon-heart pull-right" aria-hidden="true"></span></button>'
+                //+ '<button class="buttonHeart" onclick="addToWatchList('+ product.idSanPham +')"><span style="color: red" class="glyphicon glyphicon-heart pull-right" aria-hidden="true"></span></button>'
                 + '<a href="/product/detail/' + product.idSanPham + '">' + product.tenSanPham + '</a>'
                 + '</h4>'
 //                + '<h4 class="pull-right" style="color: green">'+'0'+'</h4>'
@@ -239,7 +188,7 @@
 
                 +'<div>'
                 +'<button style="padding: 2px 20px; background-color: #fff; color: brown; width: 100%;" class="btn btn-success">'
-                +'<p style="font-size: 16px;">Mua ngay&nbsp<strong style="color: orange">'+product.giaMuaNgay+'</strong></p>'
+                +'<p style="font-size: 16px;">Mua ngay&nbsp<strong style="color: orange">'+product.giaSanPham+'</strong></p>'
                 +'</button>'
                 +'</div>'
 
@@ -247,7 +196,7 @@
                 +'<div class="ratings">'
                 +'<div class="pull-right">'
                 +'<span style="color: red; display: inline" class="glyphicon glyphicon-time"></span>'
-                +'<div style="display: inline;" class="elapseTime">'+product.thoiDiemKetThuc+'</div>'
+                //+'<div style="display: inline;" class="elapseTime">'+product.thoiDiemKetThuc+'</div>'
                 +'</div>'
                 +'<p>'
                 +'<span style="color: green" class="glyphicon glyphicon-flash"></span>'

@@ -1,0 +1,80 @@
+
+<!-- title danh sách sản phẩm mới -->
+
+<div class="container" style="padding:30px;">
+    <div class="row" >
+        <div class="col-md-6 col-lg-6" >
+            
+
+            <div id="formSearch" name="formSearch" class="form-horizontal" method="get" action="#" style="list-style:inline">
+                <div class="row">
+                    <div class="col-md-10 " style="height: 30px" id="searchBox" name="search-box">
+                        <input  id="txtSearch" type="text" placeholder="Search product here..." class="form-control search-field" name="search" value={{keyword}}>
+                    </div>
+
+                    <div class="col-md-2 pull-right">
+           
+                           <button class="btn btn-info" id="btnSearch" type="button">Search</button>
+                     
+                    </div>
+        
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-offset-1 col-md-5 col-lg-5">
+            <div class="form-group">
+                <label for="catID" style="display: inline; padding-right:40px">in</label>
+
+                <select name=catID id=catID class="dropdown" style="height: 30px; width: 60%;" class="form-group">
+                    <option value="0">All categories</option>
+                    {{#each layoutVM.categories}}
+                        <option value={{idLoaiSanPham}}>{{tenLoaiSanPham}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group text-center">
+                <label class="text" style="font-style:bold">
+                Sort</label>
+             
+
+                <button id="buttonSortTime" class="btn btn-link">
+                <span class="glyphicon glyphicon-time"></span>
+                </button>
+
+
+               <button id="buttonSortPrice" class="btn btn-link">
+               <span class="glyphicon glyphicon-euro"></span>
+               </button>
+          
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <br/>
+    <br/>
+    <br/>
+    <div id="searchProduct" class="col-md-12">
+    </div>
+</div>
+
+<div class="row">
+    <div id="searchFooter" class="col-md-12">
+        <br/>
+        <br/>
+        <br/>
+        <button style="display: table; margin: 0 auto;" id="btnLoadMoreProduct" class="btn btn-info"
+                onclick="showMoreProduct()">Load more products
+        </button>
+    </div>
+  
+
+</div>

@@ -61,11 +61,17 @@ exports.loadAllByCat = function (id) {
     };
 
     var sql = mustache.render(
-        'select * from sanpham where loai = {{loai}} and thoiDiemKetThuc > NOW() and tinhTrang=0',
+        'select * from sanpham where loai = {{loai}} and tinhTrang=0',
         obj
     );
 
     return db.load(sql);
 
+}
+exports.loadAllWithUserName = function() {
+
+    var sql = 'select * from sanpham where tinhTrang=0';
+
+    return db.load(sql);
 }
 
