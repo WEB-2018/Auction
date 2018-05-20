@@ -224,7 +224,10 @@ r.all('/search', function (req, res) {
                         products = searchFunction[searchType](keyword, pRows);
                         // console.log("total" + products.length);
                         //moi lan request tra ve num sp
-                       
+                        for(i = count - num; (i < products.length && i < count); i++){
+                            console.log("Return: " + products[i].tenSanPham);
+                            returnProduct.push(products[i]);
+                        }
 
                         res.json(returnProduct);
                     })

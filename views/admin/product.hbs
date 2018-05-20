@@ -1,7 +1,109 @@
 <div class="container">
 <div class="header" style="margin-left:0px">
-  <h2>Products</h2>
+<div class="row">
+  <div class="col-md-3">
+    <h2>Products</h2>
+  </div>
+  <div class="col-md-2 pull-right">
+    <button type="button" class="btn btn-success pull right" onclick=showForm()>+</button>
+  </div>
+  <script>
+  function showForm(){
+     var x = document.getElementById("addNewProduct");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+  }
+    
+  </script>
  </div>  
+
+ <div id="addNewProduct" style="display:none">
+   
+    <form ref='uploadForm' id='uploadForm' encType="multipart/form-data" action="" method="post">
+
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+               <h3>Add new product</h3>
+                <div class="row">
+                    <div class="col-md-8" >
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input class="form-control" placeholder="VD: Laptop Dell Inspiron" name="tenSanPham">
+                        </div>
+                    </div>  
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Category</label>
+                          <select class="form-control" name="loai">
+                              {{#each categories}}
+                                  <option value="{{idLoaiSanPham}}">{{tenLoaiSanPham}}</option>
+                              {{/each}} 
+                          </select>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="textArea" >Description</label>
+                                <textarea class="form-control" rows="3" name="moTa" id="nhanXet"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <label>Price(USD)</label>
+                              <input class="form-control" type="number" placeholder="0" name="giaHienTai" step="1" min="0">
+                             
+                          </div>
+                        </div> 
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <label>Amount</label>
+                              <input class="form-control" type="number" placeholder="0" name="soLuong" step="1" min="0">
+                              
+                          </div>
+                        </div> 
+                      </div>
+                      
+                    </div>
+                   
+
+                </div>
+                <div class="row" style="padding:20px">
+                        Image 1 <input type="file" name="file1" id=""> 
+                        Image 2 <input type="file" name="file2" id=""> 
+                        Image 3 <input type="file" name="file3" id=""> 
+                      </div>
+                <hr>
+
+             
+
+            
+                <div class="col-md-2 col-md-offset-5">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                <div class="col-md-3 col-md-offset-0" style="color: green; margin-top: 6px">
+                    <b>{{messSuc}}</b>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+
+
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+ </div>
   <table class="table table-hover" style="overflow-y: scroll">
     <thead>
       <tr>

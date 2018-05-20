@@ -12,14 +12,37 @@
       </tr>
     </thead>
     <tbody height="100px">
-    {{#each categories}}
-      <tr>
-        <td>{{idLoaiSanPham}}</td>
-        <td>{{tenLoaiSanPham}}</td>
-        <td><button>edit</button></td>
-      </tr>
-    {{/each}}
- 
+     {{#each categories }}
+          <tr id="{{idLoaiSanPham}}" class="categoryInfo">
+              <td>{{idLoaiSanPham}}</td>
+              <td>
+                  <div class="currentCatNameBox" style="display: block;">{{tenLoaiSanPham}}</div>
+
+                  <div class="newCatNameBox" style="display: none;">
+                      <input type="text" class="form-control"
+                             value="{{tenLoaiSanPham}}">
+                  </div>
+              </td>
+              <td>
+                  <button style="display: inline;" id="{{idLoaiSanPham}}" class="btn btn-danger"
+                          onclick="deleteCategory({{idLoaiSanPham}})">Delete
+                  </button>
+                  <button style="display: inline;" id="{{idLoaiSanPham}}" class="btn btn-info"
+                          onclick="updateCategory({{idLoaiSanPham}})">Update
+                  </button>
+              </td>
+          </tr>
+      {{/each}}
     </tbody>
   </table>
+  <h3 style="color: black">Add new category</h3>
+    <form id="formNewCategory" name="formNewCategory" action="">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="name"> 
+        </div>
+        <div class="col-md-4">
+          <input type="submit" class="btn btn-success" value="Add">
+      </div>
+    </form>
 </div>

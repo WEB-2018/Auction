@@ -30,7 +30,7 @@ function loadAllUsers(req,res,next) {
 
 function renderUserList(req, res) {
     res.render('admin/user', {
-        title: "Users",
+        title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         users: req.users,
@@ -51,7 +51,7 @@ function loadAllProducts(req,res,next) {
 }
 function renderProductList(req, res) {
     res.render('admin/product', {
-        title: "Products",
+        title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         products: req.products,
@@ -73,7 +73,7 @@ function loadAllCate(req,res,next) {
 }
 function renderCategoryList(req, res) {
     res.render('admin/category', {
-        title: "Products",
+        title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         categories: req.categories,
@@ -82,5 +82,30 @@ function renderCategoryList(req, res) {
 }
 
 r.get('/categories',loadAllCate,renderCategoryList);
+
+r.post('/category/add', function (req, res) {
+    var name = req.body.name;
+    console.log("Add cate", name);
+    var loai = {tenLoaiSanPham: name};
+    categoryRepo.insert(loai);
+    res.send("success");
+})
+
+r.post('/category/delete', function (req, res) {
+    var id = req.body.id;
+    console.log("delete cate where id = ", id);
+    categoryRepo.deleteById(id);
+    res.send("success");
+})
+
+r.post('/category/update', function (req, res) {
+    var id = req.body.id;
+    var name = req.body.name;
+    console.log("Cap nhat loai id = ", id, " ten = ", name);
+    var loai = {idLoaiSanPham: id, tenLoaiSanPham: name};
+    categoryRepo.update(loai);
+    res.send("success");
+})
+
 
 module.exports = r;

@@ -4,7 +4,7 @@ var mysql = require('mysql'),
 var _HOST = '127.0.0.1',
     _USER = 'root',
     _PWD = '1234',
-    _DB = 'autionweb_db';
+    _DB = 'store';
 
 exports.load = function(sql) {
 

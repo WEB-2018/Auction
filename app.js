@@ -59,7 +59,7 @@ app.use(session({
         port: 3306,
         user: 'root',
         password: '1234',
-        database: 'autionweb_db',
+        database: 'store',
         createDatabaseTable: true,
         schema: {
             tableName: 'sessions',
