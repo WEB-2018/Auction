@@ -75,3 +75,29 @@ exports.loadAllWithUserName = function() {
     return db.load(sql);
 }
 
+exports.insert = function(entity) {
+    var sql = mustache.render(
+        'insert into sanpham(tenSanPham,giaSanPham,giaHienTai,daBan,moTa,tinhTrang,luotXem,loai,khoHang) values("{{tenSanPham}}","{{giaSanPham}}","{{giaHienTai}}","{{daBan}}","{{moTa}}","{{tinhTrang}}","{{luotXem}}","{{loai}}","{{khoHang}}")',
+        entity
+    );         
+
+
+    return db.insert(sql);
+}
+exports.loadIdSanPhamCaoNhat = function () {
+
+    var sql = 'select sanpham.idSanPham from sanpham where sanpham.idSanPham in (select max(idSanPham) from sanpham)';
+    return db.load(sql);
+}
+
+exports.updateTinhTrang = function (entity) {
+
+
+    var sql = mustache.render(
+        'update sanpham set tinhTrang = "{{tinhTrang}}" where idSanPham = {{idSanPham}}',
+        entity
+    );
+
+    return db.update(sql);
+
+}

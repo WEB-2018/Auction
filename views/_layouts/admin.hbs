@@ -92,7 +92,25 @@
 <script src="/assests/dist/js/Product.js"></script>
 <script type="text/javascript" src="/assests/js/product.js"></script>
 <script>
+function deleteProduct(id) {
+    var productData = {
+        id: id
+    };
 
+    $.ajax({
+        type: "POST",
+        url: "/admin/product/delete",
+        data: productData,
+        success: function (data) {
+            if(data=="success"){
+                alert("Deleted");
+                $('#'+id+'.productInfo').remove();
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}
     
 
   

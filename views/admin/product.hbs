@@ -20,85 +20,72 @@
   </script>
  </div>  
 
- <div id="addNewProduct" style="display:none">
-   
+  <div id="addNewProduct" style="display:none">
     <form ref='uploadForm' id='uploadForm' encType="multipart/form-data" action="" method="post">
-
-        <div class="panel panel-default">
-
-            <div class="panel-body">
-               <h3>Add new product</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>Add new product</h3>
+          <div class="row">
+              <div class="col-md-8" >
+                  <div class="form-group">
+                      <label>Product Name</label>
+                      <input class="form-control" placeholder="VD: Laptop Dell Inspiron" name="tenSanPham">
+                  </div>
+              </div>  
+              <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" name="loai">
+                        {{#each categories}}
+                            <option value="{{idLoaiSanPham}}">{{tenLoaiSanPham}}</option>
+                        {{/each}} 
+                    </select>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="form-group">
+                      <label for="textArea" >Description</label>
+                          <textarea class="form-control" rows="3" name="moTa"></textarea>
+                  </div>
+              </div>
+              <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-8" >
-                        <div class="form-group">
-                            <label>Product Name</label>
-                            <input class="form-control" placeholder="VD: Laptop Dell Inspiron" name="tenSanPham">
-                        </div>
-                    </div>  
-                    <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Category</label>
-                          <select class="form-control" name="loai">
-                              {{#each categories}}
-                                  <option value="{{idLoaiSanPham}}">{{tenLoaiSanPham}}</option>
-                              {{/each}} 
-                          </select>
-                        </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Price(USD)</label>
+                        <input class="form-control" type="number" placeholder="0" name="giaSanPham" step="1" min="0">
+                       
                     </div>
-
-                    
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label for="textArea" >Description</label>
-                                <textarea class="form-control" rows="3" name="moTa" id="nhanXet"></textarea>
-                        </div>
+                  </div> 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input class="form-control" type="number" placeholder="0" name="khoHang" step="1" min="0">
+                        
                     </div>
-                    <div class="col-md-4">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label>Price(USD)</label>
-                              <input class="form-control" type="number" placeholder="0" name="giaHienTai" step="1" min="0">
-                             
-                          </div>
-                        </div> 
-                        <div class="col-md-6">
-                          <div class="form-group">
-                              <label>Amount</label>
-                              <input class="form-control" type="number" placeholder="0" name="soLuong" step="1" min="0">
-                              
-                          </div>
-                        </div> 
-                      </div>
-                      
-                    </div>
-                   
-
+                  </div> 
                 </div>
-                <div class="row" style="padding:20px">
-                        Image 1 <input type="file" name="file1" id=""> 
-                        Image 2 <input type="file" name="file2" id=""> 
-                        Image 3 <input type="file" name="file3" id=""> 
-                      </div>
-                <hr>
-
-             
-
-            
-                <div class="col-md-2 col-md-offset-5">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-
-                <div class="col-md-3 col-md-offset-0" style="color: green; margin-top: 6px">
-                    <b>{{messSuc}}</b>
-                </div>
-            </div>
+                
+              </div>
+          </div>
+          <div class="row" style="padding:20px">
+                  Image 1 <input type="file" name="file1" id=""> 
+                  Image 2 <input type="file" name="file2" id=""> 
+                  Image 3 <input type="file" name="file3" id=""> 
+          </div>
+          <hr>
+          <div class="col-md-2 col-md-offset-5">
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          <div class="col-md-3 col-md-offset-0" style="color: green; margin-top: 6px">
+              <b id="msg"></b>
+          </div>
         </div>
+      </div>
     </form>
-    </div>
+  </div>
 
 
 
@@ -116,12 +103,12 @@
     </thead>
     <tbody height="100px">
     {{#each products}}
-      <tr>
+      <tr id="{{idSanPham}}" class="productInfo">
         <td>{{idSanPham}}</td>
         <td>{{tenSanPham}}</td>
         <td>{{moTa}}</td>
         <td>{{tinhTrang}}</td>
-        <td><button>delete</button></td>
+        <td><button onclick="deleteProduct({{idSanPham}})">delete</button></td>
       </tr>
     {{/each}}
  

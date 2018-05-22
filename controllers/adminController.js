@@ -2,9 +2,11 @@ var express = require('express'),
     accountRepo = require('../models/accountRepo'),
     productRepo = require('../models/productRepo'),
     categoryRepo = require('../models/categoryRepo'),
-    salerRepo = require('../models/salerRepo'),
     restrict = require('../middle-wares/restrict'),
     crypto = require('crypto');
+    fileUpload = require('express-fileupload');
+    multer = require('multer');
+    fs = require('fs');
 var r = express.Router();
 
 function renderAdminPage(req, res) {
@@ -49,17 +51,127 @@ function loadAllProducts(req,res,next) {
         })
 
 }
+function loadAllCate(req,res,next) {
+    categoryRepo.loadAll()
+        .then(function (pRows) {
+            req.categories = pRows;
+            console.log("pRows");
+            return next();
+        })
+
+}
+
 function renderProductList(req, res) {
     res.render('admin/product', {
         title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         products: req.products,
+        categories: req.categories,
         isLogged: req.session.isLogged
     });
 }
 
-r.get('/products',loadAllProducts,renderProductList);
+r.get('/products',loadAllProducts,loadAllCate,renderProductList);
+
+function CheckProductInfor(entity)
+{
+    if(
+        entity.tenSanPham !== "" 
+        &&
+        entity.moTa !== ""
+        &&
+        entity.giaSanPham !== ""
+        &&
+        entity.loai !== ""
+        &&
+        entity.khoHang !== ""
+        &&
+        entity.thoiDiemKetThuc !== ""
+      )
+    {
+         console.log("success");
+        return 1;
+    }
+    else
+    {
+        console.log("fail");
+        return 0;
+    }
+}
+
+r.use(fileUpload());
+
+r.post('/products',function(req, res) {
+   
+    //tạo đối tượng
+    var entity ={
+        tenSanPham: req.body.tenSanPham,
+        giaSanPham: req.body.giaSanPham,
+        giaHienTai: req.body.giaSanPham,
+        daBan: 0,
+        moTa: req.body.moTa,
+        tinhTrang: 0,
+        luotXem: 0,
+        loai: req.body.loai,
+        khoHang: req.body.khoHang
+    };
+    
+    
+    if(CheckProductInfor(entity) === 1 && req.files.file1 && req.files.file2 && req.files.file3)   //nếu thông tin hợp lệ
+    {
+        productRepo.insert(entity)
+        .then(function(){
+   
+            //tạo thư mục với id tương ứng
+            productRepo.loadIdSanPhamCaoNhat()
+                .then(function (pRows) {
+               
+
+                var idSanPhamCaoNhat = pRows[0].idSanPham;
+
+                var idSanPhamMoi = parseInt(idSanPhamCaoNhat);
+
+                var dir = "./public/imgs/sp/" + idSanPhamMoi;
+                
+                if (!fs.existsSync(dir)){
+                    fs.mkdirSync(dir);
+                }
+
+                //lưu ảnh vào thư mục tương ứng
+                var file1 = req.files.file1,
+                    filename1 = "1.jpg";
+                var file2 = req.files.file2,
+                    filename2 = "2.jpg";
+                var file3 = req.files.file3,
+                    filename3 = "3.jpg"; 
+
+                file1.mv(dir + "/" + filename1, function(err){})
+                file2.mv(dir + "/" + filename2, function(err){})
+                file3.mv(dir + "/" + filename3, function(err){})
+                
+            })
+
+        })
+        res.redirect('/admin/products');
+        
+    }
+    else    //nếu thông tin không hợp lệ
+    {
+       res.redirect('/admin/products')
+    }
+});
+
+r.post('/product/delete', function (req, res) {
+    var id = req.body.id;
+    console.log("Xoa product id = ", id);
+    //khong xoa sp, chi doi tinh trang -> -1
+    var product = {idSanPham: id, tinhTrang: -1};
+    productRepo.updateTinhTrang(product).then(function () {
+        res.send("success");
+        return;
+    })
+})
 
 
 function loadAllCate(req,res,next) {
