@@ -45,7 +45,7 @@ exports.deleteById = function(id) {
 exports.update = function (entity) {
 
     var sql = mustache.render(
-        'update loai set tenLoaiSanPham = {{tenLoaiSanPham}} where idLoaiSanPham = {{idLoaiSanPham}}"',
+        'update loai set tenLoaiSanPham = "{{tenLoaiSanPham}}" where idLoaiSanPham = "{{idLoaiSanPham}}"',
         entity
     );
 

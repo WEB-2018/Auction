@@ -4,31 +4,20 @@ var mustache = require('mustache'),
 
 
 exports.loadAll = function() {
-    var sql = 'select * from nguoidung where coQuyenBan<>-1';
+    var sql = 'select * from nguoidung where viTri=0';
     return db.load(sql);
 }
-
-exports.loadAllRateById = function(id) {
-    var obj = {idNguoiDuocDanhGia: id};
-    var sql = 'select nd.hoTen, nd2.hoTen, sp.tenSanPham,ct.nhanXet,ct.congHayTru,ct.thoiDiemDanhGia from chitietdanhgia ct,nguoidung nd, nguoidung nd2,sanpham sp'
-    + ' where ct.idSanPham=sp.idSanPham'
-    + ' and ct.idNguoiDuocDanhGia=nd.idNguoiDung'
-    + ' and ct.idNguoiDanhGia=nd2.idNguoiDung'
-    + ' and ct.idNguoiDuocDanhGia='+id;
-    return db.load(sql)
-}
-
-exports.loadAllSaleRequesting = function() {
-    var sql = 'select * from nguoidungxinban';
+exports.loadBlock = function() {
+    var sql = 'select * from nguoidung where viTri=-1';
     return db.load(sql);
 }
-exports.loadByUsername = function (entity) {
+exports.checkAccount = function (entity) {
 
     var d = q.defer();
 
 
     var sql = mustache.render(
-        'select * from nguoidung where email = "{{email}}" and password = "{{password}}"',
+        'select * from nguoidung where email = "{{email}}" and password = "{{password}}" and viTri=0',
         entity
     );
 
@@ -76,48 +65,6 @@ exports.loadByUserId = function (entity) {
 
 }
 
-exports.updateDiemCong = function (nguoidung) {
-
-    var obj = {
-        idNguoiDung: nguoidung
-    };
-
-    var sql = mustache.render(
-        'update nguoidung set diemDanhGiaCong = diemDanhGiaCong + 1 where idNguoiDung = "{{idNguoiDung}}"',
-        obj
-    );
-
-    return db.update(sql);
-
-}
-
-exports.updateDiemTru = function (nguoidung) {
-
-    var obj = {
-        idNguoiDung: nguoidung
-    };
-
-    var sql = mustache.render(
-        'update nguoidung set diemDanhGiaTru = diemDanhGiaTru + 1 where idNguoiDung = "{{idNguoiDung}}"',
-        obj
-    );
-
-    return db.update(sql);
-
-}
-
-exports.updateQuyenBan = function (entity) {
-
-
-
-    var sql = mustache.render(
-        'update nguoidung set coQuyenBan = "{{coQuyenBan}}"  where idNguoiDung = "{{idNguoiDung}}"',
-        entity
-    );
-
-    return db.update(sql);
-
-}
 
 exports.insert = function (entity) {
 
@@ -154,5 +101,12 @@ exports.deleteById = function(id) {
     return db.delete(sql);
 }
 
+exports.updateTinhTrang = function (entity) {
+    var sql = mustache.render(
+        'update nguoidung set viTri = "{{viTri}}" where idNguoiDung = {{idNguoiDung}}',
+        entity
+    );
 
+    return db.update(sql);
 
+}

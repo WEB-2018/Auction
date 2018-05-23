@@ -10,12 +10,21 @@ var express = require('express'),
 var r = express.Router();
 
 function renderAdminPage(req, res) {
-    res.render('admin/dashboard', {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('admin/dashboard', {
         title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         isLogged: req.session.isLogged
-    });
+        });
+    }
+   
 }
 
 r.get('/',renderAdminPage);
@@ -29,18 +38,36 @@ function loadAllUsers(req,res,next) {
         })
 
 }
+function loadBlockUsers(req,res,next) {
+    accountRepo.loadBlock()
+        .then(function (pRows) {
+            req.block = pRows;
+            console.log("pRows");
+            return next();
+        })
 
-function renderUserList(req, res) {
-    res.render('admin/user', {
-        title: "Admin",
-        layout: 'admin.hbs',
-        session: req.session,
-        users: req.users,
-        isLogged: req.session.isLogged
-    });
 }
 
-r.get('/users',loadAllUsers,renderUserList);
+function renderUserList(req, res) {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('admin/user', {
+            title: "Admin",
+            layout: 'admin.hbs',
+            session: req.session,
+            users: req.users,
+            block: req.block,
+            isLogged: req.session.isLogged
+        });
+    }
+}
+
+r.get('/users',loadAllUsers,loadBlockUsers,renderUserList);
 
 function loadAllProducts(req,res,next) {
     productRepo.loadAll()
@@ -62,14 +89,21 @@ function loadAllCate(req,res,next) {
 }
 
 function renderProductList(req, res) {
-    res.render('admin/product', {
+     if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        return;
+    }
+    else
+    {
+        res.render('admin/product', {
         title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
         products: req.products,
         categories: req.categories,
         isLogged: req.session.isLogged
-    });
+        });
+    }
 }
 
 r.get('/products',loadAllProducts,loadAllCate,renderProductList);
@@ -173,6 +207,26 @@ r.post('/product/delete', function (req, res) {
     })
 })
 
+r.post('/user/delete', function (req, res) {
+    var id = req.body.id;
+    console.log("Xoa user id = ", id);
+    //khong xoa user, chi doi viTri -> -1
+    var user = {idNguoiDung: id, viTri: -1};
+    accountRepo.updateTinhTrang(user).then(function () {
+        res.send("success");
+        return;
+    })
+})
+r.post('/user/reset', function (req, res) {
+    var id = req.body.id;
+    console.log("Reset user id = ", id);
+    // doi viTri -1 -> 0
+    var user = {idNguoiDung: id, viTri: 0};
+    accountRepo.updateTinhTrang(user).then(function () {
+        res.send("success");
+        return;
+    })
+})
 
 function loadAllCate(req,res,next) {
     categoryRepo.loadAll()
@@ -184,13 +238,21 @@ function loadAllCate(req,res,next) {
 
 }
 function renderCategoryList(req, res) {
-    res.render('admin/category', {
-        title: "Admin",
-        layout: 'admin.hbs',
-        session: req.session,
-        categories: req.categories,
-        isLogged: req.session.isLogged
-    });
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('admin/category', {
+            title: "Admin",
+            layout: 'admin.hbs',
+            session: req.session,
+            categories: req.categories,
+            isLogged: req.session.isLogged
+        });
+    }
 }
 
 r.get('/categories',loadAllCate,renderCategoryList);
@@ -218,6 +280,26 @@ r.post('/category/update', function (req, res) {
     categoryRepo.update(loai);
     res.send("success");
 })
+
+function renderEditProduct(req, res) {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('product/edit', {
+            title: "Edit product",
+            layout: 'admin.hbs',
+            session: req.session,
+            categories: req.categories,
+            product: req.product,
+            isLogged: req.session.isLogged
+        });
+    }
+}
+r.get('/product/edit',loadAllCate,renderEditProduct )
 
 
 module.exports = r;
