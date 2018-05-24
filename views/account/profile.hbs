@@ -1,0 +1,45 @@
+
+<div class="header" style="margin-left:0px">
+<h2>Users</h2>
+</div>  
+
+<form id="formUpdateUser">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input class="form-control" id="newName" value="{{user.hoTen}}">
+            </div>
+            <fieldset disabled>
+                <div class="form-group">
+                    <label >Email</label>
+                    <input class="form-control" id="disabledInput" type="text" placeholder="{{user.email}}" disabled>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <label>Address</label>
+                <input class="form-control" id="newAddr" value="{{user.diaChi}}">
+            </div>
+      
+            <button id="update">Update</button>
+        </div>
+        <div class="col-md-3">
+        
+            <div class="user-profile box-shadow bg-shape">
+                <div class="user-profile-photo">
+                    <img src="/imgs/user/{{user.idNguoiDung}}.jpg" alt="">
+                </div>
+                <div class="user-profile-info pt-20">
+                    <h5 class="member-name" style="padding-top:20px;color:orange">{{user.hoTen}}</h5>
+                    <p class="member-esb">{{user.diaChi}}</p>
+                    <p class="mb-20">Status: </p>
+                    
+                    <a href="/admin/manage-users/del#{{f_ID}}">
+                        <button>Delete</button>
+                    </a>                                   
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

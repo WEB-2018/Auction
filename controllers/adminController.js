@@ -281,6 +281,24 @@ r.post('/category/update', function (req, res) {
     res.send("success");
 })
 
+function loadProductById(req,res,next){
+    var proId = req.params.id;
+    productRepo.loadById(proId)
+    .then(function (pRows) {
+        req.product = pRows;
+        console.log("pRows");
+        return next();
+    })
+}
+function loadCatOfProduct(req,res,next){
+    var proId = req.params.id;
+    categoryRepo.loadCatOfProduct(proId)
+    .then(function (pRows) {
+        req.cat = pRows;
+        console.log("pRows");
+        return next();
+    })
+}
 function renderEditProduct(req, res) {
     if(req.session.admin != 'admin'){
         res.redirect('/login');
@@ -288,7 +306,7 @@ function renderEditProduct(req, res) {
         return;
     }
     else
-    {
+    {   
         res.render('product/edit', {
             title: "Edit product",
             layout: 'admin.hbs',
@@ -299,7 +317,42 @@ function renderEditProduct(req, res) {
         });
     }
 }
-r.get('/product/edit',loadAllCate,renderEditProduct )
+r.get('/product/:id/edit',loadAllCate,loadProductById,renderEditProduct )
 
+function loadUserById(req,res,next){
+    var idNguoiDung= req.params.id;
+    accountRepo.loadByUserId(idNguoiDung)
+    .then(function (pRows) {
+        req.user = pRows;
+        return next();
+    })
+}
+function renderUserProfile(req, res) {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {   
+        res.render('account/profile', {
+            title: "Edit user",
+            layout: 'admin.hbs',
+            session: req.session,
+            user: req.user,
+            isLogged: req.session.isLogged
+        });
+    }
+}
+r.get('/user/:id/edit',loadUserById,renderUserProfile )
+r.post('/user/:id/edit', function (req, res) {
+    var id = req.body.id;
+    var newName = req.body.newName;
+    var newAddr = req.body.newAddr;
+    console.log("Cap nhat user id = ", id, " ten = ", newName);
+    //var loai = {idLoaiSanPham: id, tenLoaiSanPham: name};
+    //categoryRepo.update(loai);
+    res.send("success");
 
+})
 module.exports = r;

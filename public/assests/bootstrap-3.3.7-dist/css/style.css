@@ -1008,6 +1008,7 @@ select,input[type="text"], input[type="password"], input[type="date"], input[typ
     margin-bottom: 30px;        
     padding: 20px 20px 30px;
     text-align: center;
+    box-shadow: 5px 5px 20px;
 }
 .member-name {
     color: #666;

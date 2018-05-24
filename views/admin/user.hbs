@@ -1,4 +1,4 @@
-<div class="container">
+
   <div class="header" style="margin-left:0px">
     <h2>Users</h2>
   </div>   
@@ -20,7 +20,8 @@
         <td>{{hoTen}}</td>
         <td>{{diaChi}}</td>
         <td>{{email}}</td>
-        <td><button onclick=deleteUser({{idNguoiDung}})>ban</button></td>
+        <td><button onclick=deleteUser({{idNguoiDung}})>ban</button>
+        <a href="/admin/user/{{idNguoiDung}}/edit"><button>edit</button></a></td>
       </tr>
     {{/each}}
  
@@ -54,4 +55,4 @@
  
     </tbody>
   </table>
-</div>
+

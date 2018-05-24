@@ -101,3 +101,15 @@ exports.updateTinhTrang = function (entity) {
     return db.update(sql);
 
 }
+exports.loadSanPhamLienQuan = function (entity) {
+
+    var d = q.defer();
+
+    var sql = mustache.render(
+        'select * from sanpham where idSanPham!={{idSanPham}} and tinhTrang=0 and loai={{loai}} limit 5',
+        entity
+    );
+
+    return db.load(sql);
+
+}

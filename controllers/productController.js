@@ -45,12 +45,25 @@ function renderProductDetail(req, res) {
         title : "Product Detail",
         product : req.product,
         session: req.session,
+        sanPhamLienQuan : req.sanPhamLienQuan,
         isLogged: req.session.isLogged
     });
 
 }
+function loadSanPhamLienQuan(req,res,next) {
+    var obj = {
+        loai: req.product.loai,
+        idSanPham: req.params.id
+    };
 
-r.get('/detail/:id',loadProductById,renderProductDetail);
+    productRepo.loadSanPhamLienQuan(obj)
+        .then(function (pRows) {
+            req.sanPhamLienQuan = pRows;
+            return next();
+        })
+}
+
+r.get('/detail/:id',loadProductById,loadSanPhamLienQuan,renderProductDetail);
 
 
 function loadSanPham(req, res, next) {
