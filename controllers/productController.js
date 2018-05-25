@@ -29,6 +29,7 @@ function loadProductById(req,res,next) {
 
     var proId = req.params.id;
     console.log(1);
+    productRepo.updateLuotXem(proId);
     productRepo.loadById(proId)
         .then(function (pRows) {
             req.product = pRows;
