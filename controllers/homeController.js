@@ -67,6 +67,7 @@ r.get('/login', function(req, res) {
 });
 
 
+
 r.post('/login', function(req, res) {
 
     console.log(ePWD);
@@ -108,6 +109,20 @@ r.post('/login', function(req, res) {
                 res.redirect(url);
             }
         });
+});
+
+r.get('/register', function(req, res) {
+    if (req.session.isLogged == true) {
+        res.redirect('/');
+    } else {
+        res.render('account/register', {
+            layoutModels: res.locals.layoutModels,
+            layout: 'account.hbs',
+            title: "Create account",
+            showError: false,
+            errorMsg: ''
+        });
+    }
 });
 r.get('/logout', restrict, function(req, res) {
     req.session.isLogged = false;

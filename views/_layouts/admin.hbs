@@ -161,26 +161,7 @@ $('#formNewCategory').submit(function () {
     
 
   
-$('#formUpdateUser').submit(function () {
-    var newName = $('#newName').val();
-    var newAddr = $('#newAddr').val();
-    var userData = {
-        idNguoiDung: id
 
-    };
-    $.ajax( {
-        type: "POST",
-        url: "/admin/category/add",
-        data: {name: name},
-        success: function (data) {
-            if(data=="success"){
-                alert("Success!");
-            }else {
-                alert("Error! Try again!");
-            }
-        }
-    } );
-})
 
 function updateCategory(id) {
     var newName = $('#'+id).find('.newCatNameBox input').val();
@@ -206,7 +187,7 @@ function updateCategory(id) {
     window.location.href = '/admin/categories'; 
 }
 $("#update").click(function () {
-        var keyword = $('#keyword').val();
+        
         console.log("newNaffffme");
         var newName = $('#newName').val();
         console.log(newName);

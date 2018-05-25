@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!DOCTYPE html>
-<html lang="en">
-<html lang="en">
     <head>
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/jquery-migrate-1.4.1.js"></script>
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <title>{{title}}</title>
+    <link rel="icon" href="/imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/material-design-iconic-font.css">
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/login.css">
-
     <link rel="icon" href="/assests/bootstrap-3.3.7-dist/img/icon/lucus.png">
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/main.js"></script>
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/userinfo.css">
@@ -31,14 +28,7 @@
     </div>
  
 
-<script type="text/javascript">
-function updateUser(id) {
-    var newName = $('#newName').val();
-    //console.log(newName);
-    console.log("newNafffffffffffffffffffffffffffffffffffffffffffffffffffffme");
-  
-}
-</script>
+
 
 <!-- jQuery -->
 <script src="/assests/vendor/jquery/jquery.min.js"></script>
@@ -56,10 +46,52 @@ function updateUser(id) {
 
 <!-- Custom Theme JavaScript -->
 <script src="/assests/dist/js/sb-admin-2.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
 <!-- Product JS -->
 <script src="/assests/dist/js/Product.js"></script>
 <script type="text/javascript" src="/assests/js/product.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#registration").validate({
+        rules: {
+            name: "required",
+            address: "required",
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            passwordConfirm: {
+                required: true,
+                equalTo: "#password"
+            },
+            agree:"required"
+        },
+        // Specify validation error messages
+        messages: {
+            name: "Please enter your name",
+            agree: "You must agree to the Private Policy",
+            address: "Please enter your address",
+            password: {
+                required: "Please enter your password",
+                minlength: "Your password must have at least 6 letters"
+            },
+            passwordConfirm: {
+                required: "Please retype your password",
+                equalTo: "This password is not correct",
+            },
+            email: "Please enter a valid e-mail address",
+           
+        },
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
+     
+    });
+})
+</script>
 </body>
 
 </html>
