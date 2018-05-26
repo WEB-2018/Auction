@@ -6,7 +6,40 @@ var express = require('express'),
     crypto = require('crypto');
 var r = express.Router();
 
+var nodemailer =  require('nodemailer');
+var transporter =  nodemailer.createTransport({ // config mail server
+    service: 'Gmail',
+    auth: {
+        user: 'tuyettinhtieu@gmail.com',
+        pass: 'inuyaiba',
+    }
+});
 
+var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
+    from: 'Lucus Store',
+    to: '',
+    subject: 'Verify your account',
+    text: 'You recieved message from Lucus Store',
+    html: ''
+}
+
+function setMailHTML(html) {
+    mainOptions.html = html;
+}
+
+function setMailReceiver(sendTo) {
+    mainOptions.to = sendTo;
+}
+
+function sendMail() {
+    transporter.sendMail(mainOptions, function(err, info){
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Message sent: ' +  info.response);
+        }
+    });
+}
 r.get('/', function(req, res) {
     if (req.session.isLogged == true) {
         res.redirect('/');
@@ -50,15 +83,16 @@ r.post('/',function(req, res) {
             }
             else{
                 accountRepo.insert(entity);
+                 var content = '<p>This email is used for creating a new account at Lucus Store' +
+                    '</b><ul><li>Username:' + name + '</li><li>Passwpord:' + password;
+                setMailReceiver(email);
+                setMailHTML(content);
+                sendMail();
                 res.send('success');
             }
         });
-        /*
-    var content = '<p>Email này vừa được sử dụng để đăng ký tài khoản tại trang web của chúng tôi với: ' +
-        '</b><ul><li>Tên người dùng:' + name + '</li><li>Mật khẩu:' + password;
-    setMailReceiver(email);
-    setMailHTML(content);
-    sendMail();*/
+        
+   
     //recaptcha đúng thì thêm tài khoản và gửi thông báo cho client
     
 });
