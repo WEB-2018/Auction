@@ -52,18 +52,28 @@ exports.loadById = function(id) {
 
 
 
-exports.loadAllByCat = function (id) {
+exports.loadAllByCat = function (id, priFrm, priTo) {
 
     var d = q.defer();
 
     var obj = {
-        loai: id
+        loai: id,
+        gia1: priFrm,
+        gia2: priTo
     };
-
-    var sql = mustache.render(
-        'select * from sanpham where loai = {{loai}} and tinhTrang=0',
-        obj
-    );
+    if (obj.loai != 0) {
+        var sql = mustache.render(
+            'select * from sanpham where loai = {{loai}} and tinhTrang=0 and giahientai between {{gia1}} and {{gia2}}',
+            obj
+        );
+    }
+    else
+    {
+        var sql = mustache.render(
+            'select * from sanpham where tinhTrang=0 and giahientai between {{gia1}} and {{gia2}}',
+            obj
+        );
+    }
 
     return db.load(sql);
 

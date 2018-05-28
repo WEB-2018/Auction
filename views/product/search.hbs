@@ -4,24 +4,14 @@
 <div class="container" style="padding:30px;">
     <div class="row" >
         <div class="col-md-6 col-lg-6" >
-            
-
             <div id="formSearch" name="formSearch" class="form-horizontal" method="get" action="#" style="list-style:inline">
                 <div class="row">
                     <div class="col-md-10 " style="height: 30px" id="searchBox" name="search-box">
                         <input  id="txtSearch" type="text" placeholder="Search product here..." class="form-control search-field" name="search" value={{keyword}}>
                     </div>
-
-                    <div class="col-md-2 pull-right">
-           
-                           <button class="btn btn-info" id="btnSearch" type="button">Search</button>
-                     
-                    </div>
         
                 </div>
             </div>
-
-
         </div>
 
         <div class="col-md-offset-1 col-md-5 col-lg-5">
@@ -34,9 +24,37 @@
                         <option value={{idLoaiSanPham}}>{{tenLoaiSanPham}}</option>
                     {{/each}}
                 </select>
+
             </div>
         </div>
+
+        <div class="col-md-12 col-lg-12" >
+            <div class="form-group">
+
+                <label for="Price" style="display: inline; padding-right:40px">Price </label>
+
+
+                <select name="PriceFrm" id="priFrm" class="dropdown" style="height: 30px; width: 40%;" class="form-group">
+                    <option value="0">Price From</option>
+                    <option value="100">100 $</option>
+                    <option value="200">200 $</option>
+                    <option value="300">300 $</option>
+                    <option value="400">400 $</option>
+                </select>
+
+                <select name="PriceTo" id="priTo" class="dropdown pull-right" style="height: 30px; width: 40%;" class="form-group">
+                    <option value="100000">Price to</option>
+                    <option value="500">500 $</option>
+                    <option value="1000">1000 $</option>
+                    <option value="2000">2000 $</option>
+                    <option value="5000">5000 $</option>
+                </select>
+            </div>
+        </div>
+
+
     </div>
+
     <div class="row">
         <div class="form-group text-center">
                 <label class="text" style="font-style:bold">
@@ -55,9 +73,18 @@
 
         </div>
     </div>
+
+    <div class="row">
+        <div class="form-group text-center">
+            <div class="col-md-2 pull-right">
+
+            <button class="btn btn-info" id="btnSearch" type="button">Search</button>
+
+            </div>
+        </div>
+    </div>
+
 </div>
-
-
 <div class="row">
     <br/>
     <br/>
