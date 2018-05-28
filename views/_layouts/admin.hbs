@@ -49,14 +49,8 @@
 </head>
 
 <body >
-    {{>header}}
+    {{>adminHeader}}
 
-    <div class="row">
-        <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
-            <div id="Time"></div>
-            <p id="result" style="display: none"></p>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-3 pull-left">
@@ -111,11 +105,46 @@ function deleteProduct(id) {
         }
     });
 }
-    
+function resetUser(id) {
+    var userData = {
+        id: id
+    };
+    $.ajax({
+        type: "POST",
+        url: "/admin/user/reset",
+        data: userData,
+        success: function (data) {
+            if(data=="success"){
+                window.location.href = '/admin/users'; 
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}
+function deleteUser(id) {
+    var userData = {
+        id: id
+    };
+    $.ajax({
+        type: "POST",
+        url: "/admin/user/delete",
+        data: userData,
+        success: function (data) {
+            if(data=="success"){
+                window.location.href = '/admin/users'; 
+           
 
-  
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}
+
 $('#formNewCategory').submit(function () {
     var name = $(this).find('input').val();
+
     $.ajax( {
         type: "POST",
         url: "/admin/category/add",
@@ -129,10 +158,14 @@ $('#formNewCategory').submit(function () {
         }
     } );
 })
+    
+
+  
+
 
 function updateCategory(id) {
     var newName = $('#'+id).find('.newCatNameBox input').val();
-    alert(newName);
+
     var categoryData = {
         id: id,
         name: newName
@@ -143,16 +176,24 @@ function updateCategory(id) {
         data: categoryData,
         success: function (data) {
             if(data=="success"){
-                alert("Update thành công");
             }else {
-                alert("Vui long thu lai");
+                alert("Error!Try again!");
             }
         }
     });
 
     $('.currentCatNameBox').css('display', 'block');
     $('.newCatNameBox').css('display', 'none');
+    window.location.href = '/admin/categories'; 
 }
+$("#update").click(function () {
+        
+        console.log("newNaffffme");
+        var newName = $('#newName').val();
+        console.log(newName);
+}
+
+
 $('.currentCatNameBox').click(function () {
     $(this).css('display', 'none');
     var trId = $(this).parent().closest('tr').attr('id').split(' ');

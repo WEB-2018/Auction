@@ -45,7 +45,7 @@ exports.deleteById = function(id) {
 exports.update = function (entity) {
 
     var sql = mustache.render(
-        'update loai set tenLoaiSanPham = {{tenLoaiSanPham}} where idLoaiSanPham = {{idLoaiSanPham}}"',
+        'update loai set tenLoaiSanPham = "{{tenLoaiSanPham}}" where idLoaiSanPham = "{{idLoaiSanPham}}"',
         entity
     );
 
@@ -61,4 +61,25 @@ exports.insert = function (entity) {
     );
 
     return db.insert(sql);
+}
+
+exports.loadCatOfProduct = function (id) {
+
+    var d = q.defer();
+
+    var obj = {
+        idSanPham: id
+    };
+
+    var sql = mustache.render(
+        'select * from loai where idLoaiSanPham = {{idLoaiSanPham}}',
+        obj
+    );
+
+    db.load(sql).then(function(rows) {
+        d.resolve(rows[0]);
+    });
+
+    return d.promise;
+
 }

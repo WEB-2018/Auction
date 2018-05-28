@@ -32,14 +32,17 @@
                            
                         </form>
                     </div>
-
+                    {{#if session.user}}
                     <div class="col-md-3">
-                    
+                        <a class="btn btn-default pull-right" role="button" href="/login">Name</a>
+                        <a class="btn btn-default pull-right" role="button" href="/logout">Log Out</a>
+                    </div>
+                    {{else}}
+                    <div class="col-md-3">
                         <a class="btn btn-default pull-right" role="button" href="/login">Log In</a>
                         <a class="btn btn-default pull-right" role="button" href="/register">Register</a>
-               
-                        
                     </div>
+                    {{/if}}
 
                 </div>
 

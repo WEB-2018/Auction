@@ -1,153 +1,179 @@
 <div class="row">
-  
-    <div class="col-md-12">
+   
 
-         <!--thông tin sp-->
-        <div id="product" class="row">
-            <!--img đại diện product-->
-            <div class="col-md-5 pull-left">
-                <br>
-                <br>
-                <div class="row text-center" style="padding-left: 30px">
-                    
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel" >
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators" >
-                            <li data-target="#myCarousel"  data-slide-to="0" class="active" ></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" style="height:240px;">
-                            <div class="item active" style="height:240px;padding-left: 120px">
-                                <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/1.jpg">
-                            </div>
-                            <div class="item" style="height:240px;padding-left: 120px">
-                                <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/2.jpg">
-                            </div>
-                            <div class="item" style="height:240px;padding-left: 120px">
-                                <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/3.jpg">
-                            </div>
-
-                            
-                        </div>
-
-                        <!-- Left and right controls -->
-                        <a class="left carousel-control" style="background-image: none;" href="#myCarousel" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" style="color: rgb(1, 116, 223)"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" style="background-image: none;" href="#myCarousel" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" style="color: rgb(1, 116, 223)"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-
-                 <br>
-         
-                <div class="info box-shadow" style="padding: 30px">
-                <h6 style="font-weight: bold;">COMMENT</h6>
-               
-      
-            </div>
-                <br>
+     <!--thông tin sp-->
+    <div id="product" class="row">
+        <!--img đại diện product-->
+        <div class="col-md-5 pull-left">
+            <br>
+            <br>
+            <div class="row text-center" style="padding-left: 30px">
                 
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" >
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators" >
+                        <li data-target="#myCarousel"  data-slide-to="0" class="active" ></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" style="height:240px;">
+                        <div class="item active" style="height:240px;padding-left: 120px">
+                            <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/1.jpg">
+                        </div>
+                        <div class="item" style="height:240px;padding-left: 120px">
+                            <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/2.jpg">
+                        </div>
+                        <div class="item" style="height:240px;padding-left: 120px">
+                            <img style="object-fit:contain" src="/imgs/sp/{{product.idSanPham}}/3.jpg">
+                        </div>
+
+                        
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" style="background-image: none;" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" style="color: rgb(1, 116, 223)"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" style="background-image: none;" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" style="color: rgb(1, 116, 223)"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
 
-            <!--Thông tin sp-->
-            <div class="form col-md-4 box-shadow">
-                <div class="form-group" style="padding: 20px">
-                    <div class="single-product-info">
-                    <h3 class="uppercase" style="text-align: center;"><font color="orange">{{product.tenSanPham}}</font></h3>
-                 
-             
-                     
-                       
-                     <div class="row">
-                        <div class="col-md-6">
-                              <h4>$ {{product.giaSanPham}} [Old: {{product.giaHienTai}}]</h4>
-                        </div>
-                        <div class="col-md-6" style="text-align: right;">
-                             <span class="fa fa-eye" ></span> {{product.luotXem}}
-                        </div>
-                    </div>
-
-                    <hr>
-                   
-                    
-
-                   
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Description</label>
-                            <p>{{product.moTa}}</p>
-                        </div>
-                       
-                         
-                    </div>
-
-                   
-
-                <script>
-                var distance = 0;
-                  if (distance < 0) {
-                    clearInterval(x);
-                    y.innerHTML = "FINISHED";
-                    document.getElementById("bidbtn").disabled = true;
-                    document.getElementById("buybtn").disabled = true;
-                    
-                  }
-
-                }, 1000);
-
-                </script>
-
-                    
-                    
-                        <hr>
+             <br>
+     
+            <div class="info box-shadow" style="padding: 30px">
+            <h6 style="font-weight: bold;">COMMENT</h6>
            
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Sold</label>
-                          
-                        </div>
-                        <div class="col-md-6 text-right">
-                            {{product.daBan}} / {{product.khoHang}}
-                        </div>
+  
+        </div>
+            <br>
+            
+        </div>
+
+        <!--Thông tin sp-->
+        <div class="form col-md-4 box-shadow">
+            <div class="form-group" style="padding: 20px">
+                <div class="single-product-info">
+                <h3 class="uppercase" style="text-align: center;"><font color="orange">{{product.tenSanPham}}</font></h3>
+             
+         
+                 
                    
+                 <div class="row">
+                    <div class="col-md-6">
+                          <h4>$ {{product.giaSanPham}} [Old: {{product.giaHienTai}}]</h4>
                     </div>
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" type="submit" onclick="fn({{product.idSanPham}})" id="bidbtn" >Add to cart</button>
-                           
-                        </div>
-                        <div class="col-md-4" style="padding-left:45px;padding-top:20px;">
-                            <input type="number" id="dauGia" class="first" placeholder="" value="1" > 
-                        </div>
-                        <div class="col-md-4">
-                             <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" onclick="datGia({{product.idSanPham}})" type="submit" id="muaNgay">Buy now</button>
-                        </div>
-                    
-                    </div>
-                    
-                     <div class="row text-left">
-                     <h6 id="err" style="color: red;padding: 20px" ></h6>
-                     </div>
-
+                    <div class="col-md-6" style="text-align: right;">
+                         <span class="fa fa-eye" ></span> {{product.luotXem}}
                     </div>
                 </div>
-      
-            </div>
-        </div>
-        <!--Description-->
-        
+
+                <hr>
+               
+                
+
+               
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Description</label>
+                        <p>{{product.moTa}}</p>
+                    </div>
+                   
+                     
+                </div>
+
+               
+
+            <script>
+            var distance = 0;
+              if (distance < 0) {
+                clearInterval(x);
+                y.innerHTML = "FINISHED";
+                document.getElementById("bidbtn").disabled = true;
+                document.getElementById("buybtn").disabled = true;
+                
+              }
+
+            }, 1000);
+
+            </script>
+
+                
+                
+                    <hr>
        
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Sold</label>
+                      
+                    </div>
+                    <div class="col-md-6 text-right">
+                        {{product.daBan}} / {{product.khoHang}}
+                    </div>
+               
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" type="submit" onclick="fn({{product.idSanPham}})" id="bidbtn" >Add to cart</button>
+                       
+                    </div>
+                    <div class="col-md-4" style="padding-left:45px;padding-top:20px;">
+                        <input type="number" id="dauGia" class="first" placeholder="" value="1" > 
+                    </div>
+                    <div class="col-md-4">
+                         <button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" onclick="datGia({{product.idSanPham}})" type="submit" id="muaNgay">Buy now</button>
+                    </div>
+                
+                </div>
+                
+                 <div class="row text-left">
+                 <h6 id="err" style="color: red;padding: 20px" ></h6>
+                 </div>
+
+                </div>
+            </div>
+  
+        </div>
     </div>
+    <!--Description-->
+    </br>
+    <hr>
+    <div class="header pull-left" >
+        <h2 class="uppercase" >related products</h2>
+    </div>
+
+    <div style="padding-top:100px">
+        <ul class="list-inline text-center">
+            {{#each sanPhamLienQuan}}
+             <li>
+                <div class="product-img" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+                    <a href="/product/detail/{{idSanPham}}" tabindex="-1">
+                        <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}">
+                  
+                    </a>
+                </div>
+                <div class="product-info text-center">
+                    <h6 class="product-title">
+                        <a href="/product/detail/{{idSanPham}}" tabindex="-1">{{tenSanPham}}</a>
+                    </h6>
+                    <p ><span class="fa fa-eye" ></span> {{luotXem}}</p>
+                    <h3 class="pro-price">{{giaSanPham}} $</h3>
+
+                    
+                </div>
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+    
         
 </div>
      
