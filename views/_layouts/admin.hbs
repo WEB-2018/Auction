@@ -141,10 +141,11 @@ function deleteUser(id) {
         }
     });
 }
+    
 
+  
 $('#formNewCategory').submit(function () {
     var name = $(this).find('input').val();
-
     $.ajax( {
         type: "POST",
         url: "/admin/category/add",
@@ -158,10 +159,6 @@ $('#formNewCategory').submit(function () {
         }
     } );
 })
-    
-
-  
-
 
 function updateCategory(id) {
     var newName = $('#'+id).find('.newCatNameBox input').val();
@@ -186,14 +183,6 @@ function updateCategory(id) {
     $('.newCatNameBox').css('display', 'none');
     window.location.href = '/admin/categories'; 
 }
-$("#update").click(function () {
-        
-        console.log("newNaffffme");
-        var newName = $('#newName').val();
-        console.log(newName);
-}
-
-
 $('.currentCatNameBox').click(function () {
     $(this).css('display', 'none');
     var trId = $(this).parent().closest('tr').attr('id').split(' ');

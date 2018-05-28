@@ -3,12 +3,12 @@
 <h2>Users</h2>
 </div>  
 
-<form id="formUpdateUser">
+<form id="formUpdateUser" method="post" action="/admin/user/{{user.idNguoiDung}}/edit">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label>Full Name</label>
-                <input class="form-control" id="newName" value="{{user.hoTen}}">
+                <input class="form-control" id="newName" name="newName" value="{{user.hoTen}}">
             </div>
             <fieldset disabled>
                 <div class="form-group">
@@ -18,7 +18,7 @@
             </fieldset>
             <div class="form-group">
                 <label>Address</label>
-                <input class="form-control" id="newAddr" value="{{user.diaChi}}">
+                <input class="form-control" id="newAddr" name="newAddr" value="{{user.diaChi}}">
             </div>
       
             <button id="update">Update</button>

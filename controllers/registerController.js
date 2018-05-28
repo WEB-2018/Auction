@@ -78,7 +78,7 @@ r.post('/',function(req, res) {
             if(user!==null) {
                 //không hợp lệ thì thông báo chỗ này
                 console.log('email không hợp lệ');
-                res.send('email');
+                res.redirect('/register');
                 return;
             }
             else{
@@ -88,12 +88,12 @@ r.post('/',function(req, res) {
                 setMailReceiver(email);
                 setMailHTML(content);
                 sendMail();
-                res.send('success');
+                //res.send('success');
+                res.redirect('/login');
             }
         });
         
    
-    //recaptcha đúng thì thêm tài khoản và gửi thông báo cho client
     
 });
 

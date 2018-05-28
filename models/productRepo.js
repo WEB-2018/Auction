@@ -29,6 +29,30 @@ exports.loadSanPhamBanChay = function () {
     return db.load(sql);
 
 }
+exports.loadSanPhamLienQuan = function (entity) {
+
+    var d = q.defer();
+
+    var sql = mustache.render(
+        'select * from sanpham where idSanPham!={{idSanPham}} and tinhTrang=0 and loai={{loai}} limit 5',
+        entity
+    );
+
+    return db.load(sql);
+
+}
+exports.updateLuotXem = function(id) {
+  
+    var obj={
+        idSanPham : id
+    }
+    var sql = mustache.render(
+        'update sanpham set luotXem = luotXem + 1 where idSanPham = {{idSanPham}}',
+        obj
+    );
+
+    return db.update(sql);
+}
 
 
 exports.loadById = function(id) {
@@ -50,18 +74,6 @@ exports.loadById = function(id) {
     return d.promise;
 }
 
-exports.updateLuotXem = function(id) {
-  
-    var obj={
-        idSanPham : id
-    }
-    var sql = mustache.render(
-        'update sanpham set luotXem = luotXem + 1 where idSanPham = {{idSanPham}}',
-        obj
-    );
-
-    return db.update(sql);
-}
 
 
 exports.loadAllByCat = function (id) {
@@ -111,17 +123,5 @@ exports.updateTinhTrang = function (entity) {
     );
 
     return db.update(sql);
-
-}
-exports.loadSanPhamLienQuan = function (entity) {
-
-    var d = q.defer();
-
-    var sql = mustache.render(
-        'select * from sanpham where idSanPham!={{idSanPham}} and tinhTrang=0 and loai={{loai}} limit 5',
-        entity
-    );
-
-    return db.load(sql);
 
 }

@@ -281,24 +281,6 @@ r.post('/category/update', function (req, res) {
     res.send("success");
 })
 
-function loadProductById(req,res,next){
-    var proId = req.params.id;
-    productRepo.loadById(proId)
-    .then(function (pRows) {
-        req.product = pRows;
-        console.log("pRows");
-        return next();
-    })
-}
-function loadCatOfProduct(req,res,next){
-    var proId = req.params.id;
-    categoryRepo.loadCatOfProduct(proId)
-    .then(function (pRows) {
-        req.cat = pRows;
-        console.log("pRows");
-        return next();
-    })
-}
 function renderEditProduct(req, res) {
     if(req.session.admin != 'admin'){
         res.redirect('/login');
@@ -306,7 +288,7 @@ function renderEditProduct(req, res) {
         return;
     }
     else
-    {   
+    {
         res.render('product/edit', {
             title: "Edit product",
             layout: 'admin.hbs',
@@ -317,7 +299,7 @@ function renderEditProduct(req, res) {
         });
     }
 }
-r.get('/product/:id/edit',loadAllCate,loadProductById,renderEditProduct )
+r.get('/product/edit',loadAllCate,renderEditProduct )
 
 function loadUserById(req,res,next){
     var idNguoiDung= req.params.id;
@@ -346,13 +328,17 @@ function renderUserProfile(req, res) {
 }
 r.get('/user/:id/edit',loadUserById,renderUserProfile )
 r.post('/user/:id/edit', function (req, res) {
-    var id = req.body.id;
+    //var id = req.body.id;
+    var id = req.params.id;
     var newName = req.body.newName;
     var newAddr = req.body.newAddr;
-    console.log("Cap nhat user id = ", id, " ten = ", newName);
-    //var loai = {idLoaiSanPham: id, tenLoaiSanPham: name};
-    //categoryRepo.update(loai);
-    res.send("success");
-
+    console.log("Cap nhat user id = ", id, " ten = ", newName, newAddr);
+    var user = {idNguoiDung: id, hoTen: newName, diaChi: newAddr};
+    console.log(user);
+    accountRepo.updateInfo(user);
+   // res.send("success");
+   var url= "/admin/user/"+id+"/edit";
+    res.redirect(url);
 })
+
 module.exports = r;

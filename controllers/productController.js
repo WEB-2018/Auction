@@ -29,6 +29,18 @@ function loadProductById(req,res,next) {
 
     var proId = req.params.id;
     console.log(1);
+    productRepo.loadById(proId)
+        .then(function (pRows) {
+            req.product = pRows;
+            console.log(pRows.tenSanPham);
+            return next();
+        })
+
+}
+function loadProductById(req,res,next) {
+
+    var proId = req.params.id;
+    console.log(1);
     productRepo.updateLuotXem(proId);
     productRepo.loadById(proId)
         .then(function (pRows) {
@@ -41,16 +53,6 @@ function loadProductById(req,res,next) {
 
 
 
-function renderProductDetail(req, res) {
-    res.render('product/productdetail', {
-        title : "Product Detail",
-        product : req.product,
-        session: req.session,
-        sanPhamLienQuan : req.sanPhamLienQuan,
-        isLogged: req.session.isLogged
-    });
-
-}
 function loadSanPhamLienQuan(req,res,next) {
     var obj = {
         loai: req.product.loai,
@@ -63,7 +65,16 @@ function loadSanPhamLienQuan(req,res,next) {
             return next();
         })
 }
+function renderProductDetail(req, res) {
+    res.render('product/productdetail', {
+        title : "Product Detail",
+        product : req.product,
+        session: req.session,
+        sanPhamLienQuan : req.sanPhamLienQuan,
+        isLogged: req.session.isLogged
+    });
 
+}
 r.get('/detail/:id',loadProductById,loadSanPhamLienQuan,renderProductDetail);
 
 

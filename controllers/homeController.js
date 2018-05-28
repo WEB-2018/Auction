@@ -67,7 +67,6 @@ r.get('/login', function(req, res) {
 });
 
 
-
 r.post('/login', function(req, res) {
 
     console.log(ePWD);
@@ -110,7 +109,6 @@ r.post('/login', function(req, res) {
             }
         });
 });
-
 r.get('/logout', restrict, function(req, res) {
     req.session.isLogged = false;
     req.session.user = null;

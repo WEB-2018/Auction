@@ -11,35 +11,6 @@ exports.loadBlock = function() {
     var sql = 'select * from nguoidung where viTri=-1';
     return db.load(sql);
 }
-exports.loadByEmail = function(entity) {
-     var d = q.defer();
-    var sql = mustache.render(
-        'select * from nguoidung where email = "{{email}}"',
-        entity
-    );
-
-     db.load(sql).then(function(rows) {
-        if (rows.length > 0) {
-            var user = {
-                idNguoiDung: rows[0].idNguoiDung,
-                password: rows[0].password,
-                hoTen: rows[0].hoTen,
-                diaChi: rows[0].diaChi,
-                email: rows[0].email,
-                diemDanhGiaCong: rows[0].diemDanhGiaCong,
-                diemDanhGiaTru: rows[0].diemDanhGiaTru,
-                viTri: rows[0].viTri,
-                coQuyenBan: rows[0].coQuyenBan
-            }
-            d.resolve(user);
-        } else {
-            d.resolve(null);
-        }
-    });
-
- return d.promise;
-
-}
 exports.checkAccount = function (entity) {
 
     var d = q.defer();
@@ -137,5 +108,44 @@ exports.updateTinhTrang = function (entity) {
     );
 
     return db.update(sql);
+
+}
+exports.updateInfo = function (entity) {
+
+    var sql = mustache.render(
+        'update nguoidung set hoTen = "{{hoTen}}", diaChi = "{{diaChi}}" where idNguoiDung = "{{idNguoiDung}}"',
+        entity
+    );
+
+    return db.update(sql);
+
+}
+exports.loadByEmail = function(entity) {
+    var d = q.defer();
+    var sql = mustache.render(
+        'select * from nguoidung where email = "{{email}}"',
+        entity
+    );
+
+    db.load(sql).then(function(rows) {
+        if (rows.length > 0) {
+            var user = {
+                idNguoiDung: rows[0].idNguoiDung,
+                password: rows[0].password,
+                hoTen: rows[0].hoTen,
+                diaChi: rows[0].diaChi,
+                email: rows[0].email,
+                diemDanhGiaCong: rows[0].diemDanhGiaCong,
+                diemDanhGiaTru: rows[0].diemDanhGiaTru,
+                viTri: rows[0].viTri,
+                coQuyenBan: rows[0].coQuyenBan
+            }
+            d.resolve(user);
+        } else {
+            d.resolve(null);
+        }
+    });
+
+    return d.promise;
 
 }

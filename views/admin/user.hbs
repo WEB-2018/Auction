@@ -11,6 +11,7 @@
         <th>Address</th>
         <th>Email</th>
         <th>Action</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody height="100px">
@@ -20,8 +21,9 @@
         <td>{{hoTen}}</td>
         <td>{{diaChi}}</td>
         <td>{{email}}</td>
-        <td><button onclick=deleteUser({{idNguoiDung}})>ban</button>
-        <a href="/admin/user/{{idNguoiDung}}/edit"><button>edit</button></a></td>
+        <td><button onclick="deleteUser({{idNguoiDung}})">ban</button>
+        </td>
+        <td><button><a href="/admin/user/{{idNguoiDung}}/edit">edit</a></button></td>
       </tr>
     {{/each}}
  
