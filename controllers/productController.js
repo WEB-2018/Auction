@@ -127,8 +127,12 @@ r.all('/search', function (req, res) {
     var isNewPage = req.query.newPage;
     var sortType = req.query.sortType;
     var category = req.query.category;
+    var priFrm = req.query.priFrm;
+    var priTo = req.query.priTo;
     console.log("sort type: " + sortType);
     console.log("category: " + category);
+    console.log("priFrm: " + priFrm);
+    console.log("priTo: " + priTo);
     AND_SEARCH = 0;
     OR_SEARCH = 1;
     var searchFunction = [
@@ -157,7 +161,7 @@ r.all('/search', function (req, res) {
             searchType = OR_SEARCH;
         }
 
-        if(category == 0){//catid = 0, tìm trong tất cả loại
+       /* if(category == 0){//catid = 0, tìm trong tất cả loại
             if(sortType=='1') {
                 productRepo.loadAllByTimeWithUserName()
                     .then(function (pRows) {
@@ -205,9 +209,9 @@ r.all('/search', function (req, res) {
                     })
             }
         }//catid = 0, tìm trong tất cả loại
-        else {//catid != 0, tìm trong loại category
+        else {//catid != 0, tìm trong loại category*/
             if(sortType=='1') {
-                productRepo.loadAllByCat(category)
+                productRepo.loadAllByCat(category, priFrm, priTo)
                     .then(function (pRows) {
                         pRows.sort(postTimeCompare);
                         // console.log(pRows);
@@ -224,7 +228,7 @@ r.all('/search', function (req, res) {
                         res.json(returnProduct);
                     })
             } else if(sortType=='2') {
-                productRepo.loadAllByCat(category)
+                productRepo.loadAllByCat(category, priFrm, priTo)
                     .then(function (pRows) {
                         pRows.sort(priceCompare);
                         // console.log(pRows);
@@ -241,7 +245,7 @@ r.all('/search', function (req, res) {
                         res.json(returnProduct);
                     })
             } else {
-                productRepo.loadAllByCat(category)
+                productRepo.loadAllByCat(category, priFrm, priTo)
                     .then(function (pRows) {
                         // console.log(pRows);
                         var products = [];
@@ -258,7 +262,7 @@ r.all('/search', function (req, res) {
                     })
             }
         }//catid = 0, tìm trong loại category
-    }
+
 })
 
 
