@@ -13,6 +13,7 @@ var express = require('express'),
     productController = require('./controllers/productController'),
     adminController = require('./controllers/adminController'),
     registerController = require('./controllers/registerController'),
+    userController = require('./controllers/userController'),
     categoryController = require('./controllers/categoryController');
 
 var app = express();
@@ -79,6 +80,7 @@ app.use('/product', productController);
 app.use('/category', categoryController);
 app.use('/admin', adminController);
 app.use('/register', registerController);
+app.use('/user', userController);
 app.use(handle404);
 
 app.listen(3000);

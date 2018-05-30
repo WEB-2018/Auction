@@ -110,6 +110,15 @@ exports.updateTinhTrang = function (entity) {
     return db.update(sql);
 
 }
+exports.updatePassword = function (entity) {
+    var sql = mustache.render(
+        'update nguoidung set password = "{{password}}" where idNguoiDung = {{idNguoiDung}}',
+        entity
+    );
+
+    return db.update(sql);
+
+}
 exports.updateInfo = function (entity) {
 
     var sql = mustache.render(

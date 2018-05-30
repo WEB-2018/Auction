@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="header" style="margin-left:0px">
+        <h2 class="uppercase">Profile</h2>
+    </div>  
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" action="/user"  id="information" >
+                <div class="row">
+                
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input class="form-control has-feedback" id="newName" name="newName" value="{{user.hoTen}}">
+                        </div>
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <label >Email</label>
+                                <input class="form-control" id="disabledInput" type="text" placeholder="{{user.email}}" disabled>
+                            </div>
+                        </fieldset>
+                        <div class="form-group has-feedback">
+                            <label>Address</label>
+                            <input class="form-control" id="newAddr" name="newAddr" value="{{user.diaChi}}">
+                        </div>
+                  
+                        <button type="submit">Update</button>
+
+              
+                    
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            <form method="post" action="/user/pswchange" id="changePWD" >
+                <div class="row">
+                   
+                        <div class="form-group">
+                            <label>Old Password</label>
+                            <input class="form-control has-feedback" id="oldPWD" name="oldPWD" >
+                        </div>
+                       
+                        <div class="form-group has-feedback">
+                            <label>New Password</label>
+                            <input class="form-control" id="newPWD" name="newPWD">
+                        </div>
+
+                         <div class="form-group has-feedback">
+                            <label>Confirm New Password</label>
+                            <input class="form-control" id="rePWD" name="rePWD">
+                        </div>
+                  
+                        <button type="submit">Change</button>
+
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

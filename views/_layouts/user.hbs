@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{{title}}</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/assests/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/assests/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/assests/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <!--<link href="/assests/vendor/morrisjs/morris.css" rel="stylesheet">-->
+
+    <!-- Custom Fonts -->
+    <link href="/assests/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates|Varela+Round" rel="stylesheet">
+
+    <!-- Product CSS -->
+    <link href="/assests/dist/css/Product.css" rel="stylesheet" type="text/css">
+ 
+    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/material-design-iconic-font.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.theme.rin.css">-->
+    <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/style.css">
+    <link rel="icon" href="/imgs/favicon.ico">
+    <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/main.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    {{>header}}
+
+    <div class="row">
+        <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
+            <div id="Time"></div>
+            <p id="result" style="display: none"></p>
+        </div>
+    </div>
+ 
+
+    <div class="row">
+        <div class="col-md-3 pull-left">
+               {{>userMenu}}
+        </div>
+        <div class="col-md-9">
+                {{{body}}}
+        </div>
+    </div>
+
+    {{>footer}}
+
+
+
+<!-- jQuery -->
+<script src="/assests/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/assests/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/assests/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<!--<script src="/assests/vendor/raphael/raphael.min.js"></script>-->
+<!--<script src="/assests/vendor/morrisjs/morris.min.js"></script>-->
+<!--<script src="/assests/data/morris-data.js"></script>-->
+
+<!-- Custom Theme JavaScript -->
+<script src="/assests/dist/js/sb-admin-2.js"></script>
+
+<!-- Product JS -->
+<script src="/assests/dist/js/Product.js"></script>
+<script type="text/javascript" src="/assests/js/product.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#information").validate({
+        rules: {
+            newName: "required",
+            newAddr: "required",
+        },
+        // Specify validation error messages
+        messages: {
+            newName: "Please enter your name",
+            newAddr: "Please enter your address",
+                     
+        },
+     
+     
+    });
+     $("#changePWD").validate({
+        rules: {
+            oldPWD: "required",
+            newPWD: {
+                required: true,
+                minlength: 6
+            },
+            rePWD: {
+                required: true,
+                equalTo: "#newPWD"
+            },
+        },
+        // Specify validation error messages
+        messages: {
+            oldPWD: "Please enter your current password",
+            newPWD: {
+                required: "Please enter a new password",
+                minlength: "Your password must have at least 6 letters"
+            },
+            rePWD: {
+                required: "Please retype your password",
+                equalTo: "This password is not correct",
+            },
+                     
+        },
+     
+     
+    });
+    /*function ChangePassword() {
+    var oldPWD = $('#oldPWD').val();
+    console.log(oldPWD);
+    $.ajax({
+        type: "POST",
+        url: "/user/pswchange",
+        
+        success: function (data) {
+            if(data=="success"){
+                window.location.href = '/admin/users'; 
+           
+
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}*/
+})
+
+</script>
+
+</body>
+
+</html>
