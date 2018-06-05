@@ -341,4 +341,45 @@ r.post('/user/:id/edit', function (req, res) {
     res.redirect(url);
 })
 
+
+function loadReportMonth(req,res,next) {
+    var thang = req.params.month;
+    productRepo.loadDanhSachHoaDon(thang)
+        .then(function (pRows) {
+            req.bill = pRows;
+            var tong = 0;
+            for(i=0;i<req.bill.length;i++)
+            {
+                tong = tong + req.bill[i].tongTien;
+            };
+            req.tong = tong;
+            console.log(req.tong);
+            console.log("pRows");
+            return next();
+        })
+
+
+}
+
+function renderReportMonth(req, res) {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('admin/report', {
+            title: "Admin",
+            layout: 'admin.hbs',
+            session: req.session,
+            bill: req.bill,
+            tong: req.tong,
+            block: req.block,
+            isLogged: req.session.isLogged
+        });
+    }
+}
+
+r.get('/report/:month',loadReportMonth,renderReportMonth);
 module.exports = r;

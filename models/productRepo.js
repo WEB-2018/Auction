@@ -135,3 +135,22 @@ exports.updateTinhTrang = function (entity) {
     return db.update(sql);
 
 }
+
+exports.loadDanhSachHoaDon = function (month) {
+    var obj = {
+        thang: month
+    }
+    if(month!=0) {
+        var sql = mustache.render(
+            sql = 'select soHoaDon, date_format(NgayLap,\'%d-%m-%Y %h:%i:%s\') as NgayLap, tenKhachHang, tongTien   from hoadon \n' +
+                'where NgayLap between "2018-{{thang}}-00" and "2018-{{thang}}-31"',
+            obj
+        );
+    }
+    else {
+        var sql = 'select soHoaDon, date_format(NgayLap,\'%d-%m-%Y %h:%i:%s\') as NgayLap, tenKhachHang, tongTien  from hoadon \n';
+    }
+    console.log(sql);
+
+    return db.load(sql);
+}

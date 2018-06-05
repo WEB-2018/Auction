@@ -1,0 +1,62 @@
+<div class="header" style="margin-left:0px">
+    <h2>
+        Report 2018
+    </h2>
+</div>
+
+
+
+<div class="container">
+    <select name="month" id="month" class="dropdown" style="height: 30px; width: 40%;" class="form-group" onchange="location=this.value;" >
+        <option value="">--Tháng--</option>
+        <option value="0">Tất cả</option>
+        <option value="01">Tháng 1</option>
+        <option value="02">Tháng 2</option>
+        <option value="03">Tháng 3</option>
+        <option value="04">Tháng 4</option>
+        <option value="05">Tháng 5</option>
+        <option value="06">Tháng 6</option>
+        <option value="07">Tháng 7</option>
+        <option value="08">Tháng 8</option>
+        <option value="09">Tháng 9</option>
+        <option value="10">Tháng 10</option>
+        <option value="11">Tháng 11</option>
+        <option value="12">Tháng 12</option>
+    </select>
+</div>
+<table class="table table-hover" style="overflow-y: scroll">
+    <thead>
+    <tr>
+        <th>Số hóa đơn</th>
+        <th>Ngày lập</th>
+        <th>Tên khách hàng</th>
+        <th>Tiền</th>
+    </tr>
+    </thead>
+    <tbody height="100px">
+    {{#each bill}}
+        <tr id="{{soHoaDon}}" class="userInfo">
+            <td>{{soHoaDon}}</td>
+            <td>{{NgayLap}}</td>
+            <td>{{tenKhachHang}}</td>
+            <td>{{tongTien}}</td>
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>
+
+<div class="container">
+    <div class="col-md-4 col-lg-4 pull-right">
+    <div id="searchFooter" class="col-md-12">
+        <br/>
+        <b>Tổng tiền:  {{tong}}</b>
+    </div>
+    </div>
+
+</div>
+
+
+
+
+
