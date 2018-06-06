@@ -27,7 +27,7 @@ function loadProductByCat(req,res,next) {
 
     var catId = req.params.id;
 
-    productRepo.loadAllByCat(catId)
+    productRepo.loadAllByCat1(catId)
         .then(function (pRows) {
             req.products = pRows;
             return next();

@@ -96,33 +96,7 @@
     $(document).ready(function () {
         formatEditor();
         //hien icon theo loai
-        $(".loai").each(function () {
-            if ($(this).html().indexOf("Sách") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-book\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Thiết bị số") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-phone\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Đồ gia dụng") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-lamp\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Thời trang") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-apple\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Làm đẹp") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-leaf\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Nhà cửa") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-home\" aria-hidden=\"true\"></i>");
-            }
-            else if ($(this).html().indexOf("Xe cộ") != -1) {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-wrench\" aria-hidden=\"true\"></i>");
-            }
-            else {
-                $(this).prepend("<i class=\"pull-right glyphicon glyphicon-pencil\" aria-hidden=\"true\"></i>");
-            }
-
-        })
+     
 
         //hide sidebar-seach khi o trang search
         if ($("title").html().indexOf("Tìm kiếm") != -1) {
@@ -210,6 +184,7 @@
         }
     }
 
+  
 
     function showMoreProduct() {
         var keyword = $('#txtSearch').val();

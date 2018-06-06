@@ -74,7 +74,23 @@ exports.loadById = function(id) {
     return d.promise;
 }
 
+exports.loadAllByCat1 = function (id) {
 
+    var d = q.defer();
+
+    var obj = {
+        loai: id
+    };
+
+        var sql = mustache.render(
+            'select * from sanpham where loai = {{loai}} and tinhTrang=0',
+            obj
+        );
+    
+  
+    return db.load(sql);
+
+}
 
 exports.loadAllByCat = function (id, priFrm, priTo) {
 
