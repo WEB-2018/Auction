@@ -2,7 +2,8 @@ var express = require('express'),
     productRepo = require('../models/productRepo'),
     restrict = require('../middle-wares/restrict'),
     accountRepo = require('../models/accountRepo'),
-    categoryRepo = require('../models/categoryRepo');
+    categoryRepo = require('../models/categoryRepo'),
+    commentRepo = require('../models/commentRepo');
 
 var r = express.Router();
 
@@ -65,17 +66,29 @@ function loadSanPhamLienQuan(req,res,next) {
             return next();
         })
 }
+function loadComment(req,res,next){
+
+    var idSanPham = req.params.id;
+    commentRepo.loadByProductId(idSanPham)
+        .then(function(pRows){
+            req.comment = pRows;
+            console.log(pRows);
+            return next();
+        })
+
+}
 function renderProductDetail(req, res) {
     res.render('product/productdetail', {
         title : "Product Detail",
         product : req.product,
         session: req.session,
         sanPhamLienQuan : req.sanPhamLienQuan,
+        comment : req.comment,
         isLogged: req.session.isLogged
     });
 
 }
-r.get('/detail/:id',loadProductById,loadSanPhamLienQuan,renderProductDetail);
+r.get('/detail/:id',loadProductById,loadSanPhamLienQuan,loadComment,renderProductDetail);
 
 
 function loadSanPham(req, res, next) {
@@ -129,20 +142,14 @@ r.all('/search', function (req, res) {
     var category = req.query.category;
     var priFrm = req.query.priFrm;
     var priTo = req.query.priTo;
-    console.log("sort type: " + sortType);
-    console.log("category: " + category);
-    console.log("priFrm: " + priFrm);
-    console.log("priTo: " + priTo);
+  
     AND_SEARCH = 0;
     OR_SEARCH = 1;
     var searchFunction = [
         andSearch,
         orSearch
     ];
-
-    console.log("count: " + count);
     var num = 4;
-    console.log("keyword: " + keyword);
     if(isNewPage=='1'){
         console.log("new page");
         res.render('product/search', {
@@ -160,56 +167,6 @@ r.all('/search', function (req, res) {
         if(keyword.indexOf('"') == -1) {
             searchType = OR_SEARCH;
         }
-
-       /* if(category == 0){//catid = 0, tìm trong tất cả loại
-            if(sortType=='1') {
-                productRepo.loadAllByTimeWithUserName()
-                    .then(function (pRows) {
-                        var products = [];
-                        var returnProduct = [];
-                        products = searchFunction[searchType](keyword, pRows);
-                        // console.log("total: " + products.length);
-                        //moi lan request tra ve num sp
-                        for(i = count - num; (i < products.length && i < count); i++){
-                            console.log("Return: " + products[i].tenSanPham);
-                            returnProduct.push(products[i]);
-                        }
-
-                        res.json(returnProduct);
-                    })
-            } else if(sortType=='2') {
-                productRepo.loadAllByPriceWithUserName()
-                    .then(function (pRows) {
-                        var products = [];
-                        var returnProduct = [];
-                        products = searchFunction[searchType](keyword, pRows);
-                        // console.log("Total: " + products.length);
-                        //moi lan request tra ve num sp
-                        for(i = count - num; (i < products.length && i < count); i++){
-                            console.log("Return: " + products[i].tenSanPham);
-                            returnProduct.push(products[i]);
-                        }
-
-                        res.json(returnProduct);
-                    })
-            } else {
-                productRepo.loadAllWithUserName()
-                    .then(function (pRows) {
-                        var products = [];
-                        var returnProduct = [];
-                        products = searchFunction[searchType](keyword, pRows);
-                        // console.log("Total: " + products.length);
-                        //moi lan request tra ve num sp
-                        for(i = count - num; (i < products.length && i < count); i++){
-                            console.log("Return: " + products[i].tenSanPham);
-                            returnProduct.push(products[i]);
-                        }
-
-                        res.json(returnProduct);
-                    })
-            }
-        }//catid = 0, tìm trong tất cả loại
-        else {//catid != 0, tìm trong loại category*/
             if(sortType=='1') {
                 productRepo.loadAllByCat(category, priFrm, priTo)
                     .then(function (pRows) {
@@ -264,6 +221,26 @@ r.all('/search', function (req, res) {
         }//catid = 0, tìm trong loại category
 
 })
+r.post('/comment', function (req, res) {
+    var name = req.body.usercmt;
+    if(name==null)
+    {
+        name = req.session.user.hoTen;
+    }
+    var idSanPham = req.body.prodID;
+    var user = req.body.idNguoiDung;
+    var comment = req.body.comment;
 
+    var dt = new Date();
+    var month = dt.getMonth() +1;
+    var time = dt.getFullYear() + ":" + month +  ":" + dt.getDate() + ":" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+    var data = {idSanPham: idSanPham, tenNguoiBinhLuan: name, binhLuan: comment, thoiDiem:time};
+    console.log(data);
+    commentRepo.insert(data).then(function () {
+        res.send("success");
+        return;
+    })
+})
 
 module.exports = r;

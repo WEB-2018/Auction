@@ -157,6 +157,35 @@
         showMoreProduct();
     })
 
+    function Comment(id) {
+       
+        var comment = $('#cmt').val();
+        var usercmt = $('#usercmt').val();
+       
+        var Data = {
+            prodID: id,
+            usercmt: usercmt,
+            comment: comment
+        };
+     
+        $.ajax({
+            type: "POST",
+            url: "/product/comment",
+            data: Data,
+            success: function (data) {
+                if(data=="success"){
+                    $('#newcmt').append(' <h5 style="color:orange"> <i class="fa fa-user" style="color:#434343">  </i>&nbsp'+usercmt+'</h5>'
+                   +'<p style="text-align:right;font-style:italic;font-size:8pt">'+ comment+'</p>').fadeIn('slow');;
+                }else {
+                    alert("Error!Try again!");
+                }
+            }
+        });
+       
+    }
+
+ 
+
     function disableSortTimeButton() {
         if (!$('#buttonSortPrice').hasClass('btnEnable')) {
             $('#buttonSortPrice').addClass('btnEnable');
@@ -185,6 +214,36 @@
     }
 
   
+     function showMoreComment() {
+        var keyword = "";
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.response);
+                var productCount = products.length;
+                i = 0;
+                while (i < productCount) {
+                    $('#comment').append(productToThumbnail(products[i]));
+                    i++;
+                }
+                count = count + num;
+
+                if (productCount < num) {
+                    $("#btnLoadMoreProduct").css('display', 'none');
+                    $("#searchFooter2").css('display', 'block');
+                }
+            }
+        };
+        var category = 1;
+        var priFrm = 0;
+        var priTo= 5000;
+        console.log("break point");
+        var url = "/product/search?keyword=" + keyword + "&count=" + count + "&sortType=" + sortType
+                + "&category=" + category  + "&priFrm=" + priFrm + "&priTo=" + priTo;
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
 
     function showMoreProduct() {
         var keyword = $('#txtSearch').val();

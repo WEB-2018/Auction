@@ -48,9 +48,31 @@
      
             <div class="info box-shadow" style="padding: 30px">
             <h6 style="font-weight: bold;">COMMENT</h6>
-           
-  
-        </div>
+            <div class="container" id="comment">
+
+            </div>
+                <form action="#">
+
+                    {{#if session.user}}
+                       
+                        <input type="text" id="usercmt" value="{{session.user.hoTen}}" style="display:none"><br>
+                     
+                    {{else}}
+                         <input type="text" id="usercmt" placeholder="Your name.."><br>
+                         
+                    {{/if}}
+                        <input type="text" id="cmt" placeholder="Type your comment.."><br>
+                        <button class="btn primary" onclick="Comment({{product.idSanPham}})">Submit</button>
+                     
+                </form>
+                <hr>
+                <div id="newcmt" value=""></div>
+                {{#each comment}}
+               
+                <h5 style="color:orange"> <i class="fa fa-user" style="color:#434343"> </i>&nbsp{{tenNguoiBinhLuan}}</h5>
+                   <p style="text-align:right;font-style:italic;font-size:8pt"> {{binhLuan}}</p>
+                {{/each}}
+            </div>
             <br>
             
         </div>
