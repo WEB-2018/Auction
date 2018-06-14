@@ -64,4 +64,61 @@ r.post('/pswchange', function (req, res) {
 
 })
 
+function loadCart(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    productRepo.loadCart(id)
+        .then(function (pRow) {
+            req.cart = pRow;
+            var tong = 0;
+            for(i=0;i<req.cart.length;i++)
+            {
+                tong = tong + req.cart[i].tong;
+            };
+            console.log(tong);
+            req.tongCong = tong;
+            next();
+        })
+
+}
+
+function renderCart(req, res) {
+    res.render('user/cart', {
+        title : "Cart",
+        session: req.session,
+        layout: 'user.hbs',
+        cart: req.cart,
+        user: req.user,
+        tongCong: req.tongCong,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/cart',loadUserById,loadCart,renderCart);
+
+function loadCheckout(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    productRepo.loadCheckout(id)
+        .then(function (pRow) {
+            req.infor = pRow;
+            console.log(req.infor.diaChi);
+            next();
+        })
+}
+
+function renderCheckout(req, res) {
+    res.render('user/checkout', {
+        title : "Checkout",
+        session: req.session,
+        user: req.user,
+        infor: req.infor,
+        tongCong: req.tongCong,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/checkout',loadUserById,loadCheckout,loadCart,renderCheckout);
+
+
 module.exports = r;

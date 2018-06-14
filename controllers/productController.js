@@ -81,6 +81,7 @@ function renderProductDetail(req, res) {
     res.render('product/productdetail', {
         title : "Product Detail",
         product : req.product,
+        layout: 'main.hbs',
         session: req.session,
         sanPhamLienQuan : req.sanPhamLienQuan,
         comment : req.comment,
@@ -241,6 +242,23 @@ r.post('/comment', function (req, res) {
         res.send("success");
         return;
     })
+})
+
+r.post('/addCart', function (req, res) {
+
+    if(req.session.isLogged != true){
+        res.redirect('');
+        console.log("Not logged");
+        return;
+    }
+    else{
+        var idNguoiDung = req.session.user.idNguoiDung;
+        var idSanPham = req.body.idSanPham;
+        var soLuong = req.body.soLuong;
+        productRepo.insertCart(idNguoiDung,idSanPham,soLuong);
+        res.send("success");
+    }
+
 })
 
 module.exports = r;

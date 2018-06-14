@@ -1,0 +1,30 @@
+<div class="container-fluid" style="background-color: white; ">
+    <div class="row">
+        <div class="col-md-9 col-lg-9">
+            <div class="header" style="margin-left:0px">
+                <h2 class="uppercase">Thông tin giao hàng</h2>
+            </div>
+            <div class="container">
+                    <form >
+                        <div class="row">
+
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input class="form-control has-feedback" id="newName" name="newName" value="{{infor.hoTen}}" placeholder="Họ Tên">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input id="numberPhone" type="number" placeholder="Xin vui lòng điền số điện thoại của bạn" data-meta="Field" value="{{infor.sdt}}" inputmode="numeric" pattern="[0-9]*">
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input class="form-control has-feedback" id="Address" name="Address" value="{{infor.diaChi}}" placeholder="Vui lòng nhập địa chỉ của bạn">
+                            </div>
+
+                            <button class="btn btn-primary pull-right" type="submit">Lưu</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>

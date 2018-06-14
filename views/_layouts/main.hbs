@@ -302,6 +302,29 @@
         return res;
     }
 
+    function addProductToCart(idProduct){
+
+        var data = {
+            //idNguoiDung: session.user.idNguoiDung,
+            idSanPham: idProduct,
+            soLuong: $("#dauGia").val()
+
+        };
+        console.log(data);
+        $.ajax( {
+            type: "POST",
+            url: "/product/addCart",
+            data: data,
+            success: function (data) {
+                if(data=="success"){
+                    alert("Success!");
+                }else {
+                    alert("Error! Try again!");
+                }
+            }
+        } );
+    }
+
 </script>
 
 

@@ -89,7 +89,7 @@
 
 <!-- Product JS -->
 <script src="/assests/dist/js/Product.js"></script>
-<script type="text/javascript" src="/assests/js/product.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -152,8 +152,31 @@ $(document).ready(function () {
             }
         }
     });
+
 }*/
 })
+function addProductToCart(idProduct){
+
+    var data = {
+        //idNguoiDung: session.user.idNguoiDung,
+        idSanPham: idProduct,
+        soLuong: $("#dauGia").val()
+
+    };
+    alert("Error! Try again!");
+    $.ajax( {
+        type: "POST",
+        url: "/product/addCart",
+        data: data,
+        success: function (data) {
+            if(data=="success"){
+                alert("Success!");
+            }else {
+                alert("Error! Try again!");
+            }
+        }
+    } );
+}
 
 </script>
 
