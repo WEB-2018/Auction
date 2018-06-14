@@ -34,13 +34,18 @@
                     </div>
                     {{#if session.user}}
                     <div class="col-md-3">
-                        <a class="btn btn-default pull-right" role="button" href="/user">Setting</a>
-                        <a class="btn btn-default pull-right" role="button" href="/logout">Log Out</a>
+                     
+                        <a class="btn btn-default pull-right" role="button" href="/logout"><i class="fa fa-sign-out" style="color:orange"></i></a>
+                        <a class="btn btn-default pull-right" role="button" href="/user"><i class="fa fa fa-user" style="color:orange"></i></a>
+                         <a class="btn btn-default pull-right" role="button" href="/user/cart"><i class="fa fa-shopping-cart" style="color:orange"></i></a>
+                       
+
                     </div>
                     {{else}}
                     <div class="col-md-3">
-                        <a class="btn btn-default pull-right" role="button" href="/login">Log In</a>
-                        <a class="btn btn-default pull-right" role="button" href="/register">Register</a>
+                        <a class="btn btn-default pull-right" role="button" href="/login"><i class="fa fa-sign-in" style="color:orange"></i></a>
+
+                        <a class="btn btn-default pull-right" role="button" href="/register"><i class="fa fa fa-user-plus" style="color:orange"></i></a>
                     </div>
                     {{/if}}
 

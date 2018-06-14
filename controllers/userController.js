@@ -2,6 +2,7 @@ var express = require('express'),
     productRepo = require('../models/productRepo'),
     categoryRepo = require('../models/categoryRepo'),
     accountRepo = require('../models/accountRepo'),
+    cartRepo = require('../models/cartRepo'),
     restrict = require('../middle-wares/restrict');
     crypto = require('crypto');
     multer = require('multer');
@@ -38,6 +39,22 @@ r.post('/', function (req, res) {
     //console.log(user);
     accountRepo.updateInfo(user);
     res.redirect('/user')
+
+})
+r.post('/cart/del', function (req, res) {
+    var idSanPham = req.body.idSanPham;
+    cartRepo.delete(idSanPham);
+    res.send('success');
+
+})
+r.post('/cart/update', function (req, res) {
+    var data={
+        idNguoiDung: req.session.user.idNguoiDung,
+        idSanPham: req.body.idSanPham,
+        soLuong: req.body.soLuong
+    }
+    cartRepo.updateSLg(data);
+    res.send('success');
 
 })
 r.post('/pswchange', function (req, res) {

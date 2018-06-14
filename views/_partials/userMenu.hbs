@@ -1,7 +1,10 @@
 <div class="sidebar-nav navbar-collapse box-shadow" style="margin-left:30px; ">
             <div class="user-profile box-shadow bg-shape" style="box-shadow: 2px 2px 2px">
                 <div class="user-profile-photo">
-                    <img src="/imgs/user/{{user.idNguoiDung}}.jpg" alt="">
+                    
+                        <img src="/imgs/user/{{user.idNguoiDung}}.jpg" onerror="if (this.src != 'error.jpg') this.src = '/imgs/user/0.png' alt="">
+                  
+                
                 </div>
                 <div class="user-profile-info pt-20">
                     <h5 class="member-name" style="padding-top:20px;color:orange">{{user.hoTen}}</h5>                                 

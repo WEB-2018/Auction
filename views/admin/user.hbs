@@ -14,14 +14,14 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody height="100px">
+    <tbody height="100px" id="USER">
     {{#each users}}
       <tr id="{{idNguoiDung}}" class="userInfo">
         <td>{{idNguoiDung}}</td>
         <td>{{hoTen}}</td>
         <td>{{diaChi}}</td>
         <td>{{email}}</td>
-        <td><button onclick="deleteUser({{idNguoiDung}})">ban</button>
+        <td><button onclick="deleteUser('{{idNguoiDung}}','{{hoTen}}','{{diaChi}}','{{email}}')">ban</button>
         </td>
         <td><button><a href="/admin/user/{{idNguoiDung}}/edit">edit</a></button></td>
       </tr>
@@ -44,14 +44,14 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody height="100px">
+    <tbody height="100px" id="BAN">
     {{#each block}}
-      <tr id="{{idNguoiDung}}" class="userBan">
+      <tr id="Ban_{{idNguoiDung}}" class="userBan">
         <td>{{idNguoiDung}}</td>
         <td>{{hoTen}}</td>
         <td>{{diaChi}}</td>
         <td>{{email}}</td>
-        <td><button onclick=resetUser({{idNguoiDung}})>reset</button></td>
+        <td><button onclick="resetUser('{{idNguoiDung}}','{{hoTen}}','{{diaChi}}','{{email}}')">reset</button></td>
       </tr>
     {{/each}}
  
