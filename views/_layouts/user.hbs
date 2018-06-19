@@ -135,29 +135,9 @@ $(document).ready(function () {
      
      
     });
-    /*function ChangePassword() {
-    var oldPWD = $('#oldPWD').val();
-    console.log(oldPWD);
-    $.ajax({
-        type: "POST",
-        url: "/user/pswchange",
-        
-        success: function (data) {
-            if(data=="success"){
-                window.location.href = '/admin/users'; 
-           
-
-            }else {
-                alert("Error!Try again!");
-            }
-        }
-    });
-
-}*/
 })
 
-<<<<<<< HEAD
-=======
+
     var data = {
         //idNguoiDung: session.user.idNguoiDung,
         idSanPham: idProduct,
@@ -176,8 +156,8 @@ $(document).ready(function () {
                 alert("Error! Try again!");
             }
         }
-    } );
-}
+    });
+
 function deleteCart(idSanPham){
     var data = {
         idSanPham: idSanPham
@@ -237,7 +217,7 @@ function dec1unit(idSanPham){
 
 }
 function inc1unit(idSanPham){
->>>>>>> 42752ec3c89e2c54801394581fa96a2c99e62dd7
+
 
     var number = $('#val_'+idSanPham).val();
     number = parseInt(number);
