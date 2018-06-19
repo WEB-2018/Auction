@@ -8,6 +8,47 @@ var express = require('express'),
     multer = require('multer');
     fs = require('fs');
 var r = express.Router();
+var idCat_Arr = [];
+var labels = [];
+var datax = [];
+
+
+
+
+function loadAllCateXX(req,res,next) {
+   
+    
+    categoryRepo.loadAll()
+    .then(function (pRows) {
+            req.category = pRows;
+            
+            for( i = 0; i < pRows.length; i++)
+            {
+                idCat_Arr.push(pRows[i].idLoaiSanPham);
+                labels.push(pRows[i].tenLoaiSanPham);
+                
+                //datax.push(x);
+               // console.log("x = " +);
+            }
+            //console.log("ARRAY" + idCat_Arr);
+           // console.log("label" + labels);
+            //console.log("data" + datax);
+           
+            return next();
+        })
+}
+function CountProduct(req,res,next){
+
+    for( i = 0; i < idCat_Arr.length; i++)
+       {
+            productRepo.loadAllByCat1(idCat_Arr[i])
+            .then(function(products){
+               datax.push(products.length);
+               console.log(datax);
+            })
+       } 
+    return next();
+}
 
 function renderAdminPage(req, res) {
     if(req.session.admin != 'admin'){
@@ -17,6 +58,9 @@ function renderAdminPage(req, res) {
     }
     else
     {
+           console.log("ARRAY" + idCat_Arr);
+            console.log("label" + labels);
+            console.log( datax);
         res.render('admin/dashboard', {
         title: "Admin",
         layout: 'admin.hbs',
@@ -27,13 +71,13 @@ function renderAdminPage(req, res) {
    
 }
 
-r.get('/',renderAdminPage);
+r.get('/',loadAllCateXX,CountProduct,renderAdminPage);
 
 function loadAllUsers(req,res,next) {
     accountRepo.loadAll()
         .then(function (pRows) {
             req.users = pRows;
-            console.log("pRows");
+    
             return next();
         })
 
@@ -42,7 +86,7 @@ function loadBlockUsers(req,res,next) {
     accountRepo.loadBlock()
         .then(function (pRows) {
             req.block = pRows;
-            console.log("pRows");
+            
             return next();
         })
 
@@ -61,6 +105,7 @@ function renderUserList(req, res) {
             layout: 'admin.hbs',
             session: req.session,
             users: req.users,
+            labels: labels,
             block: req.block,
             isLogged: req.session.isLogged
         });
@@ -73,7 +118,7 @@ function loadAllProducts(req,res,next) {
     productRepo.loadAll()
         .then(function (pRows) {
             req.products = pRows;
-            console.log("pRows");
+            
             return next();
         })
 
@@ -82,7 +127,7 @@ function loadAllCate(req,res,next) {
     categoryRepo.loadAll()
         .then(function (pRows) {
             req.categories = pRows;
-            console.log("pRows");
+            
             return next();
         })
 

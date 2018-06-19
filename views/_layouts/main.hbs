@@ -310,6 +310,7 @@
             soLuong: $("#dauGia").val()
 
         };
+
         console.log(data);
         $.ajax( {
             type: "POST",
@@ -319,8 +320,12 @@
                 if(data=="success"){
                     alert("Success! Added " + $("#dauGia").val() + " product(s)!");
                 }else {
+
+    
+
                     alert("Login to add product!");
                     window.location.href = '/login';
+
                 }
             }
         } );

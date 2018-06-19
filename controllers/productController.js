@@ -251,6 +251,7 @@ r.post('/addCart', function (req, res) {
         res.redirect('/');
         console.log("Not logged");
         return;
+
     }
     else{
         var idNguoiDung = req.session.user.idNguoiDung;

@@ -1,6 +1,6 @@
 .error{
-  padding: 10px;
-  color: yellow;
+  padding-top: 10px;
+  color: #337ab7;
   font-size: 10px;
 }
 #register form {

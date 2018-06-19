@@ -1,19 +1,49 @@
-<div class="container">
-<div class="header" style="margin-left:0px">
-  <h2>Dashboard</h2>
- </div>  
-    <div class="row">
-        <div class="col-md-3" style="height:100px;background-color:#3c8dbc;margin-left:20px;margin-right:20px">
-            <h1 class="" style="color: white">50</h1>
-            <h4 style="color: white">Total Users</h4>
-        </div>
-        <div class="col-md-3 " style="height:100px;background-color:#3c8dbc; margin-left:20px;margin-right:20px">
-            <h1 class="" style="color: white">50</h1>
-            <h4 style="color: white">Total Products</h4>
-        </div>
-        <div class="col-md-3" style="height:100px;background-color:#3c8dbc;margin-left:20px;margin-right:20px">
-            <h1 class="" style="color: white">50</h1>
-            <h4 style="color: white">Total Bid Times</h4>
-        </div>
-    </div>
+<div class="container" onload="load()">
+    <div class="header" style="margin-left:0px">
+      <h2>Dashboard</h2>
+     </div>  
+       <div class="container text-center">
+  <h2>Coding Skillsessst</h2>
+  <div id="graphDiv">
+    <canvas id="skillsChart"></canvas>
+  </div>
 </div>
+   
+</div>
+<script>
+    var ctx = document.getElementById('skillsChart').getContext('2d');
+
+    var myRadarChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+        datasets: [{
+            data: [85, 80, 90, 60, 50, 50],
+            backgroundColor: [
+              '#ff6666',
+              '#ffd966',
+              '#8cff66',
+              '#66b3ff',
+              '#b366ff',
+              '#ff66b3'
+            ]
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'HTML5',
+            'CSS3',
+            'Bootstrap',
+            'JavaScript',
+            'jQuery',
+            'Chart.js'
+        ]
+        },
+      options: {
+            startAngle: 2.8,
+            legend: {
+              position: 'bottom'
+            }
+            },
+        });
+
+ </script>
