@@ -317,9 +317,10 @@
             data: data,
             success: function (data) {
                 if(data=="success"){
-                    alert("Success!");
+                    alert("Success! Added " + $("#dauGia").val() + " product(s)!");
                 }else {
-                    alert("Error! Try again!");
+                    alert("Login to add product!");
+                    window.location.href = '/login';
                 }
             }
         } );

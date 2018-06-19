@@ -3,6 +3,7 @@ var express = require('express'),
     restrict = require('../middle-wares/restrict'),
     accountRepo = require('../models/accountRepo'),
     categoryRepo = require('../models/categoryRepo'),
+    orderRepo = require('../models/orderRepo'),
     commentRepo = require('../models/commentRepo');
 
 var r = express.Router();
@@ -247,7 +248,7 @@ r.post('/comment', function (req, res) {
 r.post('/addCart', function (req, res) {
 
     if(req.session.isLogged != true){
-        res.redirect('');
+        res.redirect('/');
         console.log("Not logged");
         return;
     }
@@ -255,7 +256,7 @@ r.post('/addCart', function (req, res) {
         var idNguoiDung = req.session.user.idNguoiDung;
         var idSanPham = req.body.idSanPham;
         var soLuong = req.body.soLuong;
-        productRepo.insertCart(idNguoiDung,idSanPham,soLuong);
+        orderRepo.insertCart(idNguoiDung,idSanPham,soLuong);
         res.send("success");
     }
 

@@ -26,7 +26,7 @@
 
     <!-- Product CSS -->
     <link href="/assests/dist/css/Product.css" rel="stylesheet" type="text/css">
- 
+
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
@@ -47,26 +47,23 @@
 </head>
 
 <body>
-    {{>header}}
+{{>header}}
 
-    <div class="row">
-        <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
-            <div id="Time"></div>
-            <p id="result" style="display: none"></p>
-        </div>
+<div class="row">
+    <div class="col-md-2 pull-right text-right" style="padding-right: 50px;">
+        <div id="Time"></div>
+        <p id="result" style="display: none"></p>
     </div>
- 
+</div>
 
-    <div class="row">
-        <div class="col-md-3 pull-left">
-               {{>userMenu}}
-        </div>
-        <div class="col-md-9">
-                {{{body}}}
-        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{{body}}}
     </div>
+</div>
 
-    {{>footer}}
+
 
 
 
@@ -92,71 +89,29 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
 <script type="text/javascript">
-$(document).ready(function () {
-    $("#information").validate({
-        rules: {
-            newName: "required",
-            newAddr: "required",
-        },
-        // Specify validation error messages
-        messages: {
-            newName: "Please enter your name",
-            newAddr: "Please enter your address",
-                     
-        },
-     
-     
-    });
-     $("#changePWD").validate({
-        rules: {
-            oldPWD: "required",
-            newPWD: {
-                required: true,
-                minlength: 6
-            },
-            rePWD: {
-                required: true,
-                equalTo: "#newPWD"
-            },
-        },
-        // Specify validation error messages
-        messages: {
-            oldPWD: "Please enter your current password",
-            newPWD: {
-                required: "Please enter a new password",
-                minlength: "Your password must have at least 6 letters"
-            },
-            rePWD: {
-                required: "Please retype your password",
-                equalTo: "This password is not correct",
-            },
-                     
-        },
-     
-     
-    });
-    /*function ChangePassword() {
-    var oldPWD = $('#oldPWD').val();
-    console.log(oldPWD);
-    $.ajax({
-        type: "POST",
-        url: "/user/pswchange",
-        
-        success: function (data) {
-            if(data=="success"){
-                window.location.href = '/admin/users'; 
-           
+    function finishPayment(){
 
-            }else {
-                alert("Error!Try again!");
+        var data = {
+            //idNguoiDung: session.user.idNguoiDung,
+            hoTen: $("#name").val(),
+            sdt: $("#numberPhone").val(),
+            diaChi: $("#address").val(),
+            tongTien: {{tongCong}}
+        };
+        $.ajax( {
+            type: "POST",
+            url: "/user/finishPayment",
+            data: data,
+            success: function (data) {
+                if(data=="success"){
+                    alert("Thanh toán thành công!");
+                    window.location.href = '/';
+                }else {
+                    alert("Error! Try again!");
+                }
             }
-        }
-    });
-
-}*/
-})
-
-
+        } );
+    }
 </script>
 
 </body>
