@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="header" style="margin-left:0px">
+    <h2>
+        Your Orders
+    </h2>
+</div>
+
+
+    <table class="table table-hover" style="overflow-y: scroll">
+        <thead>
+        <tr>
+            <th>Số hóa đơn</th>
+            <th>Ngày lập</th>
+            <th>Tên khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Tình trạng</th>
+        </tr>
+        </thead>
+        <tbody height="100px">
+        {{#each orders}}
+            <tr id="{{soHoaDon}}" class="userInfo">
+                <td>{{soHoaDon}}</td>
+                <td>{{NgayLap}}</td>
+                <td>{{tenKhachHang}}</td>
+                <td>{{tongTien}}</td>
+                <td>Đã giao</td>
+            </tr>
+        {{/each}}
+        <td><a href="/user" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back
+        </a>
+        </td>
+        </tbody>
+    </table>
+
+
+</div>
+
+
+
+
+

@@ -318,9 +318,14 @@
             data: data,
             success: function (data) {
                 if(data=="success"){
-                    alert("Success!");
+                    alert("Success! Added " + $("#dauGia").val() + " product(s)!");
                 }else {
+<<<<<<< HEAD
                     alert("You must login!");
+=======
+                    alert("Login to add product!");
+                    window.location.href = '/login';
+>>>>>>> 334037b2c258db0ce77408ea6734d7a5f28a7a97
                 }
             }
         } );

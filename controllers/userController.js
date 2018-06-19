@@ -2,7 +2,11 @@ var express = require('express'),
     productRepo = require('../models/productRepo'),
     categoryRepo = require('../models/categoryRepo'),
     accountRepo = require('../models/accountRepo'),
+<<<<<<< HEAD
+    orderRepo = require('../models/orderRepo'),
+=======
     cartRepo = require('../models/cartRepo'),
+>>>>>>> 42752ec3c89e2c54801394581fa96a2c99e62dd7
     restrict = require('../middle-wares/restrict');
     crypto = require('crypto');
     multer = require('multer');
@@ -83,7 +87,7 @@ r.post('/pswchange', function (req, res) {
 
 function loadCart(req, res, next) {
     var id = req.session.user.idNguoiDung;
-    productRepo.loadCart(id)
+    orderRepo.loadCart(id)
         .then(function (pRow) {
             req.cart = pRow;
             var tong = 0;
@@ -113,9 +117,9 @@ function renderCart(req, res) {
 
 r.get('/cart',loadUserById,loadCart,renderCart);
 
-function loadCheckout(req, res, next) {
+function loadInforCheckout(req, res, next) {
     var id = req.session.user.idNguoiDung;
-    productRepo.loadCheckout(id)
+    orderRepo.loadCheckout(id)
         .then(function (pRow) {
             req.infor = pRow;
             console.log(req.infor.diaChi);
@@ -123,10 +127,35 @@ function loadCheckout(req, res, next) {
         })
 }
 
+function loadCartCheckout(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    orderRepo.loadCart(id)
+        .then(function (pRow) {
+            req.cart = pRow;
+            var tong = 0;
+            var tongSoLuong = 0;
+            for(i=0;i<req.cart.length;i++)
+            {
+                tong = tong + req.cart[i].tong;
+            };
+            for(i=0;i<req.cart.length;i++)
+            {
+                tongSoLuong = tongSoLuong + req.cart[i].soLuong;
+            };
+            console.log(tong);
+            req.tongCong = tong;
+            req.tongSoLuong = tongSoLuong;
+            next();
+        })
+
+}
+
+
 function renderCheckout(req, res) {
     res.render('user/checkout', {
         title : "Checkout",
         session: req.session,
+        layout: 'blank.hbs',
         user: req.user,
         infor: req.infor,
         tongCong: req.tongCong,
@@ -135,7 +164,58 @@ function renderCheckout(req, res) {
 
 }
 
-r.get('/checkout',loadUserById,loadCheckout,loadCart,renderCheckout);
+r.get('/checkout',loadUserById,loadInforCheckout,loadCartCheckout,renderCheckout);
 
+r.post('/finishPayment', function (req, res) {
+    var idNguoiDung = req.session.user.idNguoiDung;
+    var hoTen= req.body.hoTen;
+    var diaChi = req.body.diaChi;
+    var soDienThoai = req.body.sdt;
+    var tongTien = req.body.tongTien;
+    var idHoaDon;
+    orderRepo.insertOrder(idNguoiDung,hoTen,diaChi,soDienThoai,tongTien);
+    orderRepo.getIDOrder()
+        .then(function (pRow) {
+            idHoaDon = pRow[pRow.length - 1].ID +   1;
+            orderRepo.loadCart(idNguoiDung)
+                .then(function (pRow1) {
+                    console.log(pRow1);
+                    for (i=0;i<pRow1.length;i++)
+                    {
+
+                        orderRepo.insertOrderDetail(idHoaDon,pRow1[i].idSanPham,pRow1[i].tenSanPham,pRow1[i].soLuong,pRow1[i].giaHienTai,pRow1[i].tong);
+                    }
+                    orderRepo.deleteCart(idNguoiDung);
+                })
+        })
+    res.send("success");
+
+
+
+})
+
+function loadOrdered(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    orderRepo.loadOrdered(id)
+        .then(function (pRow) {
+            console.log(pRow);
+            req.orders = pRow;
+            next();
+        })
+}
+
+function renderOrdered(req, res) {
+    res.render('user/ordered', {
+        title : "Your Orders",
+        session: req.session,
+        layout: 'user.hbs',
+        user: req.user,
+        orders: req.orders,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/orders',loadUserById,loadOrdered,renderOrdered);
 
 module.exports = r;
