@@ -247,9 +247,7 @@ r.post('/comment', function (req, res) {
 r.post('/addCart', function (req, res) {
 
     if(req.session.isLogged != true){
-        res.redirect('');
-        console.log("Not logged");
-        return;
+        res.send("fail");
     }
     else{
         var idNguoiDung = req.session.user.idNguoiDung;

@@ -6,6 +6,7 @@
 <html lang="en">
     <head>
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/jquery-migrate-1.4.1.js"></script>
+     <link rel="icon" href="/imgs/favicon.ico">
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/material-design-iconic-font.css">
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/login.css">
-
+     <title>{{title}}</title>
     <link rel="icon" href="/assests/bootstrap-3.3.7-dist/img/icon/lucus.png">
     <script type="text/javascript" src="/assests/bootstrap-3.3.7-dist/js/main.js"></script>
     <link rel="stylesheet" href="/assests/bootstrap-3.3.7-dist/css/userinfo.css">
@@ -94,7 +95,38 @@ $(document).ready(function () {
         // in the "action" attribute of the form when valid
      
     });
+     $("#newpw-form").validate({
+        rules: {
+            newpw: {
+                required: true,
+                minlength: 6
+            },
+            pwdconfirm: {
+                required: true,
+                equalTo: "#newpw"
+            },
+          
+        },
+        // Specify validation error messages
+        messages: {
+           
+            newpw: {
+                required: "Please enter your password",
+                minlength: "Your password must have at least 6 letters"
+            },
+            pwdconfirm: {
+                required: "Please retype your password",
+                equalTo: "This password is not correct"
+            },
+          
+           
+        },
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
+     
+    });
 })
+
 
 </script>
 </body>

@@ -7,9 +7,28 @@ exports.loadAll = function() {
     var sql = 'select * from nguoidung where viTri=0';
     return db.load(sql);
 }
+exports.checkCode = function(entity) {
+     var d = q.defer();
+
+
+
+    var sql = mustache.render(
+        'select * from nguoidung where email = "{{email}}" and resetCode = "{{code}}"',
+        entity
+    );
+
+    db.load(sql).then(function(rows) {
+        d.resolve(rows[0]);
+    });
+
+    return d.promise;
+}
+
+
 exports.loadBlock = function() {
     var sql = 'select * from nguoidung where viTri=-1';
     return db.load(sql);
+
 }
 exports.checkAccount = function (entity) {
 
@@ -75,11 +94,29 @@ exports.insert = function (entity) {
 
     return db.insert(sql);
 }
+exports.createCode = function (entity) {
 
+    var sql = mustache.render(
+        'update nguoidung set resetCode = "{{resetCode}}" where email = "{{email}}"',
+        entity
+    );
+
+    return db.update(sql);
+}
 exports.update = function (entity) {
 
     var sql = mustache.render(
         'update nguoidung set password = "{{password}}",hoTen = "{{hoTen}}",diaChi = "{{diaChi}}", coQuyenBan = "{{coQuyenBan}}" where email = "{{email}}"',
+        entity
+    );
+
+    return db.update(sql);
+
+}
+exports.changePWD = function (entity) {
+
+    var sql = mustache.render(
+        'update nguoidung set password = "{{newpassword}}",resetCode = "0" where email = "{{email}}"',
         entity
     );
 

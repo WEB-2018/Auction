@@ -310,6 +310,7 @@
             soLuong: $("#dauGia").val()
 
         };
+
         console.log(data);
         $.ajax( {
             type: "POST",
@@ -319,7 +320,7 @@
                 if(data=="success"){
                     alert("Success!");
                 }else {
-                    alert("Error! Try again!");
+                    alert("You must login!");
                 }
             }
         } );
