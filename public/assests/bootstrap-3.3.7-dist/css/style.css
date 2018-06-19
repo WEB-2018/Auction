@@ -999,6 +999,7 @@ select,input[type="text"], input[type="password"], input[type="date"], input[typ
   width: 70%;
   border-radius: 50%;
   border: 6px solid white;
+  
 }
 .user-profile{
     width: 250px;

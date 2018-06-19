@@ -105,40 +105,67 @@ function deleteProduct(id) {
         }
     });
 }
-function resetUser(id) {
+function resetUser(id, name, addr, email) {
     var userData = {
-        id: id
+        id: id,
+        name: name,
+        addr: addr,
+        email: email
     };
     $.ajax({
         type: "POST",
         url: "/admin/user/reset",
         data: userData,
-        success: function (data) {
+         success: function (data) {
             if(data=="success"){
-                window.location.href = '/admin/users'; 
-            }else {
-                alert("Error!Try again!");
-            }
-        }
+                $('#Ban_'+id).remove()
+                $('#USER').append('<tr id="Ban_'+id +'" class="userBan">'
+                +'<td>'+id+'</td>'
+                +'<td>'+name+'</td>'
+                +'<td>'+addr+'</td>'
+                +'<td>'+email+'</td>'
+                + '<td><button onclick="deleteUser("'+id+'","'+name+'","'+addr+'","'+email+'")">ban</button>'
+                +'</td>'
+                +'<td><button><a href="/admin/user/'+id+'/edit">edit</a></button></td>'
+                +'</tr>')
+                        //window.location.href = '/admin/users'; 
+                   
+
+                    }else {
+                        alert("Error!Try again!");
+                    }
+                }
     });
 }
-function deleteUser(id) {
+function deleteUser(id, name, addr, email) {
     var userData = {
-        id: id
+        id: id,
+        name: name,
+        addr: addr,
+        email: email
     };
+
     $.ajax({
         type: "POST",
         url: "/admin/user/delete",
         data: userData,
         success: function (data) {
             if(data=="success"){
-                window.location.href = '/admin/users'; 
-           
+                $('#'+id).remove()
+                $('#BAN').append('<tr id="Ban_'+id +'" class="userBan">'
+                +'<td>'+id+'</td>'
+                +'<td>'+name+'</td>'
+                +'<td>'+addr+'</td>'
+                +'<td>'+email+'</td>'
+                +'<td><button onclick="resetUser("'+id+'","'+name+'","'+addr+'","'+email+'")">reset</td>'
+                +'</tr>')
+                        //window.location.href = '/admin/users'; 
+                   
 
-            }else {
-                alert("Error!Try again!");
-            }
-        }
+                    }else {
+                        alert("Error!Try again!");
+                    }
+                }
     });
 }
     

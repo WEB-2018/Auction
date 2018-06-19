@@ -156,7 +156,116 @@ $(document).ready(function () {
 }*/
 })
 
+<<<<<<< HEAD
+=======
+    var data = {
+        //idNguoiDung: session.user.idNguoiDung,
+        idSanPham: idProduct,
+        soLuong: $("#dauGia").val()
 
+    };
+    alert("Error! Try again!");
+    $.ajax( {
+        type: "POST",
+        url: "/product/addCart",
+        data: data,
+        success: function (data) {
+            if(data=="success"){
+                alert("Success!");
+            }else {
+                alert("Error! Try again!");
+            }
+        }
+    } );
+}
+function deleteCart(idSanPham){
+    var data = {
+        idSanPham: idSanPham
+    };
+    $.ajax({
+        type: "POST",
+        url: "/user/cart/del",
+        data: data,
+        success: function (data) {
+            if(data=="success"){
+                var cost = $('#total_'+idSanPham).val();
+                cost = parseInt(cost);
+                var total = $('#total').val();
+                total = parseInt(total);
+                $('#total').val(total-cost);
+                $('#cart_'+idSanPham).remove();
+            }else {
+                alert("Error! Try again!");
+            }
+        }
+    });
+}
+function dec1unit(idSanPham){
+  
+    var number = $('#val_'+idSanPham).val();
+    var total = $('#total').val();
+    var price = $('#price_'+idSanPham).val();
+    price = parseInt(price);
+    number = parseInt(number);
+    total = parseInt(total);
+    if(number>1)
+        {
+            number -= 1;
+            $('#total').val(total-price);
+        }
+    
+    $('#val_'+idSanPham).val(number);
+    $('#total_'+idSanPham).val(price*number);
+    var data = {
+        idSanPham: idSanPham,
+        soLuong: number
+    };
+    $.ajax({
+        type: "POST",
+        url: "/user/cart/update",
+        data: data,
+        success: function (data) {
+            if(data=="success"){
+               
+            }else {
+                alert("Error! Try again!");
+            }
+        }
+    });
+    
+    
+
+}
+function inc1unit(idSanPham){
+>>>>>>> 42752ec3c89e2c54801394581fa96a2c99e62dd7
+
+    var number = $('#val_'+idSanPham).val();
+    number = parseInt(number);
+    number += 1;
+    var price = $('#price_'+idSanPham).val();
+    price = parseInt(price);
+    $('#val_'+idSanPham).val(number);
+    $('#total_'+idSanPham).val(price*number);
+    var total = $('#total').val();
+    total = parseInt(total);
+    $('#total').val(total+price);
+     var data = {
+        idSanPham: idSanPham,
+        soLuong: number
+    };
+    $.ajax({
+        type: "POST",
+        url: "/user/cart/update",
+        data: data,
+        success: function (data) {
+            if(data=="success"){
+               
+            }else {
+                alert("Error! Try again!");
+            }
+        }
+    });
+}
 </script>
 
 </body>

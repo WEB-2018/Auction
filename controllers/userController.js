@@ -2,7 +2,11 @@ var express = require('express'),
     productRepo = require('../models/productRepo'),
     categoryRepo = require('../models/categoryRepo'),
     accountRepo = require('../models/accountRepo'),
+<<<<<<< HEAD
     orderRepo = require('../models/orderRepo'),
+=======
+    cartRepo = require('../models/cartRepo'),
+>>>>>>> 42752ec3c89e2c54801394581fa96a2c99e62dd7
     restrict = require('../middle-wares/restrict');
     crypto = require('crypto');
     multer = require('multer');
@@ -39,6 +43,22 @@ r.post('/', function (req, res) {
     //console.log(user);
     accountRepo.updateInfo(user);
     res.redirect('/user')
+
+})
+r.post('/cart/del', function (req, res) {
+    var idSanPham = req.body.idSanPham;
+    cartRepo.delete(idSanPham);
+    res.send('success');
+
+})
+r.post('/cart/update', function (req, res) {
+    var data={
+        idNguoiDung: req.session.user.idNguoiDung,
+        idSanPham: req.body.idSanPham,
+        soLuong: req.body.soLuong
+    }
+    cartRepo.updateSLg(data);
+    res.send('success');
 
 })
 r.post('/pswchange', function (req, res) {
