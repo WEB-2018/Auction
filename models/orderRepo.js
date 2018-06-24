@@ -79,12 +79,26 @@ exports.insertOrder = function (idNguoiDung, hoTen, diaChi, soDienThoai, tongTie
         tongTien: tongTien
     }
     var sql = mustache.render(
-        sql = 'insert into hoadon(idNguoiDung,tenKhachHang,diaChi,soDienThoai,tongTien,NgayLap)\n' +
-            'values("{{idNguoiDung}}","{{hoTen}}","{{diaChi}}","{{soDienThoai}}","{{tongTien}}",NOW())',
+        sql = 'insert into hoadon(idNguoiDung,tenKhachHang,diaChi,soDienThoai,tongTien,NgayLap,tinhTrang)\n' +
+            'values("{{idNguoiDung}}","{{hoTen}}","{{diaChi}}","{{soDienThoai}}","{{tongTien}}",NOW(),0)',
         obj
     );
     console.log(sql);
     return db.insert(sql);
+}
+
+exports.updateTonKho = function (soLuong, idSanPham) {
+    var obj = {
+        soLuong: soLuong,
+        idSanPham: idSanPham
+    }
+    var sql = mustache.render(
+        'update store.sanpham set khoHang = khoHang - "{{soLuong}}" where idSanPham = "{{idSanPham}}"',
+        obj
+    );
+    console.log(sql);
+    return db.update(sql);
+
 }
 
 exports.getIDOrder = function () {
@@ -117,13 +131,115 @@ exports.loadOrdered = function (idNguoiDung) {
         idNguoiDung: idNguoiDung
     }
     var sql = mustache.render(
-        sql = 'select soHoaDon, date_format(NgayLap,\'%d-%m-%Y %h:%i:%s\') as NgayLap, tenKhachHang, tongTien   from hoadon \n' +
+        sql = 'select soHoaDon, date_format(NgayLap,\'%d-%m-%Y %h:%i:%s\') as NgayLap, tenKhachHang, tongTien,  ' +
+            'case \n' +
+            '    when tinhTrang = 0 then "Processing"\n' +
+            '    when tinhTrang = 1 then "Delivered"\n' +
+            '    when tinhTrang = 2 then "Cancelled"\n' +
+            '    end as tinhTrang ' +
+            ' from hoadon \n' +
             'where idNguoiDung = {{idNguoiDung}}',
         obj
     );
+    console.log(sql);
+    return db.load(sql);
+}
 
-
+exports.getEmailByID = function (idNguoiDung) {
+    var obj = {
+        idNguoiDung: idNguoiDung
+    }
+    var sql = mustache.render(
+        sql = 'SELECT email from nguoidung\n' +
+            'where idNguoiDung = {{idNguoiDung}}',
+        obj
+    );
     console.log(sql);
 
     return db.load(sql);
 }
+
+exports.getDateDeliver = function (soHoaDon) {
+    var obj = {
+        soHoaDon: soHoaDon
+    }
+    var sql = mustache.render(
+        sql = 'SELECT date_format(DATE_ADD(NgayLap, INTERVAL 2 DAY),\'%a %d %M\') as dayMin,date_format(DATE_ADD(NgayLap, INTERVAL 4 DAY),\'%a %d %M\') as dayMax from hoadon\n' +
+            'where soHoaDon = {{soHoaDon}}',
+        obj
+    );
+    console.log(sql);
+
+    return db.load(sql);
+}
+exports.loadOrderedByStatus = function (tinhTrang) {
+    var obj = {
+        tinhTrang: tinhTrang
+    }
+    var sql = mustache.render(
+        sql = 'select soHoaDon, date_format(NgayLap,\'%d-%m-%Y %h:%i:%s\') as NgayLap, tenKhachHang, tongTien,  ' +
+            'case \n' +
+            '    when tinhTrang = 0 then "Processing"\n' +
+            '    when tinhTrang = 1 then "Delivered"\n' +
+            '    when tinhTrang = 2 then "Cancelled"\n' +
+            '    end as tinhTrang ' +
+            ' from hoadon \n' +
+            'where tinhTrang = {{tinhTrang}}',
+        obj
+    );
+    console.log(sql);
+    return db.load(sql);
+}
+
+exports.updateTinhTrangDonHang = function (entity) {
+    var sql = mustache.render(
+        'update hoaDon set tinhTrang = "{{tinhTrang}}" where soHoaDon = {{soHoaDon}}',
+        entity
+    );
+
+    return db.update(sql);
+
+}
+
+exports.loadOrderedDetails = function (soHoaDon) {
+    var obj = {
+        soHoaDon: soHoaDon
+    }
+    var sql = mustache.render(
+        sql = 'select * from chitiethoadon where soHoadon = "{{soHoaDon}}"',
+        obj
+    );
+    console.log(sql);
+    return db.load(sql);
+}
+
+
+/* exports.loadHoadonByID = function (idHoaDon) {
+    var obj = {
+        idHoaDon: idHoaDon
+    }
+    var sql = mustache.render(
+        sql = 'SELECT * \n' +
+            'FROM hoadon \n' +
+            'where soHoaDon = {{idHoaDon}}',
+        obj
+    );
+    console.log(sql);
+
+    return db.load(sql);
+}
+
+exports.loadChiTietHoaDonByID = function (idHoaDon) {
+    var obj = {
+        idHoaDon: idHoaDon
+    }
+    var sql = mustache.render(
+        sql = 'SELECT idSanPham, (soLuong*1) as soLuong, tenSanPham, donGia, thanhTien \n' +
+            'FROM chitiethoadon \n' +
+            'where soHoaDon = {{idHoaDon}}',
+        obj
+    );
+    console.log(sql);
+
+    return db.load(sql);
+}*/

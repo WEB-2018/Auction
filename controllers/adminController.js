@@ -2,6 +2,7 @@ var express = require('express'),
     accountRepo = require('../models/accountRepo'),
     productRepo = require('../models/productRepo'),
     categoryRepo = require('../models/categoryRepo'),
+    orderRepo = require('../models/orderRepo'),
     restrict = require('../middle-wares/restrict'),
     crypto = require('crypto');
     fileUpload = require('express-fileupload');
@@ -427,4 +428,97 @@ function renderReportMonth(req, res) {
 }
 
 r.get('/report/:month',loadReportMonth,renderReportMonth);
+
+function loadOrderDelivered(req, res, next) {
+    orderRepo.loadOrderedByStatus(1)
+        .then(function (pRow) {
+            req.delivered = pRow;
+            next();
+        })
+}
+function loadOrderProcessing(req, res, next) {
+    orderRepo.loadOrderedByStatus(0)
+        .then(function (pRow) {
+            req.processing = pRow;
+            next();
+        })
+}
+function loadOrderCancelled(req, res, next) {
+    orderRepo.loadOrderedByStatus(2)
+        .then(function (pRow) {
+            req.cancelled = pRow;
+            next();
+        })
+}
+
+
+function renderOrdersManagement(req, res) {
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        res.render('admin/ordersManagement', {
+            title: "Admin",
+            layout: 'admin.hbs',
+            session: req.session,
+            block: req.block,
+            delivered: req.delivered,
+            processing: req.processing,
+            cancelled: req.cancelled,
+            isLogged: req.session.isLogged
+        });
+    }
+}
+
+r.get('/ordersManagement',loadOrderDelivered,loadOrderProcessing,loadOrderCancelled,renderOrdersManagement);
+
+r.post('/ordersManagement/toDelivered', function (req, res) {
+    var soHoaDon = req.body.soHoaDon;
+    console.log("Update tinh trang don hang = ", soHoaDon);
+    //khong xoa user, chi doi viTri -> -1
+    var order = {soHoaDon: soHoaDon, tinhTrang: 1};
+    orderRepo.updateTinhTrangDonHang(order).then(function () {
+        res.send("success");
+        return;
+    })
+})
+
+r.post('/ordersManagement/toCancelled', function (req, res) {
+    var soHoaDon = req.body.soHoaDon;
+    console.log("Update tinh trang don hang = ", soHoaDon);
+    //khong xoa user, chi doi viTri -> -1
+    var order = {soHoaDon: soHoaDon, tinhTrang: 2};
+    orderRepo.updateTinhTrangDonHang(order).then(function () {
+        res.send("success");
+        return;
+    })
+})
+
+function loadOrderedDetails(req, res, next) {
+    var soHoaDon = req.params.id;
+    req.soHoaDon = soHoaDon;
+    orderRepo.loadOrderedDetails(soHoaDon)
+        .then(function (pRow) {
+            req.orderedDetails = pRow;
+            next();
+        })
+}
+
+function renderOrderedDetails(req, res) {
+    res.render('admin/orderedDetails', {
+        title : "Ordered Details",
+        session: req.session,
+        layout: 'admin.hbs',
+        orderedDetails: req.orderedDetails,
+        soHoaDon: req.soHoaDon,
+        user: req.user,
+        isLogged: req.session.isLogged
+    });
+
+}
+r.get('/ordersManagement/details/:id',loadUserById,loadOrderedDetails,renderOrderedDetails);
+
 module.exports = r;

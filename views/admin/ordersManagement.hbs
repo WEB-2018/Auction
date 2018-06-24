@@ -1,0 +1,91 @@
+<div class="header" style="margin-left:0px">
+    <h2>Processing</h2>
+</div>
+
+<table class="table table-hover" style="overflow-y: scroll">
+    <thead>
+    <tr>
+        <th>Order #</th>
+        <th>Placed On</th>
+        <th>Name ordered</th>
+        <th>Total</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody height="100px" id="tblProcessing">
+    {{#each processing}}
+        <tr id="{{soHoaDon}}" >
+            <td>{{soHoaDon}}</td>
+            <td>{{NgayLap}}</td>
+            <td>{{tenKhachHang}}</td>
+            <td>{{tongTien}}</td>
+            <td><a href="/admin/ordersManagement/details/{{soHoaDon}}" class="btn btn-success btn-block">Details</a></td>
+            <td><a class="btn btn-info btn-block" onclick="toDelivered('{{soHoaDon}}','{{NgayLap}}','{{tenKhachHang}}','{{tongTien}}','{{tinhTrang}}')">Delivered</a></td>
+            <td><a class="btn btn-danger btn-block" onclick="toCancelled('{{soHoaDon}}','{{NgayLap}}','{{tenKhachHang}}','{{tongTien}}','{{tinhTrang}}')">Cancel</a></td>
+
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>
+
+<div class="header" style="margin-left:0px">
+    <h2>Order Delivered</h2>
+</div>
+
+<table class="table table-hover" style="overflow-y: scroll">
+    <thead>
+    <tr>
+        <th>Order #</th>
+        <th>Placed On</th>
+        <th>Name ordered</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody height="100px" id="tblDelivered">
+    {{#each delivered}}
+        <tr id="{{soHoaDon}}" >
+            <td>{{soHoaDon}}</td>
+            <td>{{NgayLap}}</td>
+            <td>{{tenKhachHang}}</td>
+            <td>{{tongTien}}</td>
+            <td>{{tinhTrang}}</td>
+            <td><a href="/admin/ordersManagement/details/{{soHoaDon}}" class="btn btn-success btn-block">Details</a></td>
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>
+
+<div class="header" style="margin-left:0px">
+    <h2>Cancelled</h2>
+</div>
+
+<table class="table table-hover" style="overflow-y: scroll">
+    <thead>
+    <tr>
+        <th>Order #</th>
+        <th>Placed On</th>
+        <th>Name ordered</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody height="100px" id="tblCancelled">
+    {{#each cancelled}}
+        <tr id="{{soHoaDon}}" >
+            <td>{{soHoaDon}}</td>
+            <td>{{NgayLap}}</td>
+            <td>{{tenKhachHang}}</td>
+            <td>{{tongTien}}</td>
+            <td>{{tinhTrang}}</td>
+            <td><a href="/admin/ordersManagement/details/{{soHoaDon}}" class="btn btn-success btn-block">Details</a></td>
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>
+

@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="header" style="margin-left:0px">
+        <h2>
+            Order {{soHoaDon}} #
+        </h2>
+    </div>
+
+
+    <table class="table table-hover" style="overflow-y: scroll">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody height="100px">
+        {{#each orderedDetails}}
+            <tr id="{{idSanPham}}" class="userInfo">
+                <td>{{tenSanPham}}</td>
+                <td>{{donGia}}</td>
+                <td>{{soLuong}}</td>
+                <td>{{thanhTien}}</td>
+            </tr>
+        {{/each}}
+        <td><a href="/user/orders" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back
+        </a>
+        </td>
+        </tbody>
+    </table>
+
+
+</div>
+

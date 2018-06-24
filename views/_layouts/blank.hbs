@@ -89,6 +89,29 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        var number = $("#numberPhone").val();
+        if(number = ''){
+            $("#btnFinish").attr("disabled","disabled");
+        }
+
+        $("#deliver-infor").validate({
+            rules: {
+                name: "required",
+                numberPhone: "required",
+                address: "required",
+            },
+            // Specify validation error messages
+            messages: {
+                name: "Please enter your name",
+                numberPhone: "Please enter your number phone",
+                address: "Please enter your address",
+            },
+
+
+        });
+    })
+
     function finishPayment(){
 
         var data = {
@@ -105,8 +128,13 @@
             success: function (data) {
                 if(data=="success"){
                     alert("Thanh toán thành công!");
-                    window.location.href = '/';
-                }else {
+                    window.location.href = '/user/finishPayment';
+
+                }
+                else if(data=="input"){
+
+                }
+                else {
                     alert("Error! Try again!");
                 }
             }

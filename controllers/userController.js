@@ -155,6 +155,7 @@ function renderCheckout(req, res) {
         layout: 'blank.hbs',
         user: req.user,
         infor: req.infor,
+        cart: req.cart,
         tongCong: req.tongCong,
         isLogged: req.session.isLogged
     });
@@ -170,22 +171,27 @@ r.post('/finishPayment', function (req, res) {
     var soDienThoai = req.body.sdt;
     var tongTien = req.body.tongTien;
     var idHoaDon;
-    orderRepo.insertOrder(idNguoiDung,hoTen,diaChi,soDienThoai,tongTien);
-    orderRepo.getIDOrder()
-        .then(function (pRow) {
-            idHoaDon = pRow[pRow.length - 1].ID +   1;
-            orderRepo.loadCart(idNguoiDung)
-                .then(function (pRow1) {
-                    console.log(pRow1);
-                    for (i=0;i<pRow1.length;i++)
-                    {
+    if(soDienThoai == '' || diaChi == '' || hoTen == '') {
+        res.send("input");
+    }
+    else {
+        orderRepo.insertOrder(idNguoiDung, hoTen, diaChi, soDienThoai, tongTien);
+        orderRepo.getIDOrder()
+            .then(function (pRow) {
+                idHoaDon = pRow[pRow.length - 1].ID + 1;
+                orderRepo.loadCart(idNguoiDung)
+                    .then(function (pRow1) {
+                        console.log(pRow1);
+                        for (i = 0; i < pRow1.length; i++) {
+                            orderRepo.updateTonKho(pRow1[i].soLuong,pRow1[i].idSanPham)
+                            orderRepo.insertOrderDetail(idHoaDon, pRow1[i].idSanPham, pRow1[i].tenSanPham, pRow1[i].soLuong, pRow1[i].giaHienTai, pRow1[i].tong);
+                        }
+                        orderRepo.deleteCart(idNguoiDung);
+                    })
+            })
+        res.send("success");
+    }
 
-                        orderRepo.insertOrderDetail(idHoaDon,pRow1[i].idSanPham,pRow1[i].tenSanPham,pRow1[i].soLuong,pRow1[i].giaHienTai,pRow1[i].tong);
-                    }
-                    orderRepo.deleteCart(idNguoiDung);
-                })
-        })
-    res.send("success");
 
 
 
@@ -215,4 +221,76 @@ function renderOrdered(req, res) {
 
 r.get('/orders',loadUserById,loadOrdered,renderOrdered);
 
+function loadFinishPayment(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    orderRepo.getIDOrder()
+        .then(function (pRow) {
+            idHoaDon = pRow[pRow.length - 1].ID ;
+            req.idHoaDon = idHoaDon;
+            orderRepo.getEmailByID(id)
+                .then(function (pRow1) {
+                    req.email = pRow1[0].email;
+                    console.log(req.email);
+                    next();
+                })
+
+        })
+}
+
+function loadFinishPayment1(req, res, next) {
+    var id = req.session.user.idNguoiDung;
+    orderRepo.getIDOrder()
+        .then(function (pRow) {
+            idHoaDon = pRow[pRow.length - 1].ID ;
+            orderRepo.getDateDeliver(idHoaDon)
+                .then(function (pRow1) {
+                    req.dayMax = pRow1[0].dayMax;
+                    req.dayMin = pRow1[0].dayMin;
+                    next();
+                })
+
+        })
+}
+
+
+
+function renderFinishPayment(req, res) {
+    res.render('user/finishPayment', {
+        title : "Finish Your Order",
+        session: req.session,
+        layout: 'blank.hbs',
+        user: req.user,
+        email: req.email,
+        dayMax: req.dayMax,
+        dayMin: req.dayMin,
+        idHoaDon: req.idHoaDon,
+        isLogged: req.session.isLogged
+    });
+
+}
+r.get('/finishPayment',loadFinishPayment,loadFinishPayment1,renderFinishPayment);
+
+function loadOrderedDetails(req, res, next) {
+    var soHoaDon = req.params.id;
+    req.soHoaDon = soHoaDon;
+    orderRepo.loadOrderedDetails(soHoaDon)
+        .then(function (pRow) {
+            req.orderedDetails = pRow;
+            next();
+        })
+}
+
+function renderOrderedDetails(req, res) {
+    res.render('user/orderedDetails', {
+        title : "Ordered Details",
+        session: req.session,
+        layout: 'user.hbs',
+        orderedDetails: req.orderedDetails,
+        soHoaDon: req.soHoaDon,
+        user: req.user,
+        isLogged: req.session.isLogged
+    });
+
+}
+r.get('/orders/details/:id',loadUserById,loadOrderedDetails,renderOrderedDetails);
 module.exports = r;

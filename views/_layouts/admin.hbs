@@ -217,9 +217,9 @@ $('.currentCatNameBox').click(function () {
     var trId = $(this).parent().closest('tr').attr('id').split(' ');
     $('#'+trId).find('.newCatNameBox').css('display', 'block');
 })
-function deleteCategory(id) {
+function deleteCategory(soHoadon) {
     var categoryData = {
-        id: id
+        soHoadon: soHoadon
     };
 
     $.ajax({
@@ -237,6 +237,72 @@ function deleteCategory(id) {
     });
 }
 
+function toDelivered(soHoaDon,NgayLap,tenKhachHang,tongTien,tinhTrang) {
+    var userData = {
+        soHoaDon: soHoaDon,
+        NgayLap: NgayLap,
+        tenKhachHang: tenKhachHang,
+        tongTien: tongTien,
+        tinhTrang: tinhTrang
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/admin/ordersManagement/toDelivered",
+        data: userData,
+        success: function (data) {
+            if(data=="success"){
+                $('#'+soHoaDon).remove()
+                $('#tblDelivered').append('<tr id="'+soHoaDon+'" >'
+                        +'<td>'+soHoaDon+'</td>'
+                        +'<td>'+NgayLap+'</td>'
+                        +'<td>'+tenKhachHang+'</td>'
+                        +'<td>'+tongTien+'</td>'
+                        +'<td>Delivered</td>'
+                        +'<td><a href="/admin/ordersManagement/details/'+soHoaDon+'" class="btn btn-success btn-block">Details</a></td>'
+                        +'</tr>')
+                //window.location.href = '/admin/users';
+
+
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}
+
+function toCancelled(soHoaDon,NgayLap,tenKhachHang,tongTien,tinhTrang) {
+    var userData = {
+        soHoaDon: soHoaDon,
+        NgayLap: NgayLap,
+        tenKhachHang: tenKhachHang,
+        tongTien: tongTien,
+        tinhTrang: tinhTrang
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/admin/ordersManagement/toCancelled",
+        data: userData,
+        success: function (data) {
+            if(data=="success"){
+                $('#'+soHoaDon).remove()
+                $('#tblCancelled').append('<tr id="'+soHoaDon+'" >'
+                        +'<td>'+soHoaDon+'</td>'
+                        +'<td>'+NgayLap+'</td>'
+                        +'<td>'+tenKhachHang+'</td>'
+                        +'<td>'+tongTien+'</td>'
+                        +'<td>Cancelled</td>'
+                        +'<td><a href="/admin/ordersManagement/details/'+soHoaDon+'" class="btn btn-success btn-block">Details</a></td>'
+                        +'</tr>')
+                //window.location.href = '/admin/users';
+
+            }else {
+                alert("Error!Try again!");
+            }
+        }
+    });
+}
 
 </script>
 
