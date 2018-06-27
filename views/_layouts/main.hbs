@@ -43,7 +43,190 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+     <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Muli');
 
+* {
+    box-sizing: border-box;
+    font-family: 'Muli', sans-serif;
+}
+
+.four{
+  width:250px;
+  height:50px;
+  margin:20px 0px 20px 40%;
+  background-size:cover;
+  background: url('http://www.foursites.nl/static/img/logo.svg') no-repeat center center;
+}
+.left{
+  flex:1;
+  z-index:1;
+  // background:#efeff4;
+  height:100%;
+  background-size: cover;
+  background-image:url('http://s966.info/library/r/red-curtain-background-hd/red-curtain-background-hd-11.jpg');
+}
+.right{
+  flex:1;
+  z-index:1;
+  height:100%;
+  background-size: cover;
+  background-image:url('http://s966.info/library/r/red-curtain-background-hd/red-curtain-background-hd-11.jpg');
+}
+#Laag_1{
+  z-index:12;
+  width:100px;
+  height:100px;
+  position:absolute;
+  top:50%;
+  left:46.3%;
+  cursor:pointer;
+}
+
+.open{
+  animation-name: spin;
+  animation-duration: 100ms;
+  animation-iteration-count: 5;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.sliderleft{
+  animation-name: slideleft;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slideleft {
+  0% {
+    transform:translateX(0);
+  }
+  100% {
+    transform:translateX(-100%);
+  }
+}
+
+.sliderright{
+  animation-name: slideright;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slideright {
+  0% {
+    transform:translateX(0);
+  }
+  100% {
+    transform:translateX(100%);
+  }
+}
+
+
+#container {
+  position:absolute;
+   width: auto;
+    height: auto;
+    -webkit-perspective: 800px;
+            perspective: 800px;
+    text-align: center;
+  z-index:0;
+  background-image:url('http://www.modafinilsale.com/data/out/349/230766601-white-color-wallpapers.jpg');
+  background-color:#F5F5F5;
+}
+.card {
+    margin: 10px;
+    display: inline-block;
+    position: relative;
+    width: 220px;
+    height: 260px;
+    opacity: 0.85;
+}
+.front,
+.back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transition: -webkit-transform 300ms;
+    transition: -webkit-transform 300ms;
+    transition: transform 300ms;
+    transition: transform 300ms, -webkit-transform 300ms;
+    -webkit-transition-timing-function: linear;
+            transition-timing-function: linear;
+    border-radius: 5px;
+}
+.front {
+    transform: rotateY(0deg);
+    background: #9152f8;
+  background: -webkit-linear-gradient(top, #ffb547, #000000);
+  background: -o-linear-gradient(top, #ffb547, #ff6363);
+  background: -moz-linear-gradient(top, #ffb547, #ff6363);
+  background: linear-gradient(top, #ffb547, #ff6363);
+    text-align: center;
+    padding: 30px;
+}
+.back {
+    background: #9152f8;
+  background: -webkit-linear-gradient(top, #ffb547, #000000);
+  background: -o-linear-gradient(top, #ffb547, #ff6363);
+  background: -moz-linear-gradient(top, #ffb547, #ff6363);
+  background: linear-gradient(top, #ffb547, #ff6363);
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+    padding: 40px 15px;
+    color: #fff;
+}
+.card:hover .front {
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+}
+.card:hover .back {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+}
+//styling
+.back .contact{
+    height: 90%;
+    width: 100%;
+    border: 5px solid white;
+    display: inline-block;
+   // margin-bottom: 10px;
+  
+}
+.front .contact {
+    height: 120px;
+    width: 120px;
+    border: 5px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.front .name {
+    display: inline-block;
+    font-size: 18px;
+    color: #fff;
+}
+.front .job {
+    color: #fff;
+}
+.front hr {
+    border: none;
+    color: white;
+    border: 1px solid;
+}
+
+    </style>
 </head>
 
 <body>

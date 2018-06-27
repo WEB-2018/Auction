@@ -2,16 +2,23 @@ var mustache = require('mustache'),
     q = require('q'),
     db = require('../fn/db');
 
-
+exports.countAllProd= function(){
+    var sql = `select count(*) as total from sanpham where tinhTrang=0`;
+    return db.load(sql);
+}
+exports.countProdByCat= function(CatID){
+    var sql = `select count(*) as total from sanpham where tinhTrang=0 and loai = ${CatID}`;
+    return db.load(sql);
+}
 exports.loadAll = function() {
 
     var sql = 'select * from sanpham where tinhTrang=0';
 
     return db.load(sql);
 }
-exports.loadAllByOffset = function(offset) {
+exports.loadAllByOffset = function(offset, limit) {
 
-    var sql = `select * from sanpham where tinhTrang=0 limit 4 offset ${offset}`;
+    var sql = `select * from sanpham where tinhTrang=0 limit ${limit} offset ${offset}`;
 
     return db.load(sql);
 }
@@ -93,6 +100,13 @@ exports.loadAllByCat1 = function (id) {
         );
     
   
+    return db.load(sql);
+
+}
+exports.loadAllByCatOffset = function (CatID,limit,offset) {
+
+     var sql = `select * from sanpham where tinhTrang = 0 and loai = ${CatID} limit ${limit} offset ${offset}`;
+
     return db.load(sql);
 
 }

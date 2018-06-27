@@ -102,13 +102,10 @@ function loadAllProd(req,res,next) {
     var PRODUCTS_PER_PAGE = 4;
     var offset = (page - 1) * PRODUCTS_PER_PAGE;
 
-    var p1 = productRepo.loadAllByOffset(offset);
-    var p2 = 60;
+    var p1 = productRepo.loadAllByOffset(offset,PRODUCTS_PER_PAGE);
+    var p2 = productRepo.countAllProd();
     Promise.all([p1, p2]).then(([pRows, countRows]) => {
-        console.log(pRows);
-        console.log(countRows);
-
-        var total = 60;
+            var total = countRows[0].total;
         var nPages = total / PRODUCTS_PER_PAGE;
         if (total % PRODUCTS_PER_PAGE > 0) {
             nPages++;
@@ -122,12 +119,14 @@ function loadAllProd(req,res,next) {
             });
         }
 
-        var vm = {
+    
+        res.render('product/list',{
             products: pRows,
             noProducts: pRows.length === 0,
-            page_numbers: numbers
-        };
-        res.render('product/list', vm);
+            page_numbers: numbers,
+            title : "Product",
+            layout: 'main.hbs'
+        });
     });
     /*
     productRepo.loadAll()

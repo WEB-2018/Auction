@@ -1,5 +1,6 @@
-<div class="container" style="width: 80%">
 
+<div class="container" style="width: 80%">
+{{#if cart}}
     <table id="cart" class="table">
         <thead >
             <tr >
@@ -12,6 +13,8 @@
             </tr>
         </thead>
         <tbody>
+            
+            
             {{#each cart}}
             <tr id="cart_{{idSanPham}}">
                 <td data-th="Img" >
@@ -53,6 +56,13 @@
                 </td>
             </tr>
             {{/each}}
+            {{else}}
+            <div class="row text-center">
+               
+                    <img src="/imgs/empty.jpg" style="height:300px">
+              
+            </div>
+            {{/if}}
         </tbody>
 
        

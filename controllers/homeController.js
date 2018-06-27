@@ -101,6 +101,16 @@ r.get('/login', function(req, res) {
         });
     }
 });
+r.get('/about', function(req, res) {
+
+        res.render('pages/about', {
+            layout: 'main.hbs',
+            title: "About us",
+            showError: true,
+            errorMsg: ''
+        });
+    
+});
 r.get('/resetPWD', function(req, res) {
     if (req.session.isLogged == true) {
         res.redirect('/');

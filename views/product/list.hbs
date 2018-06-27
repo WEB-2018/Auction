@@ -1,0 +1,50 @@
+
+{{#if noProducts}}
+<div class="row text-center">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+		<img src="/imgs/empty.jpg" style="height:300px">
+	</div>
+</div>
+{{else}}
+ <ul class="list-inline text-center">
+	{{#each products}}
+
+         <li style="padding:20px">
+            <div class="product-img" style="height:160px">
+                <a href="/product/detail/{{idSanPham}}">
+                    <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+                </a>
+               
+            </div>
+            <div class="product-info text-center">
+                <h6 class="product-title">
+                    {{tenSanPham}}
+                </h6>
+                <a href="/product/detail/{{idSanPham}}"><button class="btn btn-warning submit-btn-1 mt-20 btn-hover-1" type="submit" >$ {{giaHienTai}}</button></a>
+                </br>
+                <p >Views: {{luotXem}}</p>
+             
+
+                
+            </div>
+        </li>
+  
+	{{/each}}
+</ul>
+
+<ul class="pagination pull-right" style="margin-right: 150px">
+	<li class="disabled">
+		<a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a>
+	</li>
+	{{#each page_numbers}}
+		{{#if isCurPage}}
+			<li class="active"><a href="javascript:;">{{value}}</a></li>
+		{{else}}
+			<li><a href="?page={{value}}">{{value}}</a></li>
+		{{/if}}
+	{{/each}}
+	<li>
+		<a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+	</ul>
+</nav>
+{{/if}}

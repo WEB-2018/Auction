@@ -27,11 +27,42 @@ function loadProductByCat(req,res,next) {
 
     var catId = req.params.id;
 
-    productRepo.loadAllByCat1(catId)
-        .then(function (pRows) {
-            req.products = pRows;
-            return next();
-        })
+   var page = req.query.page;
+    if (!page) {
+        page = 1;
+    }
+    var PRODUCTS_PER_PAGE = 4;
+    var offset = (page - 1) * PRODUCTS_PER_PAGE;
+
+    var p1 = productRepo.loadAllByCatOffset(catId,PRODUCTS_PER_PAGE, offset);
+    var p2 = productRepo.countProdByCat(catId);
+    Promise.all([p1, p2]).then(([pRows, countRows]) => {
+
+
+        var total = countRows[0].total;
+        var nPages = total / PRODUCTS_PER_PAGE;
+        if (total % PRODUCTS_PER_PAGE > 0) {
+            nPages++;
+        }
+
+        var numbers = [];
+        for (i = 1; i <= nPages; i++) {
+            numbers.push({
+                value: i,
+                isCurPage: i === +page
+            });
+        }
+
+    
+        res.render('product/list',{
+            products: pRows,
+            noProducts: pRows.length === 0,
+            page_numbers: numbers,
+            title : "Product",
+            layout: 'main.hbs'
+        });
+    });
+
 
 }
 function renderByCat(req, res) {
