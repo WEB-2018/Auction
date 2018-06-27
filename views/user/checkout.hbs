@@ -5,7 +5,7 @@
         </h2>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <form id="deliver-infor">
                 <div class="row">
 
@@ -15,13 +15,14 @@
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
-                        <input  class="form-control has-feedback"  id="numberPhone" name="numberPhone" type="number" placeholder="Enter your number phone" data-meta="Field" value="{{infor.sdt}}" inputmode="numeric" pattern="[0-9]*">
+                        <input  class="form-control has-feedback"  id="numberPhone" name="numberPhone" type="number" placeholder="Enter your number phone" data-meta="Field" value="{{infor.sdt}}" inputmode="numeric" pattern="[0-9]*" maxlength="11">
                     </div>
                     <div class="form-group">
                         <label>Address</label>
                         <input class="form-control has-feedback" id="address" name="address" value="{{infor.diaChi}}" placeholder="Enter your address">
                     </div>
-
+                    <a href="/user/cart" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back
+                    </a>
                     <button id="btnFinish" class="btn btn-primary pull-right" type="submit" onclick="finishPayment()">Finish</button>
                 </div>
             </form>
@@ -35,6 +36,7 @@
                     <tr >
                         <th style="width:35%;text-align:center">Product</th>
                         <th style="width:10%;text-align:center">Price</th>
+                        <th style="width:10%;text-align:center">Total</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,14 +45,21 @@
                             <td data-th="Product" style=" vertical-align: middle; ">
                                 <strong>{{soLuong}} x</strong> <a href="/product/detail/{{idSanPham}}"  class="text text-primary">{{tenSanPham}} </a>
                             </td>
+                            <td data-th="Price" style=" vertical-align: middle;text-align:right " ><input id="price_{{idSanPham}}" value="{{giaHienTai}}" style="border:none;width:50px;text-align:right" readonly></td>
                             <td data-th="Price" style=" vertical-align: middle;text-align:right " ><input id="price_{{idSanPham}}" value="{{tong}}" style="border:none;width:50px;text-align:right" readonly> $</td>
 
                         </tr>
                     {{/each}}
+                    <tr >
+                        <th style="width:35%;text-align:center"></th>
+                        <th style="width:10%;text-align:center"></th>
+                        <th style="width:10%;text-align:right">{{tongCong}} $</th>
+                    </tr>
                     </tbody>
 
 
                 </table>
+
             </div>
         </div>
     </div>

@@ -521,4 +521,29 @@ function renderOrderedDetails(req, res) {
 }
 r.get('/ordersManagement/details/:id',loadUserById,loadOrderedDetails,renderOrderedDetails);
 
+function loadSalesStatistics(req, res, next) {
+    var date1=req.params.date1;
+    req.date1 = date1;
+    orderRepo.loadDoanhThuTheoNgay(0,date1)
+        .then(function (pRow) {
+            req.bill = pRow;
+            console.log(pRow);
+            next();
+        })
+}
+
+function renderSalesStatistics(req, res) {
+    res.render('admin/salesStatistics', {
+        title : "Admin",
+        session: req.session,
+        layout: 'admin.hbs',
+        user: req.user,
+        date1: req.date1,
+        bill: req.bill,
+    isLogged: req.session.isLogged
+    });
+
+}
+r.get('/salesStatistics/day/:date1',loadSalesStatistics,renderSalesStatistics);
+
 module.exports = r;
