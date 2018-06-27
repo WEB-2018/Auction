@@ -9,7 +9,12 @@ exports.loadAll = function() {
 
     return db.load(sql);
 }
+exports.loadAllByOffset = function(offset) {
 
+    var sql = `select * from sanpham where tinhTrang=0 limit 4 offset ${offset}`;
+
+    return db.load(sql);
+}
 exports.loadSanPhamNhieuLuotXem = function () {
 
     var sql = 'select * from sanpham where tinhTrang=0 order by sanpham.luotXem DESC limit 5'

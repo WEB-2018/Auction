@@ -11,12 +11,12 @@
                             <label>Full Name</label>
                             <input class="form-control has-feedback" id="newName" name="newName" value="{{user.hoTen}}">
                         </div>
-                        <fieldset disabled>
-                            <div class="form-group">
+                     
+                            <div class="form-group has-feedback">
                                 <label >Email</label>
-                                <input class="form-control" id="disabledInput" type="text" placeholder="{{user.email}}" disabled>
+                                <input class="form-control" id="disabledInput" type="text" placeholder="{{user.email}}" readonly>
                             </div>
-                        </fieldset>
+                      
                         <div class="form-group has-feedback">
                             <label>Address</label>
                             <input class="form-control" id="newAddr" name="newAddr" value="{{user.diaChi}}">
@@ -40,14 +40,16 @@
                        
                         <div class="form-group has-feedback">
                             <label>New Password</label>
-                            <input class="form-control" id="newPWD" name="newPWD">
+                            <input class="form-control" id="newPWD" name="newPWD" type="password">
                         </div>
 
                          <div class="form-group has-feedback">
                             <label>Confirm New Password</label>
-                            <input class="form-control" id="rePWD" name="rePWD">
+                            <input class="form-control" id="rePWD" name="rePWD"  type="password">
                         </div>
-                  
+                         <div class="form-group text-center" style="text-align: center">
+                  <p  style="color:#337ab7;float:center">{{errorMsg}}</p>
+                </div>
                         <button type="submit">Change</button>
 
                     

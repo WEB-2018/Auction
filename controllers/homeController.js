@@ -12,8 +12,8 @@ var nodemailer =  require('nodemailer');
 var transporter =  nodemailer.createTransport({ // config mail server
     service: 'Gmail',
     auth: {
-        user: 'tuyettinhtieu@gmail.com',
-        pass: 'inuyaiba',
+        user: 'ad.lucus.store@gmail.com',
+        pass: '0928215770a',
     }
 });
 
@@ -90,12 +90,14 @@ r.get('/login', function(req, res) {
     if (req.session.isLogged === true) {
         res.redirect('/');
     } else {
+        var x = req.session.err;
+        delete req.session.err;
         res.render('account/login', {
             layoutModels: res.locals.layoutModels,
             layout: 'account.hbs',
             title: "Log In",
-            showError: false,
-            errorMsg: ''
+            showError: true,
+            errorMsg: x
         });
     }
 });
@@ -239,6 +241,7 @@ r.post('/login', function(req, res) {
                     errorMsg: 'The username and/or password you entered is invalid! Please try again!'
                 });
             } else {
+                 
                 req.session.isLogged = true;
                 req.session.user = user;
                 var url = '/';

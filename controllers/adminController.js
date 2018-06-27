@@ -312,7 +312,7 @@ r.post('/category/add', function (req, res) {
 })
 
 r.post('/category/delete', function (req, res) {
-    var id = req.body.id;
+    var id = req.body.idLoaiSanPham;
     console.log("delete cate where id = ", id);
     categoryRepo.deleteById(id);
     res.send("success");
