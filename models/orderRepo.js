@@ -214,32 +214,20 @@ exports.loadOrderedDetails = function (soHoaDon) {
 }
 
 
-/* exports.loadHoadonByID = function (idHoaDon) {
-    var obj = {
-        idHoaDon: idHoaDon
-    }
-    var sql = mustache.render(
-        sql = 'SELECT * \n' +
-            'FROM hoadon \n' +
-            'where soHoaDon = {{idHoaDon}}',
-        obj
-    );
-    console.log(sql);
-
-    return db.load(sql);
+ exports.loadDoanhThuTheoNgay = function (tinhTrang, date) {
+     var obj = {
+         tinhTrang: tinhTrang,
+         date: date
+     }
+     var sql = mustache.render(
+         sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, date_format(NgayLap,\'%d-%m-%Y\') as NgayLap \n' +
+             ' from hoadon \n' +
+             'where tinhTrang = {{tinhTrang}}\n' +
+             'and NgayLap between "{{date}} 00:00:00" and "{{date}} 23:59:59" \n' +
+             'group by tinhTrang',
+         obj
+     );
+     console.log(sql);
+     return db.load(sql);
 }
 
-exports.loadChiTietHoaDonByID = function (idHoaDon) {
-    var obj = {
-        idHoaDon: idHoaDon
-    }
-    var sql = mustache.render(
-        sql = 'SELECT idSanPham, (soLuong*1) as soLuong, tenSanPham, donGia, thanhTien \n' +
-            'FROM chitiethoadon \n' +
-            'where soHoaDon = {{idHoaDon}}',
-        obj
-    );
-    console.log(sql);
-
-    return db.load(sql);
-}*/
