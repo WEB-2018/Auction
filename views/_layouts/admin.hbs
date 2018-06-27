@@ -181,7 +181,17 @@ $('#formNewCategory').submit(function () {
         data: {name: name},
         success: function (data) {
             if(data=="success"){
-                alert("Success!");
+                 $('#cat').append('<tr id="'+id+'" >'
+                        +'<td>'+id+'</td>'
+                        +'<td>'+newName+'</td>'
+                        + ' <td>'
+                        + '<button style="display: inline;" id="{{idLoaiSanPham}}" class="btn btn-danger"'
+                         +'onclick="deleteCategory({{idLoaiSanPham}})">Delete'
+                        +'</button>'
+                        +'<button style="display: inline;" id="{{idLoaiSanPham}}" class="btn btn-info"'
+                         +' onclick="updateCategory({{idLoaiSanPham}})">Update'
+                  +'</button>'
+              +'</td>')
             }else {
                 alert("Error! Try again!");
             }
@@ -217,9 +227,9 @@ $('.currentCatNameBox').click(function () {
     var trId = $(this).parent().closest('tr').attr('id').split(' ');
     $('#'+trId).find('.newCatNameBox').css('display', 'block');
 })
-function deleteCategory(soHoadon) {
+function deleteCategory(id) {
     var categoryData = {
-        soHoadon: soHoadon
+        idLoaiSanPham: id
     };
 
     $.ajax({

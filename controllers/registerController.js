@@ -10,8 +10,8 @@ var nodemailer =  require('nodemailer');
 var transporter =  nodemailer.createTransport({ // config mail server
     service: 'Gmail',
     auth: {
-        user: 'tuyettinhtieu@gmail.com',
-        pass: 'inuyaiba',
+        user: 'ad.lucus.store@gmail.com',
+        pass: '0928215770a',
     }
 });
 
@@ -44,12 +44,14 @@ r.get('/', function(req, res) {
     if (req.session.isLogged == true) {
         res.redirect('/');
     } else {
+        var x = req.session.err;
+        delete req.session.err;
         res.render('account/register', {
             layoutModels: res.locals.layoutModels,
             layout: 'account.hbs',
             title: "Create account",
-            showError: false,
-            errorMsg: ''
+            showError: true,
+            errorMsg: x
         });
     }
 });
@@ -73,19 +75,21 @@ r.post('/',function(req, res) {
     console.log(entity);
 
 
+
     //kiểm tra email này đã được sử dụng chưa
     accountRepo.loadByEmail(entity)
         .then(function (user) {
             if(user!==null) {
                 //không hợp lệ thì thông báo chỗ này
-                console.log('email không hợp lệ');
+                req.session.err = 'This email has been used!';
                 res.redirect('/register');
                 return;
             }
             else{
+                req.session.err =   `Welcome to Lucus's Store`;
                 accountRepo.insert(entity);
-                 var content = '<p>This email is used for creating a new account at Lucus Store' +
-                    '</b><ul><li>Username:' + name + '</li><li>Passwpord:' + password;
+                 var content = '<p>Dear Mr/Mrs ' + name + ',</br><p>This email is used for creating a new account at Lucus Store' +
+                    '</b><ul><li>Username:' + name + '</li><li>Password:' + password;
                 setMailReceiver(email);
                 setMailHTML(content);
                 sendMail();

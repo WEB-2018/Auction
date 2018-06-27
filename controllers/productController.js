@@ -92,6 +92,63 @@ function renderProductDetail(req, res) {
 }
 r.get('/detail/:id',loadProductById,loadSanPhamLienQuan,loadComment,renderProductDetail);
 
+function loadAllProd(req,res,next) {
+     
+
+    var page = req.query.page;
+    if (!page) {
+        page = 1;
+    }
+    var PRODUCTS_PER_PAGE = 4;
+    var offset = (page - 1) * PRODUCTS_PER_PAGE;
+
+    var p1 = productRepo.loadAllByOffset(offset);
+    var p2 = 60;
+    Promise.all([p1, p2]).then(([pRows, countRows]) => {
+        console.log(pRows);
+        console.log(countRows);
+
+        var total = 60;
+        var nPages = total / PRODUCTS_PER_PAGE;
+        if (total % PRODUCTS_PER_PAGE > 0) {
+            nPages++;
+        }
+
+        var numbers = [];
+        for (i = 1; i <= nPages; i++) {
+            numbers.push({
+                value: i,
+                isCurPage: i === +page
+            });
+        }
+
+        var vm = {
+            products: pRows,
+            noProducts: pRows.length === 0,
+            page_numbers: numbers
+        };
+        res.render('product/list', vm);
+    });
+    /*
+    productRepo.loadAll()
+        .then(function (pRows) {
+            req.products = pRows;
+            return next();
+        })*/
+}
+
+function renderAllProduct(req, res) {
+    res.render('product/list', {
+        title : "Product",
+        products : req.products,
+        layout: 'blank.hbs',
+        session: req.session,
+      
+    
+    });
+
+}
+r.get('/',loadAllProd,renderAllProduct)
 
 function loadSanPham(req, res, next) {
 

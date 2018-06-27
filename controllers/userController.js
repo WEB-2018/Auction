@@ -19,13 +19,16 @@ function loadUserById(req,res,next){
     })
 }
 function renderUserProfile(req, res) {
-   
+        var x = req.session.err;
+        delete req.session.err;
         res.render('account/infor', {
             title: "Profile",
             layout: 'user.hbs',
             session: req.session,
             user: req.user,
-            isLogged: req.session.isLogged
+            isLogged: req.session.isLogged,
+            showError: true,
+            errorMsg: x
         });
     
 }
@@ -71,11 +74,13 @@ r.post('/pswchange', function (req, res) {
     }
 
     if(oldPWD==password){
+        req.session.err = 'Your password has been changed!'
         accountRepo.updatePassword(user);
        
     }
     else
     {
+        req.session.err = 'You must enter current password correctly!'
         console.log("You must enter your current password correctly!");
     }
     res.redirect('/user')
