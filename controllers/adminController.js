@@ -489,12 +489,17 @@ r.post('/ordersManagement/toDelivered', function (req, res) {
 r.post('/ordersManagement/toCancelled', function (req, res) {
     var soHoaDon = req.body.soHoaDon;
     console.log("Update tinh trang don hang = ", soHoaDon);
-    //khong xoa user, chi doi viTri -> -1
-    var order = {soHoaDon: soHoaDon, tinhTrang: 2};
-    orderRepo.updateTinhTrangDonHang(order).then(function () {
-        res.send("success");
-        return;
-    })
+    orderRepo.getIdSanPhamFromChitiethoadon(soHoaDon)
+        .then(function (pRow) {
+            for (i = 0; i < pRow.length; i++) {
+                orderRepo.updateTonKhoCancel(pRow[i].soLuong,pRow[i].idSanPham);
+            }
+            //khong xoa user, chi doi viTri -> -1
+            var order = {soHoaDon: soHoaDon, tinhTrang: 2};
+            orderRepo.updateTinhTrangDonHang(order);
+            res.send("success");
+            return;
+        })
 })
 
 function loadOrderedDetails(req, res, next) {
@@ -521,10 +526,8 @@ function renderOrderedDetails(req, res) {
 }
 r.get('/ordersManagement/details/:id',loadUserById,loadOrderedDetails,renderOrderedDetails);
 
-function loadSalesStatistics(req, res, next) {
-    var date1=req.params.date1;
-    req.date1 = date1;
-    orderRepo.loadDoanhThuTheoNgay(0,date1)
+function loadSalesStatisticsByDay(req, res, next) {
+    orderRepo.loadDoanhThuTheoNgay(1)
         .then(function (pRow) {
             req.bill = pRow;
             console.log(pRow);
@@ -532,8 +535,8 @@ function loadSalesStatistics(req, res, next) {
         })
 }
 
-function renderSalesStatistics(req, res) {
-    res.render('admin/salesStatistics', {
+function renderSalesStatisticsByDay(req, res) {
+    res.render('admin/saleSttDay', {
         title : "Admin",
         session: req.session,
         layout: 'admin.hbs',
@@ -544,6 +547,91 @@ function renderSalesStatistics(req, res) {
     });
 
 }
-r.get('/salesStatistics/day/:date1',loadSalesStatistics,renderSalesStatistics);
+r.get('/salesStatistics/day/:date1',loadSalesStatisticsByDay,renderSalesStatisticsByDay);
+
+function renderSalesStatistics(req, res) {
+    res.render('admin/salesStatistics', {
+        title : "Admin",
+        session: req.session,
+        layout: 'admin.hbs',
+        user: req.user,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/salesStatistics',renderSalesStatistics);
+
+function loadSalesStatisticsByMonths(req, res, next) {
+
+    orderRepo.loadDoanhThuTheoThang(1)
+        .then(function (pRow) {
+            req.bill = pRow;
+            console.log(pRow);
+            next();
+        })
+}
+
+function renderSalesStatisticsByMonths(req, res) {
+    res.render('admin/saleSttMonth', {
+        title : "Admin",
+        session: req.session,
+        layout: 'admin.hbs',
+        user: req.user,
+        bill: req.bill,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/salesStatistics/months',loadSalesStatisticsByMonths,renderSalesStatisticsByMonths);
+
+function loadSalesStatisticsByWeeks(req, res, next) {
+
+    orderRepo.loadDoanhThuTheoTuan()
+        .then(function (pRow) {
+            req.bill = pRow;
+            console.log(pRow);
+            next();
+        })
+}
+
+function renderSalesStatisticsByWeeks(req, res) {
+    res.render('admin/saleSttWeek', {
+        title : "Admin",
+        session: req.session,
+        layout: 'admin.hbs',
+        user: req.user,
+        bill: req.bill,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/salesStatistics/weeks',loadSalesStatisticsByWeeks,renderSalesStatisticsByWeeks);
+
+function loadSalesStatisticsByQuarters(req, res, next) {
+
+    orderRepo.loadDoanhThuTheoQuy()
+        .then(function (pRow) {
+            req.bill = pRow;
+            console.log(pRow);
+            next();
+        })
+}
+
+function renderSalesStatisticsByQuarters(req, res) {
+    res.render('admin/saleSttQuarters', {
+        title : "Admin",
+        session: req.session,
+        layout: 'admin.hbs',
+        user: req.user,
+        bill: req.bill,
+        isLogged: req.session.isLogged
+    });
+
+}
+
+r.get('/salesStatistics/quarters',loadSalesStatisticsByQuarters,renderSalesStatisticsByQuarters);
 
 module.exports = r;

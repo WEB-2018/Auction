@@ -20,3 +20,23 @@
         </div>
     </div>
 </div>
+
+<table class="table table-hover" style="overflow-y: scroll">
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Total Bill</th>
+        <th>Total earning</th>
+    </tr>
+    </thead>
+    <tbody height="100px">
+    {{#each bill}}
+        <tr id="{{ThangLap}}" class="userInfo">
+            <td>{{ThangLap}}</td>
+            <td>{{soHoaDon}}</td>
+            <td>{{tongTien}} $</td>
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>

@@ -93,7 +93,7 @@ exports.updateTonKho = function (soLuong, idSanPham) {
         idSanPham: idSanPham
     }
     var sql = mustache.render(
-        'update store.sanpham set khoHang = khoHang - "{{soLuong}}" where idSanPham = "{{idSanPham}}"',
+        'update store.sanpham set daBan = daBan + "{{soLuong}}" where idSanPham = "{{idSanPham}}"',
         obj
     );
     console.log(sql);
@@ -201,6 +201,34 @@ exports.updateTinhTrangDonHang = function (entity) {
 
 }
 
+exports.getIdSanPhamFromChitiethoadon = function (soHoaDon) {
+    var obj = {
+        soHoaDon: soHoaDon
+    }
+    var sql = mustache.render(
+        'select idSanPham, soLuong from chitiethoadon \n' +
+        'where soHoaDon = {{soHoaDon}}',
+        obj
+    );
+    console.log(sql);
+    return db.load(sql);
+
+}
+
+exports.updateTonKhoCancel = function (soLuong, idSanPham) {
+    var obj = {
+        soLuong: soLuong,
+        idSanPham: idSanPham
+    }
+    var sql = mustache.render(
+        'update store.sanpham set  daBan = daBan - "{{soLuong}}" where idSanPham = "{{idSanPham}}"',
+        obj
+    );
+    console.log(sql);
+    return db.update(sql);
+
+}
+
 exports.loadOrderedDetails = function (soHoaDon) {
     var obj = {
         soHoaDon: soHoaDon
@@ -214,20 +242,60 @@ exports.loadOrderedDetails = function (soHoaDon) {
 }
 
 
- exports.loadDoanhThuTheoNgay = function (tinhTrang, date) {
-     var obj = {
-         tinhTrang: tinhTrang,
-         date: date
-     }
-     var sql = mustache.render(
-         sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, date_format(NgayLap,\'%d-%m-%Y\') as NgayLap \n' +
-             ' from hoadon \n' +
-             'where tinhTrang = {{tinhTrang}}\n' +
-             'and NgayLap between "{{date}} 00:00:00" and "{{date}} 23:59:59" \n' +
-             'group by tinhTrang',
-         obj
-     );
-     console.log(sql);
-     return db.load(sql);
+exports.loadDoanhThuTheoNgay= function () {
+
+    var sql = mustache.render(
+        sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, (date(NgayLap)) as tuanLap,date_format(NgayLap,\'%d-%m-%Y\') as NgayLap  \n' +
+            ' from hoadon \n' +
+            'where tinhTrang = 1\n' +
+            'group by tuanLap\n' +
+            'order by tuanLap'
+    );
+    console.log(sql);
+    return db.load(sql);
+}
+
+
+exports.loadDoanhThuTheoTuan= function () {
+
+    var sql = mustache.render(
+        sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, (week(NgayLap) + 1) as tuanLap \n' +
+            ' from hoadon \n' +
+            'where tinhTrang = 1\n' +
+            'group by tuanLap\n' +
+            'order by tuanLap'
+    );
+    console.log(sql);
+    return db.load(sql);
+}
+
+
+exports.loadDoanhThuTheoThang = function (tinhTrang) {
+    var obj = {
+        tinhTrang: tinhTrang,
+    }
+    var sql = mustache.render(
+        sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, DATE_FORMAT((NgayLap), "%M") as ThangLap, month(NgayLap) as sort \n' +
+            ' from hoadon \n' +
+            'where tinhTrang = {{tinhTrang}}\n' +
+            'group by ThangLap\n' +
+            'order by sort',
+        obj
+    );
+    console.log(sql);
+    return db.load(sql);
+}
+
+exports.loadDoanhThuTheoQuy= function () {
+
+    var sql = mustache.render(
+        sql = 'select count(soHoaDon) as soHoaDon, sum(tongTien) as tongTien, (QUARTER(NgayLap)) as quyLap \n' +
+            ' from hoadon \n' +
+            'where tinhTrang = 1\n' +
+            'group by quyLap\n' +
+            'order by quyLap'
+    );
+    console.log(sql);
+    return db.load(sql);
 }
 
