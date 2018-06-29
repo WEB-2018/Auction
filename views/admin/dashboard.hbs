@@ -1,4 +1,8 @@
+{{category}}
+{{datax}}
+<h1 id="a"></h1>
 <div class="container" onload="load()">
+    <div id="a"></div>
     <div class="header" style="margin-left:0px">
       <h2>Dashboard</h2>
      </div>  
@@ -8,20 +12,29 @@
     <canvas id="skillsChart"></canvas>
   </div>
 </div>
-   
+
 </div>
 <script>
+   
+   
+   
+ 
     var ctx = document.getElementById('skillsChart').getContext('2d');
-
+    var cat = {{category}};
+    var label = [];
+    var x = cat[0].tenLoaiSanPham;
+    a.innerHTML=x;
     var myRadarChart = new Chart(ctx, {
         type: 'polarArea',
         data: {
         datasets: [{
-            data: [85, 80, 90, 60, 50, 50],
+            data: [{{datax}}],
             backgroundColor: [
               '#ff6666',
               '#ffd966',
               '#8cff66',
+              '#66b3ff',
+              '#b366ff',
               '#66b3ff',
               '#b366ff',
               '#ff66b3'
@@ -29,14 +42,7 @@
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-            'HTML5',
-            'CSS3',
-            'Bootstrap',
-            'JavaScript',
-            'jQuery',
-            'Chart.js'
-        ]
+        labels : label
         },
       options: {
             startAngle: 2.8,
@@ -46,4 +52,46 @@
             },
         });
 
+
  </script>
+
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>

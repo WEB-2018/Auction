@@ -126,9 +126,16 @@ function resetUser(id, name, addr, email) {
                 +'<td>'+name+'</td>'
                 +'<td>'+addr+'</td>'
                 +'<td>'+email+'</td>'
-                + '<td><button onclick="deleteUser("'+id+'","'+name+'","'+addr+'","'+email+'")">ban</button>'
+                + '<td>'
+                + `<a type="button" class="btn btn-default " onclick="deleteUser('`+id+`','`+name+`','`+addr+`','`+email+`')" title="Ban">`
+                +'<span class="fa fa-ban" ></span>'
+                +'</a>'
                 +'</td>'
-                +'<td><button><a href="/admin/user/'+id+'/edit">edit</a></button></td>'
+                +'<td>'
+                + '<a type="button" class="btn btn-default " href="/admin/user/'+id+'/edit" title="Edit">'
+                +'<span class="fa fa-edit" ></span>'
+                + '</a>'
+                +'</td>'
                 +'</tr>')
                         //window.location.href = '/admin/users'; 
                    
@@ -159,7 +166,11 @@ function deleteUser(id, name, addr, email) {
                 +'<td>'+name+'</td>'
                 +'<td>'+addr+'</td>'
                 +'<td>'+email+'</td>'
-                +'<td><button onclick="resetUser("'+id+'","'+name+'","'+addr+'","'+email+'")">reset</td>'
+                +'<td>'
+                + `<a type="button" class="btn btn-default " onclick="resetUser('`+id+`','`+name+`','`+addr+`','`+email+`')" title="Reset">`
+                +'<span class="fa fa-refresh" ></span>'
+                +'</a>'
+                +'</td>'
                 +'</tr>')
                         //window.location.href = '/admin/users'; 
                    

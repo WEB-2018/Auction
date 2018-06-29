@@ -1,4 +1,6 @@
-
+td{
+     vertical-align: middle;
+    }
 h1{
     font-size: 24px;
 	padding-left: 10px;

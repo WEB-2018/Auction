@@ -9,49 +9,58 @@ var express = require('express'),
     multer = require('multer');
     fs = require('fs');
 var r = express.Router();
-var idCat_Arr = [];
-var labels = [];
-var datax = [];
+
 
 
 
 
 function loadAllCateXX(req,res,next) {
    
-    
+    var idCat_Arr = [];
+    var labels = [];
+    var dataxs = [];
+    //var name;
     categoryRepo.loadAll()
     .then(function (pRows) {
             req.category = pRows;
-            
+
             for( i = 0; i < pRows.length; i++)
             {
                 idCat_Arr.push(pRows[i].idLoaiSanPham);
                 labels.push(pRows[i].tenLoaiSanPham);
-                
-                //datax.push(x);
-               // console.log("x = " +);
+               // name+=`'`+labels[i]+    `',`;
             }
-            //console.log("ARRAY" + idCat_Arr);
-           // console.log("label" + labels);
-            //console.log("data" + datax);
            
+            req.CatId = idCat_Arr;
+            req.TagName = labels;
+          
+            //req.namez = name;
             return next();
         })
 }
 function CountProduct(req,res,next){
 
-    for( i = 0; i < idCat_Arr.length; i++)
+    var idCat_Arr = req.CatId;
+ 
+    var dataxs = [];
+
+    for(var j = 0; j < idCat_Arr.length; j++)
        {
-            productRepo.loadAllByCat1(idCat_Arr[i])
-            .then(function(products){
-               datax.push(products.length);
-               console.log(datax);
+            productRepo.countProdByCat(idCat_Arr[j])
+                .then(function(pRows){
+                var x = pRows[0].total;
+                dataxs.push(x)
             })
+           
+          
        } 
+    req.dataz = dataxs;
+   
     return next();
 }
 
 function renderAdminPage(req, res) {
+   
     if(req.session.admin != 'admin'){
         res.redirect('/login');
         console.log("login");
@@ -59,14 +68,16 @@ function renderAdminPage(req, res) {
     }
     else
     {
-           console.log("ARRAY" + idCat_Arr);
-            console.log("label" + labels);
-            console.log( datax);
+        
         res.render('admin/dashboard', {
         title: "Admin",
         layout: 'admin.hbs',
         session: req.session,
-        isLogged: req.session.isLogged
+        isLogged: req.session.isLogged,
+        datax: req.dataz,
+        label: req.TagName,
+        category: req.category 
+        //name: req.namez
         });
     }
    
@@ -74,6 +85,10 @@ function renderAdminPage(req, res) {
 
 r.get('/',loadAllCateXX,CountProduct,renderAdminPage);
 
+function getData(req,res){
+    productRepo.count('')
+}
+r.get('/x',getData)
 function loadAllUsers(req,res,next) {
     accountRepo.loadAll()
         .then(function (pRows) {
