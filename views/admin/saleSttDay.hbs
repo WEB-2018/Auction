@@ -1,0 +1,44 @@
+
+
+    <div class="header" style="margin-left:0px">
+        <h2>
+            Sales Statistics
+        </h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="/admin/salesStatistics/day/2018-6-28" class="btn btn-success btn-block">By day</a>
+            </div>
+            <div class="col-md-3">
+                <a href="/admin/salesStatistics/weeks" class="btn btn-danger btn-block">By Weeks</a>
+            </div>
+            <div class="col-md-3">
+                <a href="/admin/salesStatistics/months" class="btn btn-primary btn-block">By Months</a>
+            </div>
+            <div class="col-md-3">
+                <a href="/admin/salesStatistics/quarters" class="btn btn-info btn-block">By Quarters</a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover" style="overflow-y: scroll">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Total Bill</th>
+            <th>Total earning</th>
+        </tr>
+        </thead>
+        <tbody height="100px">
+        {{#each bill}}
+            <tr id="{{NgayLap}}" class="userInfo">
+                <td>{{NgayLap}}</td>
+                <td>{{soHoaDon}}</td>
+                <td>{{tongTien}} $</td>
+            </tr>
+        {{/each}}
+
+        </tbody>
+    </table>
+

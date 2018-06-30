@@ -97,16 +97,22 @@
 
         $("#deliver-infor").validate({
             rules: {
-                name: "required",
+                name: {
+                    required: true,
+                    maxlength: 30
+                },
                 numberPhone: {
                     required: true,
-                    maxlength: 14
+                    maxlength: 11
                 },
                 address: "required",
             },
             // Specify validation error messages
             messages: {
-                name: "Please enter your name",
+                name: {
+                    required: "Please enter your name",
+                    maxlength: "Your number phone must have maximum 30 letters"
+                },
                 numberPhone: {
                     required: "Please enter your number phone",
                     maxlength: "Your number phone must have maximum 11 letters"
