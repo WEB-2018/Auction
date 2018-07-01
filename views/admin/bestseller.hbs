@@ -1,0 +1,27 @@
+<div class="header" style="margin-left:0px">
+      <h2>Top 10 Best Seller</h2>
+     </div>
+<ul class="list-inline text-center">
+	{{#each products}}
+
+         <li style="padding:20px">
+            <div class="product-img" style="height:160px">
+          
+                    <img src="/imgs/sp/{{idSanPham}}/1.jpg" alt="{{tenSanPham}}" style="max-width: 100%;max-height: 100%;    object-fit: contain">
+      
+               
+            </div>
+            <div class="product-info text-center">
+                <h6 class="product-title">
+                    {{tenSanPham}}
+                </h6>
+           
+                <p >Sold: {{daBan}}/{{khoHang}}</p>
+             
+
+                
+            </div>
+        </li>
+  
+	{{/each}}
+</ul>

@@ -41,6 +41,13 @@ exports.loadSanPhamBanChay = function () {
     return db.load(sql);
 
 }
+
+exports.loadTop10 = function () {
+    var sql = 'select * from sanpham order by sanpham.daBan DESC limit 10';
+    return db.load(sql);
+
+}
+
 exports.loadSanPhamLienQuan = function (entity) {
 
     var d = q.defer();

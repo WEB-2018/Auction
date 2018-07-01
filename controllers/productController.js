@@ -297,7 +297,7 @@ r.post('/comment', function (req, res) {
     console.log(data);
     commentRepo.insert(data).then(function () {
         res.send("success");
-        return;
+    
     })
 })
 

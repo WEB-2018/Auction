@@ -33,3 +33,15 @@ exports.insert = function (entity) {
 
     return db.insert(sql);
 }
+
+exports.countCommentByProduct= function(ProdID){
+    var sql = `select count(*) as total from binhluan where idSanPham = ${ProdID}`;
+    return db.load(sql);
+}
+exports.loadAllByProductOffset = function(ProdID,limit,offset) {
+
+     var sql = `select * from binhluan where idSanPham = ${ProdID} limit ${limit} offset ${offset}`;
+
+    return db.load(sql);
+
+}

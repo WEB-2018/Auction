@@ -51,7 +51,7 @@
             <div class="container" id="comment">
 
             </div>
-                <form action="#">
+             
 
                     {{#if session.user}}
                        
@@ -62,9 +62,9 @@
                          
                     {{/if}}
                         <input type="text" id="cmt" placeholder="Type your comment.."><br>
-                        <button class="btn primary" onclick="Comment({{product.idSanPham}})">Submit</button>
+                        <button onclick="Comment({{product.idSanPham}})">Submit</button>
                      
-                </form>
+               
                 <hr>
                 <div id="newcmt" value=""></div>
                 {{#each comment}}

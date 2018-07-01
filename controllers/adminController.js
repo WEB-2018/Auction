@@ -85,6 +85,38 @@ function renderAdminPage(req, res) {
 
 r.get('/',loadAllCateXX,CountProduct,renderAdminPage);
 
+function loadTop10(req,res,next) {
+   
+    productRepo.loadTop10()
+    .then(function (pRows) {
+           req.products = pRows;
+           return next();
+        })
+}
+
+function renderTop10(req, res) {
+   
+    if(req.session.admin != 'admin'){
+        res.redirect('/login');
+        console.log("login");
+        return;
+    }
+    else
+    {
+        
+        res.render('admin/bestseller', {
+        title: "Admin",
+        layout: 'admin.hbs',
+        session: req.session,
+        isLogged: req.session.isLogged,
+        products: req.products
+        //name: req.namez
+        });
+    }
+   
+}
+
+r.get('/bestseller',loadTop10,renderTop10);
 function getData(req,res){
     productRepo.count('')
 }
@@ -121,7 +153,7 @@ function renderUserList(req, res) {
             layout: 'admin.hbs',
             session: req.session,
             users: req.users,
-            labels: labels,
+      
             block: req.block,
             isLogged: req.session.isLogged
         });
