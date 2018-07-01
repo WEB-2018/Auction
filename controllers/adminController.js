@@ -121,7 +121,7 @@ function renderUserList(req, res) {
             layout: 'admin.hbs',
             session: req.session,
             users: req.users,
-            labels: labels,
+
             block: req.block,
             isLogged: req.session.isLogged
         });

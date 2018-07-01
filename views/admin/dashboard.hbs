@@ -1,6 +1,4 @@
-{{category}}
-{{datax}}
-<h1 id="a"></h1>
+
 <div class="container" onload="load()">
     <div id="a"></div>
     <div class="header" style="margin-left:0px">
@@ -20,10 +18,6 @@
    
  
     var ctx = document.getElementById('skillsChart').getContext('2d');
-    var cat = {{category}};
-    var label = [];
-    var x = cat[0].tenLoaiSanPham;
-    a.innerHTML=x;
     var myRadarChart = new Chart(ctx, {
         type: 'polarArea',
         data: {
@@ -42,7 +36,7 @@
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels : label
+        labels : ['Sách','Phương tiện','Thời trang','Sức khỏe','Thiết bị điện tử','Đồng hồ']
         },
       options: {
             startAngle: 2.8,
